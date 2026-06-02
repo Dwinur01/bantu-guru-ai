@@ -73,6 +73,39 @@ const loadingTexts = [
   'Hampir selesai, menyinkronkan sisa kuota Anda...'
 ];
 
+const popularTemplates = [
+  {
+    title: 'Penjumlahan SD',
+    jenjang: 'SD',
+    kelas: 'Kelas I',
+    mapel: 'Matematika',
+    topik: 'Penjumlahan Angka 1 sampai 10 dengan Gambar',
+    alokasiWaktu: '2 JP (2 x 35 menit)',
+    modelPembelajaran: 'Problem Based Learning (PBL)',
+    asesmen: ['Pengetahuan', 'Sikap']
+  },
+  {
+    title: 'Siklus Air SMP',
+    jenjang: 'SMP',
+    kelas: 'Kelas VII',
+    mapel: 'IPA',
+    topik: 'Siklus Hidrologi (Air) dan Dampaknya Bagi Kehidupan',
+    alokasiWaktu: '2 JP (2 x 40 menit)',
+    modelPembelajaran: 'Project Based Learning (PjBL)',
+    asesmen: ['Pengetahuan', 'Keterampilan']
+  },
+  {
+    title: 'Ekonomi SMA',
+    jenjang: 'SMA',
+    kelas: 'Kelas X',
+    mapel: 'Ekonomi',
+    topik: 'Konsep Dasar Ilmu Ekonomi dan Kebutuhan Manusia',
+    alokasiWaktu: '2 JP (2 x 45 menit)',
+    modelPembelajaran: 'Discovery Learning',
+    asesmen: ['Pengetahuan']
+  }
+];
+
 export const GenerateRPP: React.FC = () => {
   const navigate = useNavigate();
   const [isGenerating, setIsGenerating] = useState(false);
@@ -264,6 +297,34 @@ export const GenerateRPP: React.FC = () => {
           
           {/* Sisi Kiri: Formulir Input (50% Desktop) */}
           <div className="bg-white border border-rule rounded-xl p-5 sm:p-6 shadow-sm">
+            {/* RPP Instan Templates - Beginner Friendly */}
+            <div className="space-y-2.5 mb-6 border-b border-rule pb-5">
+              <span className="text-xs text-brand-mid font-bold uppercase tracking-wider block">✨ RPP Instan (Pilih Template Pengisian Cepat)</span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                {popularTemplates.map((tpl) => (
+                  <button
+                    key={tpl.title}
+                    type="button"
+                    onClick={() => {
+                      setValue('jenjang', tpl.jenjang);
+                      setTimeout(() => {
+                        setValue('kelas', tpl.kelas);
+                        setValue('mapel', tpl.mapel);
+                        setValue('topik', tpl.topik);
+                        setValue('alokasiWaktu', tpl.alokasiWaktu);
+                        setValue('modelPembelajaran', tpl.modelPembelajaran);
+                        setValue('asesmen', tpl.asesmen);
+                      }, 50);
+                    }}
+                    className="px-3 py-2.5 border border-brand-mid/10 hover:border-brand-mid/40 bg-brand-light/10 hover:bg-brand-light/30 rounded-lg text-left transition-all duration-150 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-brand-mid/20 w-full"
+                  >
+                    <span className="font-bold text-xs text-ink block group-hover:text-brand-mid">{tpl.title}</span>
+                    <span className="text-[9px] text-muted block mt-0.5">{tpl.mapel} · {tpl.kelas}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
