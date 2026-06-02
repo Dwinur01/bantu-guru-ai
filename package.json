@@ -1,0 +1,19 @@
+{
+  "name": "gurubantu-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev -w frontend",
+    "dev:backend": "npm run dev -w backend",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "install:all": "npm install",
+    "db:switch": "npm run db:switch -w backend --"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: gurubantu-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: gurubanturootpass
+      MYSQL_DATABASE: gurubantu
+      MYSQL_USER: gurubantu_user
+      MYSQL_PASSWORD: gurubantupass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

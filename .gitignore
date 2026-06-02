@@ -1,0 +1,82 @@
+# ─── Dependencies ──────────────────────────────────────────────────────────────
+node_modules/
+**/node_modules/
+
+# ─── Build Outputs ─────────────────────────────────────────────────────────────
+dist/
+**/dist/
+build/
+**/build/
+.cache/
+**/.cache/
+
+# ─── Environment Files (JANGAN PERNAH DI-COMMIT!) ──────────────────────────────
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# ─── Database Files (SQLite lokal — sensitif) ──────────────────────────────────
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+backend/prisma/dev.db
+backend/prisma/dev.db-journal
+
+# ─── Google Cloud Service Account Keys ────────────────────────────────────────
+*.json
+!package.json
+!package-lock.json
+!tsconfig*.json
+!**/tsconfig*.json
+service-account*.json
+gcp-key*.json
+credentials*.json
+
+# ─── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ─── Upload Folder (file hasil generate lokal) ─────────────────────────────────
+backend/uploads/
+uploads/
+
+# ─── IDE dan OS ────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+.AppleDouble
+.LSOverride
+
+# ─── TypeScript Build Cache ────────────────────────────────────────────────────
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# ─── Prisma Generate Output ────────────────────────────────────────────────────
+# Dibiarkan ada di repo tapi generated client tidak perlu di-commit
+# (regenerated via `prisma generate`)
+
+# ─── Coverage & Testing ────────────────────────────────────────────────────────
+coverage/
+**/coverage/
+.nyc_output/
+*.lcov
+
+# ─── Miscellaneous ─────────────────────────────────────────────────────────────
+*.pem
+*.key
+*.cert
+*.p12
+*.pfx
+.turbo/
+.vercel/
