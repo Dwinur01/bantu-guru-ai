@@ -16,6 +16,9 @@ import { GenerateSoal } from './pages/GenerateSoal';
 import { GenerateSuccess } from './pages/GenerateSuccess';
 import { Documents } from './pages/Documents';
 import { Profile } from './pages/Profile';
+import { Pricing } from './pages/Pricing';
+import { PaymentConfirm, PaymentSuccess, PaymentFailed } from './pages/Payment';
+import { Billing } from './pages/Billing';
 
 // 1. Landing Page (showcasing visual elements and Tailwind styles from design.md)
 const LandingPage: React.FC = () => {
@@ -176,6 +179,30 @@ const App: React.FC = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/pricing"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Pricing />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/billing"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Billing />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        {/* Payment Flow — tanpa Layout (full-screen) */}
+        <Route path="/payment/:plan" element={<ProtectedRoute><PaymentConfirm /></ProtectedRoute>} />
+        <Route path="/payment/success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
+        <Route path="/payment/failed" element={<ProtectedRoute><PaymentFailed /></ProtectedRoute>} />
 
         {/* Catch-all redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />

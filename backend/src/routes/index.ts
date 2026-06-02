@@ -3,6 +3,7 @@ import authRouter from './auth.routes';
 import userRouter from './user.routes';
 import documentRouter from './document.routes';
 import cronRouter from './cron.routes';
+import paymentRouter from './payment.routes';
 
 const apiRouter = Router();
 
@@ -22,6 +23,9 @@ apiRouter.use('/documents', documentRouter);
 
 // Cron Sub-router (/api/cron/*) — Endpoint tugas terjadwal, dilindungi X-Cron-Secret
 apiRouter.use('/cron', cronRouter);
+
+// Payment Sub-router (/api/payment/*) — Pembayaran Midtrans
+apiRouter.use('/payment', paymentRouter);
 
 // Error Handling Test Endpoint (Only in development/test)
 apiRouter.get('/error-test', (_req: Request, _res: Response) => {
