@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Sparkles, ClipboardList, FolderOpen, User, LogOut } from 'lucide-react';
+import { Home, Sparkles, ClipboardList, FolderOpen, User, LogOut, Tag, CreditCard } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../services/api';
 import QuotaBanner, { UpgradeModal } from './QuotaBanner';
@@ -39,6 +39,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     { label: 'Buat RPP', mobileLabel: 'Buat RPP', path: '/rpp', icon: Sparkles },
     { label: 'Buat Soal Ujian', mobileLabel: 'Buat Soal', path: '/soal', icon: ClipboardList },
     { label: 'Riwayat Dokumen', mobileLabel: 'Riwayat', path: '/riwayat', icon: FolderOpen },
+    { label: 'Paket Langganan', mobileLabel: 'Paket', path: '/pricing', icon: Tag },
+    { label: 'Riwayat Transaksi', mobileLabel: 'Transaksi', path: '/billing', icon: CreditCard },
     { label: 'Profil Guru', mobileLabel: 'Profil', path: '/profile', icon: User },
   ];
 

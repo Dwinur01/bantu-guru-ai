@@ -4,12 +4,30 @@ import userRouter from './user.routes';
 import documentRouter from './document.routes';
 import cronRouter from './cron.routes';
 import paymentRouter from './payment.routes';
+import prisma from '../utils/db';
 
 const apiRouter = Router();
 
 // Health Check Endpoint
-apiRouter.get('/health', (_req: Request, res: Response) => {
-  res.status(200).json({ status: 'ok' });
+apiRouter.get('/health', async (_req: Request, res: Response) => {
+  try {
+    // Ping database to ensure active connectivity
+    await prisma.$queryRaw`SELECT 1`;
+    res.status(200).json({ 
+      status: 'ok', 
+      db: 'connected',
+      uptime: process.uptime(),
+      version: '1.0.0'
+    });
+  } catch (error: any) {
+    res.status(500).json({ 
+      status: 'error', 
+      db: 'disconnected',
+      error: error.message || error,
+      uptime: process.uptime(),
+      version: '1.0.0'
+    });
+  }
 });
 
 // Auth Sub-router (/api/auth/*)

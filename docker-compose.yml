@@ -14,6 +14,53 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - gurubantu-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gurubantu-backend
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      PORT: 8080
+      NODE_ENV: production
+      DATABASE_URL: mysql://gurubantu_user:gurubantupass@mysql:3306/gurubantu
+      JWT_ACCESS_SECRET: default_jwt_access_secret_please_change
+      JWT_REFRESH_SECRET: default_jwt_refresh_secret_please_change
+      FRONTEND_URL: http://localhost
+      # GEMINI_API_KEY, MIDTRANS_CLIENT_KEY, MIDTRANS_SERVER_KEY must be supplied by the host
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-mock-key-gemini}
+      MIDTRANS_CLIENT_KEY: ${MIDTRANS_CLIENT_KEY:-mock-client-key}
+      MIDTRANS_SERVER_KEY: ${MIDTRANS_SERVER_KEY:-mock-server-key}
+      MIDTRANS_IS_PRODUCTION: "false"
+    ports:
+      - "8080:8080"
+    networks:
+      - gurubantu-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # PWA frontend points to port 8080 on the same host (via browser URL)
+        VITE_API_BASE_URL: http://localhost:8080/api
+    container_name: gurubantu-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - gurubantu-network
 
 volumes:
   mysql_data:
+
+networks:
+  gurubantu-network:
+    driver: bridge

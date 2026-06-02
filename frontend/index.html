@@ -5,6 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GuruBantu AI — RPP & Administrasi Guru Otomatis</title>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#C84B2F" />
     <!-- Google Fonts: Playfair Display for big metric numbers and H1 hero -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,5 +15,14 @@
   <body class="bg-[#F5F0E8] text-[#1A1A2E] font-sans antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((reg) => console.log('[PWA] Service Worker registered:', reg.scope))
+            .catch((err) => console.error('[PWA] Service Worker registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>

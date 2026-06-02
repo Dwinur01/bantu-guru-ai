@@ -1,14 +1,15 @@
 import { Router } from 'express';
 import { register, login, refresh, logout, googleLogin } from '../controllers/auth.controller';
 import { verifyAccessToken } from '../middleware/auth.middleware';
+import { loginLimiter, registerLimiter } from '../middleware/rate-limit.middleware';
 
 const authRouter = Router();
 
 // POST /api/auth/register - Registrasi Akun Guru Baru
-authRouter.post('/register', register);
+authRouter.post('/register', registerLimiter, register);
 
 // POST /api/auth/login - Masuk Akun Guru
-authRouter.post('/login', login);
+authRouter.post('/login', loginLimiter, login);
 
 // POST /api/auth/refresh - Segarkan Access Token
 authRouter.post('/refresh', refresh);

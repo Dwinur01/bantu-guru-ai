@@ -1,0 +1,37 @@
+name: GuruBantu AI CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build and Check Type Compilation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install Monorepo Dependencies
+        run: npm install
+
+      - name: Switch Database to SQLite for dev check
+        run: node backend/prisma/switch-db.js sqlite
+
+      - name: Generate Prisma Client Types
+        run: npm run prisma:generate -w backend
+
+      - name: Build Backend (TypeScript)
+        run: npm run build -w backend
+
+      - name: Build Frontend (Vite)
+        run: npm run build -w frontend

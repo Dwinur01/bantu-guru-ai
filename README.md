@@ -200,8 +200,8 @@ Aplikasi akan berjalan di:
 - [x] Sprint 2: Dashboard, Form Generate, Gemini AI, GCS, docx Builder
 - [x] Sprint 3: Generate E2E, Halaman Sukses, Riwayat Dokumen
 - [x] Sprint 4: Kuota, Notifikasi, Profil, Cron Jobs
-- [ ] Sprint 5: Pembayaran Midtrans
-- [ ] Sprint 6: Hardening, CI/CD, PWA, Deploy Production
+- [x] Sprint 5: Pembayaran Midtrans (Midtrans Snap, Webhook & Status Polling)
+- [x] Sprint 6: Hardening, CI/CD, PWA, Deploy Production (Rate Limiting, Health Check, Docker, GitHub Actions CI)
 
 ---
 

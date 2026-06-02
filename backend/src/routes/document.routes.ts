@@ -7,6 +7,7 @@ import {
 } from '../controllers/document.controller';
 import { verifyAccessToken } from '../middleware/auth.middleware';
 import { checkQuota } from '../middleware/quota.middleware';
+import { generateLimiter } from '../middleware/rate-limit.middleware';
 
 const documentRouter = Router();
 
@@ -15,7 +16,7 @@ documentRouter.use(verifyAccessToken);
 
 // POST /api/documents/generate - Generasi dokumen otomatis bertenaga AI (RPP / Soal)
 // checkQuota dipasang sebelum handler utama agar kuota dicek lebih awal
-documentRouter.post('/generate', checkQuota, generateDocument);
+documentRouter.post('/generate', generateLimiter, checkQuota, generateDocument);
 
 // GET /api/documents - Ambil daftar riwayat dokumen user (dengan filter & pagination)
 documentRouter.get('/', listDocuments);
