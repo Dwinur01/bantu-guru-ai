@@ -8,7 +8,9 @@ import {
   ArrowLeft, 
   AlertCircle, 
   Loader2, 
-  HelpCircle 
+  HelpCircle,
+  Mic,
+  MicOff
 } from 'lucide-react';
 import { api } from '../services/api';
 
@@ -98,6 +100,40 @@ export const GenerateSoal: React.FC = () => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [isListening, setIsListening] = useState(false);
+
+  const startSpeechRecognition = () => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert('Browser Anda belum mendukung fitur pengenalan suara. Silakan gunakan Google Chrome atau Microsoft Edge.');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'id-ID';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: any) => {
+      const text = event.results[0][0].transcript;
+      setValue('topik', text);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error('Speech recognition error:', event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.start();
+  };
 
   const {
     register,
@@ -352,8 +388,29 @@ export const GenerateSoal: React.FC = () => {
 
               {/* 4. Input Topik / Materi Pokok */}
               <div className="flex flex-col gap-1">
-                <label htmlFor="topik" className="text-sm font-medium text-ink">
-                  Materi Pokok / Topik Evaluasi *
+                <label htmlFor="topik" className="text-sm font-medium text-ink flex justify-between items-center">
+                  <span>Materi Pokok / Topik Evaluasi *</span>
+                  <button
+                    type="button"
+                    onClick={startSpeechRecognition}
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all duration-150 active:scale-95 ${
+                      isListening
+                        ? 'bg-brand-red text-white animate-pulse'
+                        : 'bg-brand-light text-brand-mid hover:bg-brand-light/75'
+                    }`}
+                  >
+                    {isListening ? (
+                      <>
+                        <MicOff className="w-3.5 h-3.5 animate-spin" />
+                        <span>Mendengarkan...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Mic className="w-3.5 h-3.5" />
+                        <span>Isi Pakai Suara</span>
+                      </>
+                    )}
+                  </button>
                 </label>
                 <input
                   id="topik"

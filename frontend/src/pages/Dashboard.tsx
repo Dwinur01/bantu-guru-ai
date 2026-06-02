@@ -80,6 +80,7 @@ export const Dashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showSkeleton, setShowSkeleton] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [onboardingStep, setOnboardingStep] = useState<number | null>(null);
 
   useEffect(() => {
     // Jalankan timer untuk menampilkan skeleton hanya jika fetch memakan waktu > 300ms
@@ -92,6 +93,12 @@ export const Dashboard: React.FC = () => {
         const response = await api.get('/user/me');
         const data = response.data.data;
         setUserProfile(data);
+        
+        // Tampilkan Onboarding Tour interaktif jika pengguna pertama kali masuk Dashboard
+        const hasOnboarded = localStorage.getItem('gurubantu_onboarded_v1');
+        if (!hasOnboarded) {
+          setOnboardingStep(1);
+        }
         
         // Sinkronisasi data user terupdate ke Zustand authStore
         if (accessToken) {
@@ -384,6 +391,99 @@ export const Dashboard: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Beginner Friendly Interactive Onboarding Tour Overlay */}
+      {onboardingStep !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-[#FAF7F2] border border-[#C8BFB0] rounded-xl max-w-md w-full p-6 shadow-2xl relative space-y-6">
+            
+            {/* Indicator step */}
+            <div className="flex justify-between items-center text-xs text-brand-mid font-bold">
+              <span>📚 PANDUAN GURUBANTU AI</span>
+              <span>Langkah {onboardingStep} dari 3</span>
+            </div>
+
+            {/* Steps Content */}
+            {onboardingStep === 1 && (
+              <div className="space-y-3 animate-in slide-in-from-right duration-250">
+                <div className="w-12 h-12 bg-[#E8F5EE] text-[#1A7A4A] rounded-lg flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-[#1A7A4A]" />
+                </div>
+                <h3 className="text-lg font-bold text-ink leading-tight">Selamat Datang, Guru Hebat!</h3>
+                <p className="text-sm text-muted leading-relaxed">
+                  Kami merancang GuruBantu AI agar Anda bisa menghemat waktu berharga dalam membuat **RPP Kurikulum Merdeka** & **Soal Ujian** dalam hitungan menit saja. Mari ikuti tur singkat 1 menit ini untuk memahami cara menggunakannya!
+                </p>
+              </div>
+            )}
+
+            {onboardingStep === 2 && (
+              <div className="space-y-3 animate-in slide-in-from-right duration-250">
+                <div className="w-12 h-12 bg-warning-bg text-warning rounded-lg flex items-center justify-center">
+                  <Award className="w-6 h-6 text-warning" />
+                </div>
+                <h3 className="text-lg font-bold text-ink leading-tight">Sistem Kuota Transaksional Aman</h3>
+                <p className="text-sm text-muted leading-relaxed">
+                  Di Dashboard, Anda bisa melihat sisa kuota dokumen gratis Anda. Kuota Anda **HANYA** akan berkurang jika AI kami berhasil menyelesaikan berkas Word (.docx) Anda. Jika proses pembuatan gagal, kuota Anda tetap aman 100%!
+                </p>
+              </div>
+            )}
+
+            {onboardingStep === 3 && (
+              <div className="space-y-3 animate-in slide-in-from-right duration-250">
+                <div className="w-12 h-12 bg-[#EBF3FB] text-brand-mid rounded-lg flex items-center justify-center">
+                  <ClipboardList className="w-6 h-6 text-brand-mid" />
+                </div>
+                <h3 className="text-lg font-bold text-ink leading-tight">Mulai Buat Dokumen AI Instan</h3>
+                <p className="text-sm text-muted leading-relaxed">
+                  Gunakan bagian **Quick Generate** di Dashboard untuk mulai membuat RPP atau Soal Ujian. Anda juga bisa memilih *"Isi Pakai Suara"* (Speech Input) di halaman form untuk mempermudah penulisan materi pokok!
+                </p>
+              </div>
+            )}
+
+            {/* Buttons bar */}
+            <div className="flex items-center justify-between pt-2 border-t border-[#C8BFB0]/30">
+              <button
+                type="button"
+                onClick={() => {
+                  localStorage.setItem('gurubantu_onboarded_v1', 'true');
+                  setOnboardingStep(null);
+                }}
+                className="text-xs font-bold text-muted hover:text-ink min-h-[44px] px-3 active:scale-95"
+              >
+                Lewati Panduan
+              </button>
+
+              <div className="flex gap-2">
+                {onboardingStep > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => setOnboardingStep((prev) => (prev !== null ? prev - 1 : null))}
+                    className="px-4 py-2 border border-[#C8BFB0] text-muted rounded-lg text-xs font-bold min-h-[44px] transition-colors hover:bg-neutral-100 active:scale-95"
+                  >
+                    Sebelumnya
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onboardingStep === 3) {
+                      localStorage.setItem('gurubantu_onboarded_v1', 'true');
+                      setOnboardingStep(null);
+                    } else {
+                      setOnboardingStep((prev) => (prev !== null ? prev + 1 : null));
+                    }
+                  }}
+                  className="px-5 py-2.5 bg-[#C84B2F] hover:bg-[#a83d25] text-white rounded-lg text-xs font-bold min-h-[44px] shadow-sm transition-all active:scale-95"
+                >
+                  {onboardingStep === 3 ? 'Selesai & Mulai!' : 'Lanjut'}
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
