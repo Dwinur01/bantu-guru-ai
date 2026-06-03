@@ -110,7 +110,7 @@ const plans = [
     color: 'text-brand-red',
     bgColor: 'bg-brand-pale',
     borderColor: 'border-brand-red',
-    ctaColor: 'bg-brand-red hover:bg-brand-hover text-white',
+    ctaColor: 'bg-brand-red hover:bg-blue-700 text-white',
     popular: true,
     features: ['Dokumen unlimited', 'RPP & Soal Ujian', 'Download DOCX', 'Prioritas AI', 'Email support'],
   },

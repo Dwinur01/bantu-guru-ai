@@ -82,7 +82,7 @@ const plans = [
     color: 'text-brand-red',
     bg: 'bg-brand-pale',
     border: 'border-brand-red',
-    btnClass: 'bg-brand-red hover:bg-brand-hover text-white',
+    btnClass: 'bg-brand-red hover:bg-blue-700 text-white',
     icon: Sparkles,
     popular: true,
     features: [

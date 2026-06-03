@@ -19,7 +19,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string; 
   settlement:{ label: 'Sukses',   color: 'text-success',        bg: 'bg-[#E8F5EE]',  icon: CheckCircle },
   expire:    { label: 'Kedaluwarsa', color: 'text-muted',       bg: 'bg-neutral-100', icon: XCircle },
   cancel:    { label: 'Dibatalkan', color: 'text-muted',        bg: 'bg-neutral-100', icon: XCircle },
-  deny:      { label: 'Ditolak',  color: 'text-brand-red',     bg: 'bg-red-50',      icon: AlertCircle },
+  deny:      { label: 'Ditolak',  color: 'text-error',     bg: 'bg-error-bg',    icon: AlertCircle },
 };
 
 const PLAN_LABELS: Record<string, string> = {
@@ -89,7 +89,7 @@ export const Billing: React.FC = () => {
         <button
           id="billing-upgrade-btn"
           onClick={() => navigate('/pricing')}
-          className="flex items-center gap-1.5 px-4 py-2 bg-brand-red text-white rounded-xl text-sm font-bold hover:bg-brand-hover transition-all hover:scale-105 active:scale-95"
+          className="flex items-center gap-1.5 px-4 py-2 bg-brand-red text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-all hover:scale-105 active:scale-95"
         >
           Upgrade <ArrowRight className="w-3.5 h-3.5" />
         </button>
@@ -118,7 +118,7 @@ export const Billing: React.FC = () => {
           </div>
           <button
             onClick={() => navigate('/pricing')}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-red text-white rounded-xl text-sm font-bold hover:bg-brand-hover transition-all"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-red text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-all"
           >
             Lihat Paket <ArrowRight className="w-4 h-4" />
           </button>

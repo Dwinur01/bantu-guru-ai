@@ -278,7 +278,7 @@ export const GenerateModulAjar: React.FC = () => {
 
       {/* Error Server */}
       {serverError && (
-        <div className="p-4 bg-error-bg border border-brand-red rounded-lg flex items-start gap-2.5 text-brand-red">
+        <div className="p-4 bg-error-bg border border-error rounded-xl flex items-start gap-2.5 text-error">
           <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div className="text-sm font-semibold">{serverError}</div>
         </div>
@@ -430,15 +430,15 @@ export const GenerateModulAjar: React.FC = () => {
                   id="topik"
                   type="text"
                   placeholder="Misal: Fotosintesis, Sistem Persamaan Linear, Siklus Air"
-                  className={`w-full px-4 py-2.5 text-base text-ink bg-white border rounded-lg min-h-[44px] transition-colors duration-150 placeholder:text-muted focus:outline-none ${
+                  className={`w-full px-4 py-2.5 text-base text-slate-900 bg-white border rounded-xl min-h-[44px] transition-all placeholder:text-slate-400 focus:outline-none ${
                     errors.topik
-                      ? 'border-brand-red bg-error-bg focus:ring-2 focus:ring-[#C84B2F]/20'
-                      : 'border-rule focus:border-brand-mid focus:ring-2 focus:ring-brand-mid/20'
+                      ? 'border-error bg-[#FFF2F2] focus:ring-2 focus:ring-error/20'
+                      : 'border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'
                   }`}
                   {...register('topik')}
                 />
                 {errors.topik && (
-                  <p className="flex items-center gap-1 mt-1 text-xs text-brand-red">
+                  <p className="flex items-center gap-1 mt-1 text-xs text-error">
                     <AlertCircle className="w-3.5 h-3.5" />
                     {errors.topik.message}
                   </p>
@@ -505,7 +505,7 @@ export const GenerateModulAjar: React.FC = () => {
                   })}
                 </div>
                 {errors.profilPelajarPancasila && (
-                  <p className="flex items-center gap-1 mt-1 text-xs text-brand-red">
+                  <p className="flex items-center gap-1 mt-1 text-xs text-error">
                     <AlertCircle className="w-3.5 h-3.5" />
                     {errors.profilPelajarPancasila.message}
                   </p>
@@ -515,7 +515,7 @@ export const GenerateModulAjar: React.FC = () => {
               {/* Tombol Generate */}
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#6A3EA1] text-white font-semibold text-sm rounded-lg min-h-[44px] shadow-md transition-all duration-150 hover:bg-[#5a3390] hover:shadow-lg active:scale-95 text-center mt-4"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#6A3EA1] text-white font-bold text-sm rounded-xl min-h-[44px] shadow-lg shadow-purple-500/10 transition-all duration-150 hover:bg-[#5a3390] hover:shadow-xl active:scale-95 text-center mt-4"
               >
                 <BookOpen className="w-4 h-4" />
                 <span>Generate Modul Ajar Kurikulum Merdeka</span>
@@ -554,7 +554,7 @@ export const GenerateModulAjar: React.FC = () => {
             </div>
 
             {/* Box 2: Info Keandalan */}
-            <div className="bg-[#FAF7F2] border border-[#C8BFB0] rounded-xl p-5 flex items-start gap-3.5 shadow-sm text-left">
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 flex items-start gap-3.5 shadow-sm text-left">
               <Sparkles className="w-6 h-6 text-[#6A3EA1] flex-shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <h4 className="font-bold text-sm text-ink">Keandalan Transaksional</h4>

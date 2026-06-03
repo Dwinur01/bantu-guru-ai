@@ -64,7 +64,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onConfirm, i
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-5 animate-bounce-in">
         <div className="flex items-center gap-3">
           <div className="w-11 h-11 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
-            <AlertTriangle className="w-5 h-5 text-brand-red" />
+            <AlertTriangle className="w-5 h-5 text-red-600" />
           </div>
           <div>
             <h3 className="font-display font-black text-ink text-lg">
@@ -102,7 +102,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onConfirm, i
           {step === 1 && (
             <button
               onClick={onNextStep}
-              className="flex-1 py-2.5 bg-brand-red text-white rounded-xl text-sm font-bold hover:bg-brand-hover transition-colors"
+              className="flex-1 py-2.5 bg-brand-red text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-colors"
             >
               Lanjutkan
             </button>
@@ -117,19 +117,19 @@ const ConfirmDeleteInput: React.FC<{ onConfirm: () => void; isLoading: boolean }
   const [value, setValue] = useState('');
   return (
     <div className="space-y-3">
-      <p className="text-sm text-ink">Ketik <strong className="text-brand-red">HAPUS</strong> di bawah untuk konfirmasi:</p>
+      <p className="text-sm text-ink">Ketik <strong className="text-error font-bold">HAPUS</strong> di bawah untuk konfirmasi:</p>
       <input
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="w-full px-4 py-2.5 border-2 border-red-300 rounded-xl text-sm font-mono focus:outline-none focus:border-brand-red"
+        className="w-full px-4 py-2.5 border-2 border-red-350 rounded-xl text-sm font-mono focus:outline-none focus:border-red-500"
         placeholder="Ketik HAPUS"
         autoFocus
       />
       <button
         onClick={onConfirm}
         disabled={value !== 'HAPUS' || isLoading}
-        className="w-full py-2.5 bg-brand-red text-white rounded-xl text-sm font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-brand-hover transition-colors"
+        className="w-full py-2.5 bg-red-600 text-white rounded-xl text-sm font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-red-700 transition-colors"
       >
         {isLoading ? 'Memproses...' : 'Ya, Hapus Akun Saya'}
       </button>
@@ -245,7 +245,7 @@ export const Profile: React.FC = () => {
   const isUnlimited = profile?.plan === 'basic' || profile?.plan === 'pro';
 
   const quotaBarColor =
-    quotaPct <= 20 ? 'bg-brand-red' :
+    quotaPct <= 20 ? 'bg-error' :
     quotaPct <= 50 ? 'bg-[#D97706]' :
     'bg-success';
 
@@ -333,12 +333,12 @@ export const Profile: React.FC = () => {
                       type="text"
                       value={newName}
                       onChange={(e) => { setNewName(e.target.value); setNameError(''); }}
-                      className={`w-full px-3 py-2 border-2 rounded-xl text-sm font-medium focus:outline-none transition-colors ${nameError ? 'border-brand-red' : 'border-brand-mid/50 focus:border-brand-mid'}`}
+                      className={`w-full px-3 py-2 border-2 rounded-xl text-sm font-medium focus:outline-none transition-colors ${nameError ? 'border-error' : 'border-slate-200 focus:border-blue-600'}`}
                       placeholder="Nama lengkap Anda"
                       autoFocus
                       onKeyDown={(e) => { if (e.key === 'Enter') handleSaveName(); if (e.key === 'Escape') setIsEditingName(false); }}
                     />
-                    {nameError && <p className="text-xs text-brand-red">{nameError}</p>}
+                    {nameError && <p className="text-xs text-error">{nameError}</p>}
                     <div className="flex gap-2">
                       <button
                         id="save-name-btn"
@@ -439,8 +439,8 @@ export const Profile: React.FC = () => {
             </div>
             <button
               id="profile-upgrade-btn"
-              onClick={() => navigate('/profile')}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-red text-white rounded-lg text-xs font-bold hover:bg-brand-hover transition-all hover:scale-105"
+              onClick={() => navigate('/pricing')}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-red text-white rounded-lg text-xs font-bold hover:bg-blue-700 transition-all hover:scale-105"
             >
               <Zap className="w-3 h-3" /> Upgrade
             </button>
@@ -456,7 +456,7 @@ export const Profile: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
             { id: 'saset', name: 'Saset', price: 'Rp 15.000', period: '/ minggu', quota: '25 dok/minggu', icon: Zap, color: 'text-[#D97706]', bg: 'bg-[#FFF8E7]', border: 'border-[#FDE68A]', cta: 'bg-[#D97706] hover:bg-[#B45309]' },
-            { id: 'basic', name: 'Basic', price: 'Rp 29.000', period: '/ bulan', quota: 'Unlimited', icon: Sparkles, color: 'text-brand-red', bg: 'bg-brand-pale', border: 'border-brand-red', cta: 'bg-brand-red hover:bg-brand-hover', popular: true },
+            { id: 'basic', name: 'Basic', price: 'Rp 29.000', period: '/ bulan', quota: 'Unlimited', icon: Sparkles, color: 'text-brand-red', bg: 'bg-brand-pale', border: 'border-brand-red', cta: 'bg-brand-red hover:bg-blue-700', popular: true },
             { id: 'pro',   name: 'Pro',   price: 'Rp 49.000', period: '/ bulan', quota: 'Unlimited + Pro', icon: Crown, color: 'text-[#7C3AED]', bg: 'bg-[#F5F3FF]', border: 'border-[#DDD6FE]', cta: 'bg-[#7C3AED] hover:bg-[#6D28D9]' },
           ].map((p) => {
             const Icon = p.icon;
@@ -513,7 +513,7 @@ export const Profile: React.FC = () => {
           <button
             id="profile-delete-account-btn"
             onClick={() => { setDeleteStep(1); setShowDeleteModal(true); }}
-            className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-red-200 hover:bg-red-50 transition-colors text-sm font-medium text-brand-red group"
+            className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-red-100 hover:bg-red-50 transition-colors text-sm font-medium text-error group"
           >
             <div className="flex items-center gap-3">
               <Trash2 className="w-4 h-4" />

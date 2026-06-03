@@ -145,7 +145,7 @@ export const PaymentConfirm: React.FC = () => {
               disabled={isLoading}
               className={`w-full py-3.5 rounded-xl text-white font-bold text-sm transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
                 plan === 'pro' ? 'bg-[#7C3AED] hover:bg-[#6D28D9]' :
-                plan === 'basic' ? 'bg-brand-red hover:bg-brand-hover' :
+                plan === 'basic' ? 'bg-brand-red hover:bg-blue-700' :
                 'bg-[#D97706] hover:bg-[#B45309]'
               }`}
             >
@@ -224,7 +224,7 @@ export const PaymentSuccess: React.FC = () => {
               <button
                 id="payment-success-generate-btn"
                 onClick={() => navigate('/rpp')}
-                className="w-full py-3 bg-brand-red text-white rounded-xl font-bold text-sm hover:bg-brand-hover transition-all"
+                className="w-full py-3 bg-brand-red text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-all"
               >
                 Mulai Buat Dokumen →
               </button>
@@ -240,7 +240,7 @@ export const PaymentSuccess: React.FC = () => {
             </div>
             <h1 className="font-display font-black text-2xl text-ink">Menunggu Konfirmasi</h1>
             <p className="text-muted text-sm max-w-sm mx-auto">Pembayaran Anda sedang diverifikasi. Biasanya selesai dalam 1-5 menit. Cek email Anda untuk konfirmasi.</p>
-            <button onClick={() => navigate('/dashboard')} className="w-full py-3 bg-brand-red text-white rounded-xl font-bold text-sm hover:bg-brand-hover transition-all">
+            <button onClick={() => navigate('/dashboard')} className="w-full py-3 bg-brand-red text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-all">
               Kembali ke Dashboard
             </button>
           </>
@@ -268,7 +268,7 @@ export const PaymentFailed: React.FC = () => {
     <div className="min-h-screen bg-page flex items-center justify-center p-4">
       <div className="w-full max-w-md text-center space-y-6">
         <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto">
-          <XCircle className="w-10 h-10 text-brand-red" />
+          <XCircle className="w-10 h-10 text-error" />
         </div>
         <div className="space-y-2">
           <h1 className="font-display font-black text-2xl text-ink">Pembayaran Gagal</h1>
@@ -284,7 +284,7 @@ export const PaymentFailed: React.FC = () => {
           <button
             id="payment-retry-btn"
             onClick={() => navigate('/pricing')}
-            className="w-full py-3 bg-brand-red text-white rounded-xl font-bold text-sm hover:bg-brand-hover transition-all"
+            className="w-full py-3 bg-red-600 text-white rounded-xl font-bold text-sm hover:bg-red-700 transition-all"
           >
             Coba Bayar Lagi
           </button>

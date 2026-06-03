@@ -214,7 +214,7 @@ export const Documents: React.FC = () => {
 
       {/* Error Alert */}
       {errorMsg && (
-        <div className="p-4 bg-error-bg border border-brand-red rounded-xl flex items-start gap-2.5 text-brand-red">
+        <div className="p-4 bg-error-bg border border-error rounded-xl flex items-start gap-2.5 text-error">
           <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div className="text-sm font-semibold">{errorMsg}</div>
         </div>
@@ -309,13 +309,13 @@ export const Documents: React.FC = () => {
       {/* Main Grid / List */}
       {isLoading ? (
         <div className="py-20 flex flex-col items-center justify-center gap-3">
-          <Loader2 className="w-10 h-10 text-brand-red animate-spin" />
+          <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
           <p className="text-sm font-semibold text-muted">Menyinkronkan riwayat dokumen...</p>
         </div>
       ) : filteredDocs.length === 0 ? (
         /* Empty State */
         <div className="bg-white border border-rule rounded-xl p-8 sm:p-14 text-center shadow-sm flex flex-col items-center justify-center max-w-2xl mx-auto">
-          <div className="w-16 h-16 rounded-full bg-[#FAF7F2] text-[#C84B2F] flex items-center justify-center mb-5 border border-[#C8BFB0]/40">
+          <div className="w-16 h-16 rounded-full bg-slate-50 text-blue-600 flex items-center justify-center mb-5 border border-slate-200">
             <FolderOpen className="w-8 h-8" />
           </div>
           <h4 className="text-base font-bold text-ink mb-2">
@@ -330,7 +330,7 @@ export const Documents: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3 justify-center">
               <Link 
                 to="/rpp"
-                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-[#C84B2F] text-white font-semibold text-sm rounded-lg min-h-[44px] shadow-brand-red hover:bg-[#a83d25] transition-all"
+                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-blue-600 text-white font-bold text-sm rounded-xl min-h-[44px] shadow-lg shadow-blue-500/10 hover:bg-blue-700 hover:shadow-xl transition-all"
               >
                 <span>Generate RPP</span>
               </Link>
@@ -397,7 +397,7 @@ export const Documents: React.FC = () => {
                   <div className="flex items-center justify-between pt-3 border-t border-rule/35">
                     <button
                       onClick={() => setDocumentToDelete(doc)}
-                      className="inline-flex items-center justify-center p-2 text-neutral-400 hover:text-brand-red hover:bg-error-bg rounded-lg transition-colors min-h-[44px] min-w-[44px]"
+                      className="inline-flex items-center justify-center p-2 text-neutral-400 hover:text-red-500 hover:bg-error-bg rounded-lg transition-colors min-h-[44px] min-w-[44px]"
                       title="Hapus Dokumen"
                     >
                       <Trash2 className="w-4.5 h-4.5" />
@@ -456,7 +456,7 @@ export const Documents: React.FC = () => {
               >
                 {isLoadingMore ? (
                   <>
-                    <Loader2 className="w-4 h-4 text-brand-red animate-spin" />
+                    <Loader2 className="w-4 h-4 text-blue-600 animate-spin" />
                     <span>Memuat berkas selanjutnya...</span>
                   </>
                 ) : (
@@ -472,7 +472,7 @@ export const Documents: React.FC = () => {
       {documentToDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="bg-white border border-rule rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-xl text-center transform animate-in scale-in-95 duration-150">
-            <div className="w-12 h-12 rounded-full bg-error-bg text-brand-red flex items-center justify-center mx-auto shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto shadow-sm">
               <AlertTriangle className="w-6 h-6" />
             </div>
 
@@ -494,7 +494,7 @@ export const Documents: React.FC = () => {
               <button
                 onClick={handleDeleteConfirm}
                 disabled={isDeleting}
-                className="flex-1 px-4 py-2.5 bg-[#C84B2F] text-white font-bold text-sm rounded-lg min-h-[44px] shadow-brand-red hover:bg-[#a83d25] transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+                className="flex-1 px-4 py-2.5 bg-red-600 text-white font-bold text-sm rounded-xl min-h-[44px] shadow-md hover:bg-red-700 transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
               >
                 {isDeleting ? (
                   <>

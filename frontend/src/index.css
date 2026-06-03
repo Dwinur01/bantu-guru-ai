@@ -4,14 +4,47 @@
 
 @layer base {
   body {
-    font-family: 'Arial', 'Helvetica Neue', sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 
   .font-display {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 
   code, pre {
     font-family: 'Courier New', 'Consolas', monospace;
   }
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page {
+  animation: fadeIn 0.35s ease-out forwards;
+}
+
+@keyframes loadingBar {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 70%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-loading-bar {
+  animation: loadingBar 0.4s ease-out forwards;
+}
+
+

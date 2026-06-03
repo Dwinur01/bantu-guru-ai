@@ -190,7 +190,7 @@ export const Library: React.FC = () => {
 
       {/* ── Error Alert ── */}
       {errorMsg && (
-        <div className="p-4 bg-error-bg border border-brand-red rounded-xl flex items-start gap-2.5 text-brand-red">
+        <div className="p-4 bg-error-bg border border-error rounded-xl flex items-start gap-2.5 text-error">
           <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div className="text-sm font-semibold">{errorMsg}</div>
         </div>

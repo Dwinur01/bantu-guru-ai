@@ -87,7 +87,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="p-3 border-t border-white/10">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-3 py-3 lg:py-2.5 rounded-lg text-sm font-semibold transition-all duration-150 justify-center lg:justify-start w-full text-white/60 hover:bg-[#FCEAE6] hover:text-[#C84B2F] active:scale-95 group"
+            className="flex items-center gap-3 px-3 py-3 lg:py-2.5 rounded-lg text-sm font-semibold transition-all duration-150 justify-center lg:justify-start w-full text-white/60 hover:bg-red-500/10 hover:text-red-400 active:scale-95 group"
             title="Keluar dari Akun"
           >
             <LogOut className="w-5 h-5 flex-shrink-0 group-hover:animate-pulse" />
@@ -146,7 +146,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Quick Logout Header (Mobile Only) */}
             <button
               onClick={handleLogout}
-              className="p-2 text-muted hover:text-brand-red rounded-lg transition-colors hover:bg-neutral-100 md:hidden"
+              className="p-2 text-muted hover:text-red-500 rounded-lg transition-colors hover:bg-neutral-100 md:hidden"
               title="Keluar dari Akun"
               aria-label="Logout"
             >
@@ -166,7 +166,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
 
         {/* Halaman Utama Anak */}
-        <main className="p-4 md:p-6 lg:p-8 max-w-7xl w-full mx-auto flex-grow">
+        <main key={location.pathname} className="p-4 md:p-6 lg:p-8 max-w-7xl w-full mx-auto flex-grow animate-page">
           {children}
         </main>
 

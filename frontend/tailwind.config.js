@@ -16,29 +16,29 @@ export default {
     extend: {
       colors: {
         brand: {
-          red:      '#C84B2F',
-          dark:     '#1F4E79',
-          mid:      '#2E75B6',
-          light:    '#D6E4F0',
-          pale:     '#EBF3FB',
+          red:      '#2563EB', // mapped to blue for backward compatibility in variables
+          dark:     '#0F172A', // slate-900 for sidebar/header
+          mid:      '#3B82F6', // blue-500
+          light:    '#DBEAFE', // blue-100
+          pale:     '#F1F5F9', // slate-100
         },
         success: {
-          DEFAULT: '#1A7A4A',
-          bg: '#E8F5EE',
+          DEFAULT: '#10B981', // emerald-500
+          bg: '#ECFDF5',
         },
         warning: {
-          DEFAULT: '#B8860B',
-          bg: '#FDF3D8',
+          DEFAULT: '#F59E0B', // amber-500
+          bg: '#FEF3C7',
         },
         error: {
-          DEFAULT: '#C84B2F',
-          bg: '#FCEAE6',
+          DEFAULT: '#EF4444', // red-500
+          bg: '#FEF2F2',
         },
-        ink: '#1A1A2E',
-        muted: '#737373',
-        rule: '#C8BFB0',
-        cream: '#FAF7F2',
-        page: '#F5F0E8',
+        ink: '#0F172A', // slate-900
+        muted: '#64748B', // slate-500
+        rule: '#E2E8F0', // slate-200
+        cream: '#FFFFFF', // clean white cards
+        page: '#F8FAFC', // slate-50 background
       },
     },
   },

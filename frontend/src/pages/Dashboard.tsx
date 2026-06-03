@@ -142,11 +142,11 @@ export const Dashboard: React.FC = () => {
       };
     }
 
-    let color = 'bg-[#1A7A4A]'; // success green
+    let color = 'bg-success'; // success green
     if (percentage <= 20) {
-      color = 'bg-[#C84B2F]'; // error/danger red
+      color = 'bg-error'; // error/danger red
     } else if (percentage <= 50) {
-      color = 'bg-[#B8860B]'; // warning gold
+      color = 'bg-warning'; // warning gold
     }
 
     return {
@@ -285,7 +285,7 @@ export const Dashboard: React.FC = () => {
           <div className="z-10 flex-shrink-0 flex w-full lg:w-auto">
             <Link
               to="/profile"
-              className="w-full lg:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-brand-red text-white font-bold text-sm rounded-lg min-h-[44px] shadow-brand-red transition-all duration-150 hover:bg-[#a83d25] hover:shadow-lg active:scale-95 text-center"
+              className="w-full lg:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-brand-red text-white font-bold text-sm rounded-lg min-h-[44px] shadow-lg shadow-blue-500/10 transition-all duration-150 hover:bg-blue-700 hover:shadow-xl active:scale-95 text-center"
             >
               <span>Upgrade Sekarang</span>
               <ArrowRight className="w-4 h-4" />
@@ -382,7 +382,7 @@ export const Dashboard: React.FC = () => {
           </p>
           <button 
             onClick={() => handleQuickAction('/rpp')}
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#C84B2F] text-white font-semibold text-sm rounded-lg min-h-[44px] shadow-brand-red transition-all duration-150 hover:bg-[#a83d25] hover:shadow-md active:scale-95 text-center"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold text-sm rounded-lg min-h-[44px] shadow-lg shadow-blue-500/10 transition-all duration-150 hover:bg-blue-700 hover:shadow-md active:scale-95 text-center"
           >
             <span>Buat Dokumen Sekarang</span>
             <Plus className="w-4.5 h-4.5" />
@@ -393,7 +393,7 @@ export const Dashboard: React.FC = () => {
       {/* Beginner Friendly Interactive Onboarding Tour Overlay */}
       {onboardingStep !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-[#FAF7F2] border border-[#C8BFB0] rounded-xl max-w-md w-full p-6 shadow-2xl relative space-y-6">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 shadow-2xl relative space-y-6">
             
             {/* Indicator step */}
             <div className="flex justify-between items-center text-xs text-brand-mid font-bold">
@@ -439,7 +439,7 @@ export const Dashboard: React.FC = () => {
             )}
 
             {/* Buttons bar */}
-            <div className="flex items-center justify-between pt-2 border-t border-[#C8BFB0]/30">
+            <div className="flex items-center justify-between pt-2 border-t border-slate-100">
               <button
                 type="button"
                 onClick={() => {
@@ -456,7 +456,7 @@ export const Dashboard: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setOnboardingStep((prev) => (prev !== null ? prev - 1 : null))}
-                    className="px-4 py-2 border border-[#C8BFB0] text-muted rounded-lg text-xs font-bold min-h-[44px] transition-colors hover:bg-neutral-100 active:scale-95"
+                    className="px-4 py-2 border border-slate-200 text-muted rounded-lg text-xs font-bold min-h-[44px] transition-colors hover:bg-neutral-100 active:scale-95"
                   >
                     Sebelumnya
                   </button>
@@ -472,7 +472,7 @@ export const Dashboard: React.FC = () => {
                       setOnboardingStep((prev) => (prev !== null ? prev + 1 : null));
                     }
                   }}
-                  className="px-5 py-2.5 bg-[#C84B2F] hover:bg-[#a83d25] text-white rounded-lg text-xs font-bold min-h-[44px] shadow-sm transition-all active:scale-95"
+                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold min-h-[44px] shadow-sm transition-all active:scale-95"
                 >
                   {onboardingStep === 3 ? 'Selesai & Mulai!' : 'Lanjut'}
                 </button>

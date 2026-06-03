@@ -121,7 +121,7 @@ export const GenerateSuccess: React.FC = () => {
             href={signedUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#C84B2F] text-white font-bold text-sm rounded-lg min-h-[44px] shadow-brand-red transition-all duration-150 hover:bg-[#a83d25] hover:shadow-lg active:scale-95 text-center"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 text-white font-bold text-sm rounded-xl min-h-[44px] shadow-lg shadow-blue-500/10 transition-all duration-150 hover:bg-blue-700 hover:shadow-xl active:scale-95 text-center"
           >
             <Download className="w-4.5 h-4.5" />
             <span>Unduh Berkas Word</span>
@@ -350,14 +350,14 @@ export const GenerateSuccess: React.FC = () => {
         
         <Link 
           to={type === 'rpp' ? '/rpp' : '/soal'} 
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-6 py-3 bg-[#EBF3FB] text-brand-mid font-semibold text-sm rounded-lg min-h-[44px] hover:bg-[#dce9f7] transition-colors text-center"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-6 py-3 bg-brand-light text-blue-700 font-semibold text-sm rounded-xl min-h-[44px] hover:bg-blue-200 transition-all text-center"
         >
           <span>Buat Dokumen Baru</span>
         </Link>
 
         <Link 
           to="/riwayat" 
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-6 py-3 bg-[#FAF7F2] border border-[#C8BFB0]/60 text-brand-dark font-semibold text-sm rounded-lg min-h-[44px] hover:bg-[#f3edd9] transition-colors text-center"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-6 py-3 bg-slate-50 border border-slate-200 text-slate-700 font-semibold text-sm rounded-xl min-h-[44px] hover:bg-slate-100 transition-all text-center"
         >
           <span>Lihat Semua Riwayat</span>
         </Link>

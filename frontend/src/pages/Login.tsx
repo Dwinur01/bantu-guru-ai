@@ -67,33 +67,35 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-page">
+    <div className="min-h-screen flex bg-slate-50 animate-page">
       {/* 1. SISI KIRI: Formulir Login (40% pada Desktop, 100% pada Mobile) */}
       <div className="w-full lg:w-2/5 flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-16 bg-white shadow-lg z-10">
         <div className="max-w-md w-full mx-auto">
           {/* Logo & Branding */}
           <div className="flex items-center gap-2 mb-8">
-            <div className="bg-[#E8F5EE] text-[#1A7A4A] p-2 rounded-lg">
+            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl shadow-sm">
               <Sparkles className="w-6 h-6" />
             </div>
-            <span className="font-bold text-lg text-brand-dark">GuruBantu AI</span>
+            <span className="font-extrabold text-xl text-slate-950 tracking-tight">
+              GuruBantu <span className="text-blue-600">AI</span>
+            </span>
           </div>
 
           {/* Heading */}
           <div className="mb-8">
-            <h2 className="font-display text-3xl font-black text-ink leading-tight mb-2">
+            <h2 className="font-display text-3xl font-black text-slate-950 leading-tight mb-2">
               Selamat Datang Kembali
             </h2>
-            <p className="text-sm text-muted">
+            <p className="text-sm text-slate-500">
               Masuk untuk melanjutkan otomasi administrasi mengajar Anda.
             </p>
           </div>
 
           {/* Alert Server Error */}
           {serverError && (
-            <div className="mb-6 p-4 bg-error-bg border border-brand-red rounded-lg flex items-start gap-2 text-brand-red">
+            <div className="mb-6 p-4 bg-error-bg border border-error rounded-xl flex items-start gap-2 text-error">
               <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-              <div className="text-sm font-medium">{serverError}</div>
+              <div className="text-sm font-semibold">{serverError}</div>
             </div>
           )}
 
@@ -101,7 +103,7 @@ export const Login: React.FC = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Input Email */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="email" className="text-sm font-medium text-ink">
+              <label htmlFor="email" className="text-sm font-semibold text-slate-700">
                 Alamat Email *
               </label>
               <input
@@ -110,15 +112,15 @@ export const Login: React.FC = () => {
                 placeholder="nama@guru.id"
                 autoComplete="email"
                 disabled={isLoading}
-                className={`w-full px-4 py-3 text-base text-ink bg-white border rounded-lg min-h-[44px] transition-colors duration-150 placeholder:text-muted focus:outline-none disabled:bg-[#F2F2F2] disabled:cursor-not-allowed ${
+                className={`w-full px-4 py-3 text-base text-slate-900 bg-white border rounded-xl min-h-[44px] transition-all placeholder:text-slate-400 focus:outline-none disabled:bg-[#F2F2F2] disabled:cursor-not-allowed ${
                   errors.email
-                    ? 'border-brand-red bg-error-bg focus:ring-2 focus:ring-[#C84B2F]/20'
-                    : 'border-rule focus:border-brand-mid focus:ring-2 focus:ring-brand-mid/20'
+                    ? 'border-error bg-[#FFF2F2] focus:ring-2 focus:ring-error/20'
+                    : 'border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'
                 }`}
                 {...register('email')}
               />
               {errors.email && (
-                <p className="flex items-center gap-1 mt-1 text-xs text-brand-red">
+                <p className="flex items-center gap-1 mt-1 text-xs text-error">
                   <AlertCircle className="w-3.5 h-3.5" />
                   {errors.email.message}
                 </p>
@@ -128,12 +130,12 @@ export const Login: React.FC = () => {
             {/* Input Password */}
             <div className="flex flex-col gap-1">
               <div className="flex justify-between items-center">
-                <label htmlFor="password" className="text-sm font-medium text-ink">
+                <label htmlFor="password" className="text-sm font-semibold text-slate-700">
                   Kata Sandi *
                 </label>
                 <Link
                   to="/forgot-password"
-                  className="text-xs font-semibold text-brand-mid hover:underline"
+                  className="text-xs font-semibold text-blue-600 hover:underline"
                 >
                   Lupa Sandi?
                 </Link>
@@ -145,10 +147,10 @@ export const Login: React.FC = () => {
                   placeholder="Masukkan kata sandi Anda"
                   autoComplete="current-password"
                   disabled={isLoading}
-                  className={`w-full px-4 py-3 pr-10 text-base text-ink bg-white border rounded-lg min-h-[44px] transition-colors duration-150 placeholder:text-muted focus:outline-none disabled:bg-[#F2F2F2] disabled:cursor-not-allowed ${
+                  className={`w-full px-4 py-3 pr-10 text-base text-slate-900 bg-white border rounded-xl min-h-[44px] transition-all placeholder:text-slate-400 focus:outline-none disabled:bg-[#F2F2F2] disabled:cursor-not-allowed ${
                     errors.password
-                      ? 'border-brand-red bg-error-bg focus:ring-2 focus:ring-[#C84B2F]/20'
-                      : 'border-rule focus:border-brand-mid focus:ring-2 focus:ring-brand-mid/20'
+                      ? 'border-error bg-[#FFF2F2] focus:ring-2 focus:ring-error/20'
+                      : 'border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'
                   }`}
                   {...register('password')}
                 />
@@ -156,13 +158,13 @@ export const Login: React.FC = () => {
                   type="button"
                   disabled={isLoading}
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted hover:text-ink rounded transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 rounded transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="flex items-center gap-1 mt-1 text-xs text-brand-red">
+                <p className="flex items-center gap-1 mt-1 text-xs text-error">
                   <AlertCircle className="w-3.5 h-3.5" />
                   {errors.password.message}
                 </p>
@@ -173,7 +175,7 @@ export const Login: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#C84B2F] text-white font-semibold text-sm rounded-lg min-h-[44px] transition-all duration-150 hover:bg-[#a83d25] hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C84B2F] focus-visible:ring-offset-2 mt-2"
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white font-bold text-sm rounded-xl min-h-[44px] shadow-md hover:shadow-lg transition-all duration-150 hover:bg-blue-700 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 mt-2"
             >
               {isLoading ? (
                 <>
@@ -191,9 +193,9 @@ export const Login: React.FC = () => {
             {/* Divider */}
             <div className="relative my-6 flex items-center justify-center">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-rule"></div>
+                <div className="w-full border-t border-slate-100"></div>
               </div>
-              <span className="relative px-3 bg-white text-xs text-muted uppercase font-medium tracking-wider">
+              <span className="relative px-3 bg-white text-xs text-slate-450 uppercase font-bold tracking-wider">
                 Atau masuk dengan
               </span>
             </div>
@@ -203,7 +205,7 @@ export const Login: React.FC = () => {
               type="button"
               onClick={handleGoogleLogin}
               disabled={isLoading}
-              className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3 bg-white border-[1.5px] border-rule hover:border-brand-mid text-ink font-semibold text-sm rounded-lg min-h-[44px] transition-all duration-150 hover:bg-[#FAF7F2] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3 bg-white border border-slate-200 hover:border-blue-200 text-slate-700 font-semibold text-sm rounded-xl min-h-[44px] transition-all duration-150 hover:bg-slate-50 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {/* Google SVG Icon */}
               <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -229,9 +231,9 @@ export const Login: React.FC = () => {
           </form>
 
           {/* Footer Link */}
-          <p className="mt-8 text-sm text-center text-muted">
+          <p className="mt-8 text-sm text-center text-slate-500">
             Belum punya akun?{' '}
-            <Link to="/register" className="font-semibold text-brand-mid hover:underline">
+            <Link to="/register" className="font-semibold text-blue-600 hover:underline">
               Daftar Gratis Sekarang
             </Link>
           </p>
@@ -239,15 +241,15 @@ export const Login: React.FC = () => {
       </div>
 
       {/* 2. SISI KANAN: Ilustrasi Inspiratif (Hanya muncul pada Desktop) */}
-      <div className="hidden lg:flex lg:w-3/5 bg-brand-dark flex-col justify-center items-center p-16 text-white relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-3/5 bg-[#0F172A] flex-col justify-center items-center p-16 text-white relative overflow-hidden">
         {/* Background Decorative Circles */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-mid/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-red/5 rounded-full blur-3xl -ml-16 -mb-16"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -ml-16 -mb-16"></div>
 
         <div className="max-w-md text-center z-10">
           {/* Logo Icon Sparkle */}
           <div className="inline-flex p-4 bg-white/10 rounded-2xl mb-8">
-            <Sparkles className="w-10 h-10 text-brand-red animate-pulse" />
+            <Sparkles className="w-10 h-10 text-blue-400 animate-pulse" />
           </div>
 
           <h3 className="font-display text-4xl font-black leading-tight mb-6">
@@ -258,19 +260,19 @@ export const Login: React.FC = () => {
           {/* List Fitur Unggulan */}
           <div className="space-y-4 text-left border-t border-white/10 pt-8">
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-brand-red"></div>
+              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
               <span className="text-sm font-medium text-white/95">
                 Otomatisasi Dokumen RPP Kurikulum Merdeka & K-13.
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-brand-red"></div>
+              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
               <span className="text-sm font-medium text-white/95">
                 Pembuat Soal Ujian Cerdas & Modul Pembelajaran Lengkap.
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-brand-red"></div>
+              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
               <span className="text-sm font-medium text-white/95">
                 Hemat Waktu Administrasi Hingga 90%!
               </span>
