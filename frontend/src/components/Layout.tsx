@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Sparkles, ClipboardList, FolderOpen, User, LogOut, Tag, CreditCard } from 'lucide-react';
+import { Home, Sparkles, ClipboardList, FolderOpen, User, LogOut, Tag, CreditCard, BookOpen, GraduationCap } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../services/api';
 import QuotaBanner, { UpgradeModal } from './QuotaBanner';
@@ -38,7 +38,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     { label: 'Dashboard', mobileLabel: 'Dashboard', path: '/dashboard', icon: Home },
     { label: 'Buat RPP', mobileLabel: 'Buat RPP', path: '/rpp', icon: Sparkles },
     { label: 'Buat Soal Ujian', mobileLabel: 'Buat Soal', path: '/soal', icon: ClipboardList },
+    { label: 'Buat Modul Ajar', mobileLabel: 'Modul', path: '/modul-ajar', icon: BookOpen },
     { label: 'Riwayat Dokumen', mobileLabel: 'Riwayat', path: '/riwayat', icon: FolderOpen },
+    { label: 'Perpustakaan Guru', mobileLabel: 'Perpustakaan', path: '/perpustakaan', icon: GraduationCap },
     { label: 'Paket Langganan', mobileLabel: 'Paket', path: '/pricing', icon: Tag },
     { label: 'Riwayat Transaksi', mobileLabel: 'Transaksi', path: '/billing', icon: CreditCard },
     { label: 'Profil Guru', mobileLabel: 'Profil', path: '/profile', icon: User },
@@ -202,7 +204,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Floating WhatsApp Support Button - Beginner Friendly */}
       <a
-        href="https://wa.me/6281234567890?text=Halo%20Admin%20GuruBantu%20AI,%20saya%20guru%20honorer%20pengguna%20GuruBantu%20dan%20memerlukan%20bantuan..."
+        href="https://wa.me/6282132775342?text=Halo%20Admin%20GuruBantu%20AI,%20saya%20guru%20honorer%20pengguna%20GuruBantu%20dan%20memerlukan%20bantuan..."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-30 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl active:scale-95 transition-all duration-150 font-bold text-sm"

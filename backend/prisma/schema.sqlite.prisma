@@ -48,9 +48,11 @@ model Document {
   title      String
   input_data String
   gcs_path   String?
-  created_at DateTime @default(now())
+  is_public  Boolean   @default(false)  // Apakah dokumen dibagikan ke perpustakaan publik
+  shared_at  DateTime?                  // Kapan dokumen dibagikan ke perpustakaan
+  created_at DateTime  @default(now())
 
-  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("documents")
 }

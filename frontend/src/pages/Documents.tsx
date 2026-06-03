@@ -10,7 +10,9 @@ import {
   Search,
   Calendar,
   ArrowLeft,
-  FolderOpen
+  FolderOpen,
+  Share2,
+  Globe
 } from 'lucide-react';
 import { api } from '../services/api';
 
@@ -20,6 +22,8 @@ interface Document {
   title: string;
   gcsPath: string;
   createdAt: string;
+  isPublic?: boolean;
+  sharedAt?: string | null;
 }
 
 export const Documents: React.FC = () => {
@@ -36,6 +40,9 @@ export const Documents: React.FC = () => {
   // Modal Hapus State
   const [documentToDelete, setDocumentToDelete] = useState<Document | null>(null);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
+  // Share state
+  const [sharingId, setSharingId] = useState<number | null>(null);
 
   // Stats
   const [stats, setStats] = useState({
@@ -117,6 +124,36 @@ export const Documents: React.FC = () => {
     } catch (err) {
       console.error('Error getting download link:', err);
       alert('Gagal membuat tautan unduh. Silakan coba kembali.');
+    }
+  };
+
+  const handleToggleShare = async (doc: Document) => {
+    const actionWord = doc.isPublic ? 'menyembunyikan' : 'membagikan';
+    const confirmed = window.confirm(
+      doc.isPublic
+        ? `Apakah Anda yakin ingin menyembunyikan "${doc.title}" dari Perpustakaan Guru?`
+        : `Apakah Anda yakin ingin membagikan "${doc.title}" ke Perpustakaan Guru? Dokumen akan dapat dilihat dan diunduh oleh guru lain.`
+    );
+    if (!confirmed) return;
+
+    setSharingId(doc.id);
+    try {
+      const response = await api.patch(`/documents/${doc.id}/share`);
+      const { isPublic: newIsPublic, sharedAt, message } = response.data.data;
+
+      // Update dokumen di state lokal secara optimistik
+      setDocuments((prev) =>
+        prev.map((d) =>
+          d.id === doc.id ? { ...d, isPublic: newIsPublic, sharedAt } : d
+        )
+      );
+
+      alert(message);
+    } catch (err: any) {
+      console.error(`Error ${actionWord} dokumen:`, err);
+      alert(err.response?.data?.message || `Gagal ${actionWord} dokumen. Silakan coba kembali.`);
+    } finally {
+      setSharingId(null);
     }
   };
 
@@ -366,17 +403,43 @@ export const Documents: React.FC = () => {
                       <Trash2 className="w-4.5 h-4.5" />
                     </button>
 
-                    <button
-                      onClick={() => handleDownload(doc.id)}
-                      className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 border rounded-lg text-xs font-bold min-h-[44px] transition-colors ${
-                        doc.type === 'rpp' 
-                          ? 'border-brand-mid/30 text-brand-mid hover:bg-[#EBF3FB]/50'
-                          : 'border-[#1A7A4A]/30 text-[#1A7A4A] hover:bg-[#E8F5EE]/50'
-                      }`}
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      <span>Unduh Word</span>
-                    </button>
+                    <div className="flex items-center gap-2">
+                      {/* Share Toggle Button */}
+                      <button
+                        onClick={() => handleToggleShare(doc)}
+                        disabled={sharingId === doc.id}
+                        title={doc.isPublic ? 'Sembunyikan dari Perpustakaan' : 'Bagikan ke Perpustakaan Guru'}
+                        className={`inline-flex items-center justify-center gap-1.5 px-3 py-2 border rounded-lg text-xs font-bold min-h-[44px] transition-colors disabled:opacity-50 ${
+                          doc.isPublic
+                            ? 'border-[#1A7A4A]/30 text-[#1A7A4A] bg-[#E8F5EE]/60 hover:bg-[#E8F5EE]'
+                            : 'border-rule text-muted hover:bg-neutral-50 hover:text-ink'
+                        }`}
+                      >
+                        {sharingId === doc.id ? (
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        ) : doc.isPublic ? (
+                          <Globe className="w-3.5 h-3.5" />
+                        ) : (
+                          <Share2 className="w-3.5 h-3.5" />
+                        )}
+                        <span className="hidden sm:inline">
+                          {sharingId === doc.id ? 'Menyimpan...' : doc.isPublic ? 'Dibagikan' : 'Bagikan'}
+                        </span>
+                      </button>
+
+                      {/* Download Button */}
+                      <button
+                        onClick={() => handleDownload(doc.id)}
+                        className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 border rounded-lg text-xs font-bold min-h-[44px] transition-colors ${
+                          doc.type === 'rpp' 
+                            ? 'border-brand-mid/30 text-brand-mid hover:bg-[#EBF3FB]/50'
+                            : 'border-[#1A7A4A]/30 text-[#1A7A4A] hover:bg-[#E8F5EE]/50'
+                        }`}
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        <span>Unduh Word</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               );

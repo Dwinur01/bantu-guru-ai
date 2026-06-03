@@ -1,8 +1,8 @@
 import { Response, NextFunction } from 'express';
 import prisma from '../utils/db';
 import { AuthenticatedRequest } from '../middleware/auth.middleware';
-import { generateRPPContent, generateSoalContent } from '../utils/gemini';
-import { buildRPPDocx, buildSoalDocx } from '../utils/docxBuilder';
+import { generateRPPContent, generateSoalContent, generateModulAjarContent } from '../utils/gemini';
+import { buildRPPDocx, buildSoalDocx, buildModulAjarDocx } from '../utils/docxBuilder';
 import { uploadFile, getSignedUrl, deleteFile } from '../utils/gcs'; // GCS utility helper
 
 /**
@@ -28,7 +28,7 @@ export const generateDocument = async (
     const userId = parseInt(userIdStr, 10);
     const { type, inputData } = req.body;
 
-    if (!type || !inputData || !['rpp', 'soal'].includes(type)) {
+    if (!type || !inputData || !['rpp', 'soal', 'modul_ajar'].includes(type)) {
       res.status(400).json({
         success: false,
         error: 'BAD_REQUEST',
@@ -73,6 +73,10 @@ export const generateDocument = async (
         rawAiResponse = await generateRPPContent(inputData);
         parsedData = JSON.parse(rawAiResponse);
         docBuffer = await buildRPPDocx(parsedData);
+      } else if (type === 'modul_ajar') {
+        rawAiResponse = await generateModulAjarContent(inputData);
+        parsedData = JSON.parse(rawAiResponse);
+        docBuffer = await buildModulAjarDocx(parsedData);
       } else {
         rawAiResponse = await generateSoalContent(inputData);
         parsedData = JSON.parse(rawAiResponse);
@@ -119,7 +123,8 @@ export const generateDocument = async (
         // Tentukan judul dokumen
         const mapel = parsedData.identitas?.mapel || inputData.mapel || 'Administrasi';
         const topik = parsedData.identitas?.topik || inputData.topik || 'Topik';
-        const docTitle = `${type === 'rpp' ? 'RPP' : 'Soal Ujian'} ${mapel} - ${topik}`;
+        const typeLabel = type === 'rpp' ? 'RPP' : type === 'modul_ajar' ? 'Modul Ajar' : 'Soal Ujian';
+        const docTitle = `${typeLabel} ${mapel} - ${topik}`;
 
         // Tambah rekam dokumen ke database
         const doc = await tx.document.create({
@@ -218,7 +223,7 @@ export const listDocuments = async (
       user_id: userId,
     };
 
-    if (type && ['rpp', 'soal'].includes(type as string)) {
+    if (type && ['rpp', 'soal', 'modul_ajar'].includes(type as string)) {
       whereConditions.type = type as string;
     }
 
@@ -403,6 +408,120 @@ export const deleteDocument = async (
     res.status(200).json({
       success: true,
       message: 'Dokumen berhasil dihapus secara permanen.',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * PATCH /api/documents/:id/share
+ * Toggle dokumen menjadi publik atau privat (masuk/keluar dari perpustakaan)
+ */
+export const toggleDocumentShare = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const userIdStr = req.user?.userId;
+    if (!userIdStr) {
+      res.status(401).json({ success: false, error: 'UNAUTHORIZED', message: 'Sesi tidak valid.' });
+      return;
+    }
+    const userId = parseInt(userIdStr, 10);
+    const docId = parseInt(req.params.id, 10);
+
+    if (isNaN(docId)) {
+      res.status(400).json({ success: false, error: 'BAD_REQUEST', message: 'ID dokumen tidak valid.' });
+      return;
+    }
+
+    const doc = await prisma.document.findFirst({ where: { id: docId, user_id: userId } });
+    if (!doc) {
+      res.status(404).json({ success: false, error: 'NOT_FOUND', message: 'Dokumen tidak ditemukan.' });
+      return;
+    }
+
+    const newIsPublic = !doc.is_public;
+    const updated = await prisma.document.update({
+      where: { id: docId },
+      data: {
+        is_public: newIsPublic,
+        shared_at: newIsPublic ? new Date() : null,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        id: updated.id,
+        isPublic: updated.is_public,
+        sharedAt: updated.shared_at,
+        message: newIsPublic
+          ? 'Dokumen berhasil dibagikan ke Perpustakaan Guru.'
+          : 'Dokumen berhasil disembunyikan dari Perpustakaan Guru.',
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * GET /api/library
+ * Mengambil semua dokumen publik untuk ditampilkan di Perpustakaan Berbagi Guru
+ * Public endpoint — tidak memerlukan autentikasi
+ */
+export const getPublicLibrary = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 12;
+    const type = req.query.type as string | undefined;
+    const skip = (page - 1) * limit;
+
+    const where: any = { is_public: true };
+    if (type && ['rpp', 'soal', 'modul_ajar'].includes(type)) {
+      where.type = type;
+    }
+
+    const [documents, total] = await prisma.$transaction([
+      prisma.document.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { shared_at: 'desc' },
+        include: {
+          user: {
+            select: { name: true },
+          },
+        },
+      }),
+      prisma.document.count({ where }),
+    ]);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        documents: documents.map((doc) => ({
+          id: doc.id,
+          type: doc.type,
+          title: doc.title,
+          authorName: doc.user.name,
+          sharedAt: doc.shared_at,
+          gcsPath: doc.gcs_path,
+        })),
+        pagination: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+        },
+      },
     });
   } catch (error) {
     next(error);

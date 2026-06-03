@@ -19,6 +19,7 @@ enum DocType {
   rpp
   soal
   modul
+  modul_ajar
   rapor
   pmm
 }
@@ -41,6 +42,8 @@ model User {
   quota_reset_at     DateTime?      @db.Timestamp
   email_verified     Boolean        @default(false) @db.TinyInt
   verification_token String?        @unique @db.VarChar(255)
+  scheduled_deletion DateTime?      @db.Timestamp   // Tanggal penghapusan terjadwal (soft-delete 24j)
+  deletion_token     String?        @unique @db.VarChar(255) // Token unik untuk membatalkan penghapusan
   created_at         DateTime       @default(now()) @db.Timestamp
   
   refresh_tokens     RefreshToken[]
@@ -69,6 +72,8 @@ model Document {
   title      String   @db.VarChar(255)
   input_data Json     @db.Json
   gcs_path   String?  @db.VarChar(500)
+  is_public  Boolean  @default(false) @db.TinyInt // Apakah dokumen dibagikan ke perpustakaan publik
+  shared_at  DateTime? @db.Timestamp          // Kapan dokumen dibagikan ke perpustakaan
   created_at DateTime @default(now()) @db.Timestamp
 
   user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)

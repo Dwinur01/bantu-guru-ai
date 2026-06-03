@@ -339,25 +339,23 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Card 3: Buat Modul Ajar (Coming Soon Badge Purple) */}
-          <div className="relative bg-cream border border-rule rounded-xl p-5 sm:p-6 shadow-sm min-h-[200px] flex flex-col justify-between opacity-85">
+          {/* Card 3: Buat Modul Ajar */}
+          <div
+            onClick={() => handleQuickAction('/modul-ajar')}
+            className="bg-cream border border-rule rounded-xl p-5 sm:p-6 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#6A3EA1]/50 hover:-translate-y-1 cursor-pointer flex flex-col justify-between min-h-[200px]"
+          >
             <div>
-              <div className="flex justify-between items-start mb-4">
-                <div className="w-10 h-10 rounded-lg bg-[#F0EBFF] text-[#6A3EA1] flex items-center justify-center">
-                  <BookOpen className="w-5 h-5 text-[#6A3EA1]" />
-                </div>
-                <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#F0EBFF] text-[#6A3EA1] border border-[#6A3EA1]/20">
-                  SEGERA HADIR
-                </span>
+              <div className="w-10 h-10 rounded-lg bg-[#F0EBFF] text-[#6A3EA1] flex items-center justify-center mb-4">
+                <BookOpen className="w-5 h-5 text-[#6A3EA1]" />
               </div>
               <h4 className="text-base font-bold text-ink">Buat Modul Ajar</h4>
               <p className="text-xs text-muted mt-2 leading-relaxed">
-                Susun modul ajar digital interaktif lengkap dengan materi pembelajaran, petunjuk guru, dan lembar kerja siswa.
+                Susun modul ajar digital Kurikulum Merdeka lengkap dengan CP, ATP, kegiatan pembelajaran, dan asesmen berbasis Profil Pelajar Pancasila.
               </p>
             </div>
-            <div className="mt-4 text-xs font-bold text-muted border-t border-rule/25 pt-4 flex items-center justify-between">
-              <span>Segera Rilis di Versi 1.1</span>
-              <BookOpen className="w-3.5 h-3.5" />
+            <div className="mt-4 flex items-center justify-between text-xs font-bold text-[#6A3EA1] border-t border-rule/25 pt-4">
+              <span>Mulai Buat Modul Ajar</span>
+              <Plus className="w-4 h-4" />
             </div>
           </div>
 

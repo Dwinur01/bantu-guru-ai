@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import authRouter from './auth.routes';
 import userRouter from './user.routes';
-import documentRouter from './document.routes';
+import documentRouter, { getPublicLibrary } from './document.routes';
 import cronRouter from './cron.routes';
 import paymentRouter from './payment.routes';
 import prisma from '../utils/db';
@@ -38,6 +38,9 @@ apiRouter.use('/user', userRouter);
 
 // Documents Sub-router (/api/documents/*)
 apiRouter.use('/documents', documentRouter);
+
+// Library Public Endpoint (/api/library) — Tidak memerlukan autentikasi
+apiRouter.get('/library', getPublicLibrary);
 
 // Cron Sub-router (/api/cron/*) — Endpoint tugas terjadwal, dilindungi X-Cron-Secret
 apiRouter.use('/cron', cronRouter);

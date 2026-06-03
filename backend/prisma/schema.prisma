@@ -18,6 +18,8 @@ model User {
   quota_reset_at     DateTime?
   email_verified     Boolean        @default(false) // Ditambahkan untuk fitur email verifikasi
   verification_token String?        @unique         // Ditambahkan untuk token verifikasi email
+  scheduled_deletion DateTime?                      // Tanggal penghapusan terjadwal (soft-delete 24j)
+  deletion_token     String?        @unique         // Token unik untuk membatalkan penghapusan
   created_at         DateTime       @default(now())
   
   refresh_tokens     RefreshToken[]
@@ -40,15 +42,17 @@ model RefreshToken {
 }
 
 model Document {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   user_id    Int
-  type       String   // Mapped to String for SQLite compatibility
+  type       String    // Mapped to String for SQLite compatibility
   title      String
   input_data String
   gcs_path   String?
-  created_at DateTime @default(now())
+  is_public  Boolean   @default(false)  // Apakah dokumen dibagikan ke perpustakaan publik
+  shared_at  DateTime?                  // Kapan dokumen dibagikan ke perpustakaan
+  created_at DateTime  @default(now())
 
-  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("documents")
 }

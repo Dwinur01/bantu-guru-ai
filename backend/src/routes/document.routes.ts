@@ -3,7 +3,9 @@ import {
   generateDocument, 
   listDocuments, 
   downloadDocument, 
-  deleteDocument 
+  deleteDocument,
+  toggleDocumentShare,
+  getPublicLibrary
 } from '../controllers/document.controller';
 import { verifyAccessToken } from '../middleware/auth.middleware';
 import { checkQuota } from '../middleware/quota.middleware';
@@ -24,7 +26,12 @@ documentRouter.get('/', listDocuments);
 // GET /api/documents/:id/download - Ambil signed URL pengunduhan dinamis valid 24 jam
 documentRouter.get('/:id/download', downloadDocument);
 
+// PATCH /api/documents/:id/share - Toggle status publik dokumen (masuk/keluar perpustakaan)
+documentRouter.patch('/:id/share', toggleDocumentShare);
+
 // DELETE /api/documents/:id - Hapus rekam dokumen dari DB & berkas fisik dari penyimpanan
 documentRouter.delete('/:id', deleteDocument);
 
+export { getPublicLibrary };
 export default documentRouter;
+
