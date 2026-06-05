@@ -26,17 +26,42 @@ api.interceptors.request.use(
         const url = cfg.url || '';
 
         if (url.includes('/user/me')) {
+          if (cfg.method?.toLowerCase() === 'patch') {
+            let updatedName = 'Guru Honor Demo';
+            try {
+              if (cfg.data) {
+                const body = typeof cfg.data === 'string' ? JSON.parse(cfg.data) : cfg.data;
+                updatedName = body.name || updatedName;
+              }
+            } catch (e) {}
+            responseData = {
+              success: true,
+              data: {
+                name: updatedName
+              }
+            };
+          } else if (cfg.method?.toLowerCase() === 'delete') {
+            responseData = {
+              success: true,
+              message: "Akun berhasil dihapus."
+            };
+          } else {
+            responseData = {
+              success: true,
+              data: {
+                id: 999,
+                name: "Guru Honor Demo",
+                email: "guru.demo@gurubantu.ai",
+                plan: "pro",
+                quotaRemaining: 100,
+                quotaPercentage: 100,
+                documentsCreated: 12
+              }
+            };
+          }
+        } else if (url.includes('/auth/logout')) {
           responseData = {
-            success: true,
-            data: {
-              id: 999,
-              name: "Guru Honor Demo",
-              email: "guru.demo@gurubantu.ai",
-              plan: "pro",
-              quotaRemaining: 100,
-              quotaPercentage: 100,
-              documentsCreated: 12
-            }
+            success: true
           };
         } else if (url.includes('/documents/generate')) {
           let docType = 'rpp';
@@ -50,10 +75,14 @@ api.interceptors.request.use(
           responseData = {
             success: true,
             data: {
-              id: 101,
-              title: "Dokumen Pembelajaran - Hasil Demo",
-              type: docType,
-              gcsPath: "#"
+              document: {
+                id: 101,
+                title: "Dokumen Pembelajaran - Hasil Demo",
+                type: docType,
+                gcsPath: "#",
+                createdAt: new Date().toISOString()
+              },
+              signedUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
             }
           };
         } else if (url.includes('/download')) {
@@ -102,6 +131,71 @@ api.interceptors.request.use(
                 }
               ],
               nextCursor: null
+            }
+          };
+        } else if (url.includes('/library')) {
+          responseData = {
+            success: true,
+            data: {
+              documents: [
+                {
+                  id: 201,
+                  type: "rpp",
+                  title: "RPP Inspiratif IPS Kelas VIII Kurikulum Merdeka",
+                  authorName: "Budi Santoso, S.Pd.",
+                  sharedAt: new Date(Date.now() - 172800000).toISOString(),
+                  gcsPath: "#"
+                },
+                {
+                  id: 202,
+                  type: "soal",
+                  title: "Soal Ujian Akhir Semester Matematika Kelas IX",
+                  authorName: "Siti Aminah, M.Pd.",
+                  sharedAt: new Date(Date.now() - 86400000).toISOString(),
+                  gcsPath: "#"
+                }
+              ],
+              pagination: {
+                total: 2,
+                page: 1,
+                limit: 12,
+                totalPages: 1
+              }
+            }
+          };
+        } else if (url.includes('/payment/history')) {
+          responseData = {
+            success: true,
+            data: {
+              items: [
+                {
+                  id: 1,
+                  plan: "pro",
+                  status: "settlement",
+                  amount: 49000,
+                  midtrans_order_id: "ORDER-DEMO-101",
+                  started_at: new Date(Date.now() - 432000000).toISOString(),
+                  expires_at: new Date(Date.now() + 2160000000).toISOString()
+                }
+              ],
+              nextCursor: null,
+              hasMore: false
+            }
+          };
+        } else if (url.includes('/payment/create')) {
+          responseData = {
+            success: true,
+            data: {
+              snapToken: "demo-snap-token",
+              redirectUrl: "/payment/success?order_id=ORDER-DEMO-999",
+              orderId: "ORDER-DEMO-999"
+            }
+          };
+        } else if (url.includes('/payment/status')) {
+          responseData = {
+            success: true,
+            data: {
+              status: "active"
             }
           };
         }
