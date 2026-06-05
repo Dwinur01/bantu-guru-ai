@@ -32,6 +32,8 @@ backend/prisma/dev.db-journal
 !package-lock.json
 !tsconfig*.json
 !**/tsconfig*.json
+!vercel.json
+!**/vercel.json
 service-account*.json
 gcp-key*.json
 credentials*.json
