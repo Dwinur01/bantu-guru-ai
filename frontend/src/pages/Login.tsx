@@ -6,7 +6,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, AlertCircle, Mail, Lock, Sparkles, ArrowRight } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../services/api';
-import demoAccounts from '../demo-accounts.json';
+const DEMO_ACCOUNTS = [
+  {
+    email: "guru.demo@gurubantu.ai",
+    password: "Password123",
+    name: "Guru Honor Demo",
+    plan: "pro" as const,
+    quotaRemaining: 100
+  },
+  {
+    email: "demo.guru@gurubantu.ai",
+    password: "Password123",
+    name: "Guru Honor Demo",
+    plan: "pro" as const,
+    quotaRemaining: 100
+  }
+];
 
 const loginSchema = z.object({
   email: z.string().min(1, 'Alamat email wajib diisi').email('Format alamat email tidak valid'),
@@ -36,19 +51,22 @@ export const Login: React.FC = () => {
     setIsLoading(true);
     setServerError(null);
 
-    // Cek kecocokan akun demo dari file JSON
-    const matchingDemo = demoAccounts.find(
+    console.log("Mencoba login dengan:", data.email);
+
+    // Cek kecocokan akun demo dari array lokal
+    const matchingDemo = DEMO_ACCOUNTS.find(
       (acc) => acc.email.toLowerCase() === data.email.toLowerCase() && acc.password === data.password
     );
 
     if (matchingDemo) {
+      console.log("Akun demo cocok! Mem-bypass login...");
       setTimeout(() => {
         setAuth(
           {
             id: 999,
             name: matchingDemo.name,
             email: matchingDemo.email,
-            plan: matchingDemo.plan as any,
+            plan: matchingDemo.plan,
             quotaRemaining: matchingDemo.quotaRemaining,
           },
           'mock-demo-jwt-token-from-json'
