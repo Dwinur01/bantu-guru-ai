@@ -47,15 +47,35 @@ export const Login: React.FC = () => {
     defaultValues: { email: '', password: '' },
   });
 
+  const handleQuickDemo = () => {
+    setIsLoading(true);
+    setServerError(null);
+    console.log("Membypass login dengan Akun Demo Instan...");
+    setTimeout(() => {
+      setAuth(
+        {
+          id: 999,
+          name: "Guru Honor Demo",
+          email: "demo.guru@gurubantu.ai",
+          plan: "pro",
+          quotaRemaining: 100,
+        },
+        'mock-demo-jwt-token-from-json'
+      );
+      setIsLoading(false);
+      navigate('/dashboard');
+    }, 1000);
+  };
+
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     setServerError(null);
 
     console.log("Mencoba login dengan:", data.email);
 
-    // Cek kecocokan akun demo dari array lokal
+    // Cek kecocokan akun demo dari array lokal (dengan trim spasi bawaan copy-paste)
     const matchingDemo = DEMO_ACCOUNTS.find(
-      (acc) => acc.email.toLowerCase() === data.email.toLowerCase() && acc.password === data.password
+      (acc) => acc.email.toLowerCase() === data.email.trim().toLowerCase() && acc.password === data.password.trim()
     );
 
     if (matchingDemo) {
@@ -209,6 +229,16 @@ export const Login: React.FC = () => {
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
+            </button>
+
+            {/* Quick Demo Login Button */}
+            <button
+              type="button"
+              onClick={handleQuickDemo}
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl font-black text-xs border border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50 text-indigo-700 hover:text-indigo-800 transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60 mt-2.5 shadow-sm"
+            >
+              🔑 Masuk Instan Akun Demo (Bypass)
             </button>
           </form>
 
