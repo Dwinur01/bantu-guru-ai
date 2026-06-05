@@ -3,16 +3,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogIn, Eye, EyeOff, AlertCircle, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle, Mail, Lock, Sparkles, ArrowRight } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../services/api';
 
-// Schema validasi dengan Zod
 const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, 'Alamat email wajib diisi')
-    .email('Format alamat email tidak valid'),
+  email: z.string().min(1, 'Alamat email wajib diisi').email('Format alamat email tidak valid'),
   password: z.string().min(1, 'Kata sandi wajib diisi'),
 });
 
@@ -21,7 +17,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export const Login: React.FC = () => {
   const navigate = useNavigate();
   const { setAuth } = useAuthStore();
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -32,10 +28,7 @@ export const Login: React.FC = () => {
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+    defaultValues: { email: '', password: '' },
   });
 
   const onSubmit = async (data: LoginFormValues) => {
@@ -44,240 +37,159 @@ export const Login: React.FC = () => {
     try {
       const response = await api.post('/auth/login', data);
       const { accessToken, user } = response.data.data;
-      
-      // Simpan kredensial ke Zustand auth store
       setAuth(user, accessToken);
-      
-      // Arahkan ke dashboard
       navigate('/dashboard');
     } catch (error: any) {
-      if (error.response?.data?.message) {
-        setServerError(error.response.data.message);
-      } else {
-        setServerError('Terjadi kesalahan sistem. Silakan coba kembali.');
-      }
+      setServerError(
+        error.response?.data?.message || 'Terjadi kesalahan sistem. Silakan coba kembali.'
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleGoogleLogin = () => {
-    // Simulasi Login Google
-    alert('Fitur masuk dengan Google sedang dalam proses integrasi OAuth2.');
-  };
-
   return (
-    <div className="min-h-screen flex bg-slate-50 animate-page">
-      {/* 1. SISI KIRI: Formulir Login (40% pada Desktop, 100% pada Mobile) */}
-      <div className="w-full lg:w-2/5 flex flex-col justify-center px-6 py-12 sm:px-12 lg:px-16 bg-white shadow-lg z-10">
-        <div className="max-w-md w-full mx-auto">
-          {/* Logo & Branding */}
-          <div className="flex items-center gap-2 mb-8">
-            <div className="bg-blue-50 text-blue-600 p-2.5 rounded-xl shadow-sm">
-              <Sparkles className="w-6 h-6" />
+    <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4 animate-page"
+      style={{background: 'linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 40%, #F0F9FF 100%)'}}>
+
+      {/* Background animated blobs */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-300/20 rounded-full blur-[80px] animate-blob pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-300/20 rounded-full blur-[60px] animate-blob-delay pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-violet-300/10 rounded-full blur-[80px] animate-blob-delay2 pointer-events-none" />
+
+      {/* Card */}
+      <div className="relative z-10 w-full max-w-md">
+        {/* Logo Header */}
+        <div className="text-center mb-8 animate-fade-up">
+          <Link to="/" className="inline-flex items-center gap-2.5 mb-6 group">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-glow-blue group-hover:scale-110 transition-transform">
+              <img src="/logo-gurubantu.png" alt="GuruBantu AI" className="w-8 h-8 object-contain rounded-xl" onError={(e) => { (e.target as HTMLImageElement).style.display='none'; }} />
             </div>
-            <span className="font-extrabold text-xl text-slate-950 tracking-tight">
-              GuruBantu <span className="text-blue-600">AI</span>
+            <span className="font-display font-black text-xl text-slate-900">
+              GuruBantu <span className="gradient-text-blue">AI</span>
             </span>
-          </div>
+          </Link>
+          <h1 className="font-display font-black text-3xl text-slate-900 mb-2">Masuk ke Akun</h1>
+          <p className="text-slate-500 text-sm">Selamat kembali, Guru Hebat! 👋</p>
+        </div>
 
-          {/* Heading */}
-          <div className="mb-8">
-            <h2 className="font-display text-3xl font-black text-slate-950 leading-tight mb-2">
-              Selamat Datang Kembali
-            </h2>
-            <p className="text-sm text-slate-500">
-              Masuk untuk melanjutkan otomasi administrasi mengajar Anda.
-            </p>
-          </div>
-
-          {/* Alert Server Error */}
+        {/* Form Card */}
+        <div className="glass-card rounded-3xl p-7 shadow-2xl animate-fade-up-1">
+          {/* Server Error */}
           {serverError && (
-            <div className="mb-6 p-4 bg-error-bg border border-error rounded-xl flex items-start gap-2 text-error">
-              <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-              <div className="text-sm font-semibold">{serverError}</div>
+            <div className="flex items-start gap-3 p-3.5 mb-5 bg-red-50 border border-red-200/80 rounded-2xl text-red-700 animate-scale-in">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <span className="text-sm font-semibold leading-relaxed">{serverError}</span>
             </div>
           )}
 
-          {/* Form Utama */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Input Email */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="email" className="text-sm font-semibold text-slate-700">
-                Alamat Email *
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+            {/* Email */}
+            <div className="space-y-1.5">
+              <label htmlFor="login-email" className="block text-sm font-bold text-slate-700">
+                Email Guru
               </label>
-              <input
-                id="email"
-                type="email"
-                placeholder="nama@guru.id"
-                autoComplete="email"
-                disabled={isLoading}
-                className={`w-full px-4 py-3 text-base text-slate-900 bg-white border rounded-xl min-h-[44px] transition-all placeholder:text-slate-400 focus:outline-none disabled:bg-[#F2F2F2] disabled:cursor-not-allowed ${
-                  errors.email
-                    ? 'border-error bg-[#FFF2F2] focus:ring-2 focus:ring-error/20'
-                    : 'border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'
-                }`}
-                {...register('email')}
-              />
+              <div className="relative">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <input
+                  id="login-email"
+                  type="email"
+                  placeholder="email@sekolah.com"
+                  autoComplete="email"
+                  {...register('email')}
+                  className={`input-premium w-full pl-10 pr-4 py-3 text-sm text-slate-900 placeholder-slate-400 ${errors.email ? 'error' : ''}`}
+                />
+              </div>
               {errors.email && (
-                <p className="flex items-center gap-1 mt-1 text-xs text-error">
-                  <AlertCircle className="w-3.5 h-3.5" />
-                  {errors.email.message}
+                <p className="text-xs text-red-500 font-semibold flex items-center gap-1 pt-0.5">
+                  <AlertCircle className="w-3 h-3" />{errors.email.message}
                 </p>
               )}
             </div>
 
-            {/* Input Password */}
-            <div className="flex flex-col gap-1">
+            {/* Password */}
+            <div className="space-y-1.5">
               <div className="flex justify-between items-center">
-                <label htmlFor="password" className="text-sm font-semibold text-slate-700">
-                  Kata Sandi *
+                <label htmlFor="login-password" className="block text-sm font-bold text-slate-700">
+                  Kata Sandi
                 </label>
-                <Link
-                  to="/forgot-password"
-                  className="text-xs font-semibold text-blue-600 hover:underline"
-                >
+                <Link to="/forgot-password" className="text-xs text-blue-600 font-semibold hover:text-blue-700 transition-colors">
                   Lupa Sandi?
                 </Link>
               </div>
               <div className="relative">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                  <Lock className="w-4 h-4" />
+                </div>
                 <input
-                  id="password"
+                  id="login-password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Masukkan kata sandi Anda"
+                  placeholder="••••••••"
                   autoComplete="current-password"
-                  disabled={isLoading}
-                  className={`w-full px-4 py-3 pr-10 text-base text-slate-900 bg-white border rounded-xl min-h-[44px] transition-all placeholder:text-slate-400 focus:outline-none disabled:bg-[#F2F2F2] disabled:cursor-not-allowed ${
-                    errors.password
-                      ? 'border-error bg-[#FFF2F2] focus:ring-2 focus:ring-error/20'
-                      : 'border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'
-                  }`}
                   {...register('password')}
+                  className={`input-premium w-full pl-10 pr-11 py-3 text-sm text-slate-900 placeholder-slate-400 ${errors.password ? 'error' : ''}`}
                 />
                 <button
                   type="button"
-                  disabled={isLoading}
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-700 rounded transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-500 transition-colors"
+                  tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="flex items-center gap-1 mt-1 text-xs text-error">
-                  <AlertCircle className="w-3.5 h-3.5" />
-                  {errors.password.message}
+                <p className="text-xs text-red-500 font-semibold flex items-center gap-1 pt-0.5">
+                  <AlertCircle className="w-3 h-3" />{errors.password.message}
                 </p>
               )}
             </div>
 
-            {/* Tombol Login */}
+            {/* Submit */}
             <button
               type="submit"
+              id="login-submit"
               disabled={isLoading}
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white font-bold text-sm rounded-xl min-h-[44px] shadow-md hover:shadow-lg transition-all duration-150 hover:bg-blue-700 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 mt-2"
+              className="btn-primary w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-sm text-white disabled:opacity-60 disabled:cursor-not-allowed mt-2"
             >
               {isLoading ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Memproses...</span>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Memverifikasi...
                 </>
               ) : (
                 <>
-                  <LogIn className="w-4 h-4" />
-                  <span>Masuk Ke Akun</span>
+                  <Sparkles className="w-4 h-4" />
+                  Masuk Sekarang
+                  <ArrowRight className="w-4 h-4" />
                 </>
               )}
             </button>
-
-            {/* Divider */}
-            <div className="relative my-6 flex items-center justify-center">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-100"></div>
-              </div>
-              <span className="relative px-3 bg-white text-xs text-slate-450 uppercase font-bold tracking-wider">
-                Atau masuk dengan
-              </span>
-            </div>
-
-            {/* Google Login Button */}
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              disabled={isLoading}
-              className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-3 bg-white border border-slate-200 hover:border-blue-200 text-slate-700 font-semibold text-sm rounded-xl min-h-[44px] transition-all duration-150 hover:bg-slate-50 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {/* Google SVG Icon */}
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
-                <path
-                  fill="#4285F4"
-                  d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.9h6.69c-.29 1.5-.1.14-.14 2.87c.83.55 1.56 1.25 2.19 2.04 3.7-3.4 5.9-8.4 5.9-14.3z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 24c3.24 0 5.97-1.08 7.96-2.91l-6.19-4.8c-1.72 1.15-3.92 1.83-6.19 1.83-4.76 0-8.8-3.21-10.23-7.53H.28v4.95C2.26 20.35 6.78 24 12 24z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M1.77 13.06A7.18 7.18 0 0 1 1.77 11v-4.9H.28C-.1 7.2-.1 16.8.28 17.9l6.09-4.74c-.38-1.12-.38-2.38 0-3.52z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.22 0 12 0 6.78 0 2.26 3.65.28 8.16l6.09 4.74c1.43-4.32 5.47-7.53 10.23-7.53z"
-                />
-              </svg>
-              <span>Google</span>
-            </button>
           </form>
 
-          {/* Footer Link */}
-          <p className="mt-8 text-sm text-center text-slate-500">
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-slate-200" />
+            <span className="text-xs text-slate-400 font-semibold">atau</span>
+            <div className="flex-1 h-px bg-slate-200" />
+          </div>
+
+          {/* Register Link */}
+          <p className="text-center text-sm text-slate-500">
             Belum punya akun?{' '}
-            <Link to="/register" className="font-semibold text-blue-600 hover:underline">
-              Daftar Gratis Sekarang
+            <Link to="/register" className="text-blue-600 font-black hover:text-blue-700 transition-colors">
+              Daftar Gratis
             </Link>
           </p>
         </div>
-      </div>
 
-      {/* 2. SISI KANAN: Ilustrasi Inspiratif (Hanya muncul pada Desktop) */}
-      <div className="hidden lg:flex lg:w-3/5 bg-[#0F172A] flex-col justify-center items-center p-16 text-white relative overflow-hidden">
-        {/* Background Decorative Circles */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl -ml-16 -mb-16"></div>
-
-        <div className="max-w-md text-center z-10">
-          {/* Logo Icon Sparkle */}
-          <div className="inline-flex p-4 bg-white/10 rounded-2xl mb-8">
-            <Sparkles className="w-10 h-10 text-blue-400 animate-pulse" />
-          </div>
-
-          <h3 className="font-display text-4xl font-black leading-tight mb-6">
-            "Guru mulia karena karya, terbantu karena teknologi."
-          </h3>
-          <p className="text-base text-white/70 italic mb-10">— GuruBantu AI</p>
-
-          {/* List Fitur Unggulan */}
-          <div className="space-y-4 text-left border-t border-white/10 pt-8">
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-              <span className="text-sm font-medium text-white/95">
-                Otomatisasi Dokumen RPP Kurikulum Merdeka & K-13.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-              <span className="text-sm font-medium text-white/95">
-                Pembuat Soal Ujian Cerdas & Modul Pembelajaran Lengkap.
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-              <span className="text-sm font-medium text-white/95">
-                Hemat Waktu Administrasi Hingga 90%!
-              </span>
-            </div>
-          </div>
+        {/* Trust badges */}
+        <div className="flex items-center justify-center gap-5 mt-6 text-[10px] text-slate-400 font-semibold animate-fade-up-2">
+          <span className="flex items-center gap-1">🔒 SSL Encrypted</span>
+          <span className="flex items-center gap-1">🇮🇩 Server Indonesia</span>
+          <span className="flex items-center gap-1">✅ Data Aman</span>
         </div>
       </div>
     </div>

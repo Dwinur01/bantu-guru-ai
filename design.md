@@ -1,5 +1,7 @@
 # GuruBantu AI — Design System Reference
-> Version 1.0 · React + Tailwind CSS · Mobile-First · Last Updated: 2026
+> Version 2.0 · React + Tailwind CSS · Mobile-First · Last Updated: 2026-06
+>
+> ⚠️ **v2.0 BREAKING CHANGE**: Palet warna utama telah diperbarui dari Red/Dark Blue menjadi Blue/Indigo/Lavender. Semua halaman baru HARUS mengacu ke system v2.0 ini.
 
 ---
 
@@ -11,89 +13,98 @@ Jika ada konflik antara file ini dan kode yang sudah ada, file ini yang menang.
 
 ---
 
-## 1. COLOR SYSTEM
+## 1. COLOR SYSTEM (v2.0)
 
-### 1.1 Brand Colors
-
-```
-PRIMARY RED     #C84B2F   → CTA utama, aksen penting, tombol Generate
-PRIMARY DARK    #1F4E79   → Header, sidebar, heading utama, background gelap
-PRIMARY MID     #2E75B6   → Link, border aktif, icon secondary, info state
-```
-
-### 1.2 Semantic Colors
+### 1.1 Brand Colors — AKTIF DIGUNAKAN
 
 ```
-SUCCESS         #1A7A4A   → Konfirmasi berhasil, kuota cukup, status aktif
-SUCCESS BG      #E8F5EE   → Background success state ringan
-WARNING         #B8860B   → Kuota hampir habis, peringatan non-kritis
-WARNING BG      #FDF3D8   → Background warning state ringan
-ERROR           #C84B2F   → Error state, field validasi gagal, danger action
-ERROR BG        #FCEAE6   → Background error state ringan
-INFO            #2E75B6   → Informasi netral
-INFO BG         #EBF3FB   → Background info state ringan
+PRIMARY BLUE     #2563EB   → CTA utama (link, icon, aksen interaktif)
+PRIMARY NAVY     #1E3A8A   → Tombol submit utama (Masuk, Daftar, Generate)
+PRIMARY CYAN     #22D3EE   → Aksen logo, highlight elemen sekunder
+PRIMARY INDIGO   #6366F1   → Gradient aksen, hover state card
 ```
 
-### 1.3 Neutral Colors
+### 1.2 Background Colors — AKTIF DIGUNAKAN
 
 ```
-INK             #1A1A2E   → Body text utama, konten penting
-MUTED           #737373   → Label, placeholder, teks sekunder, caption
-RULE            #C8BFB0   → Garis border, divider, separator
-LIGHT GRAY      #F2F2F2   → Background disabled, skeleton base
-CREAM           #FAF7F2   → Background card, panel, surface ringan
-PAGE BG         #F5F0E8   → Background halaman utama
-WHITE           #FFFFFF   → Background komponen bersih
+PAGE BG AUTH     linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #F0F9FF 100%)
+                 → Background halaman Login & Register (lavender/periwinkle)
+
+PAGE BG LANDING  #F8FAFC  → Background halaman Landing Page
+PAGE BG DASH     #F8FAFC  → Background halaman Dashboard & App (abu-abu sangat terang)
+
+CARD BG          #FFFFFF  → Background semua card/form panel
+MASCOT BG        linear-gradient(135deg, #d4f5f3 0%, #dde8fd 50%, #f0d6fb 100%)
+                 → Background di belakang ilustrasi maskot (teal-indigo-purple)
 ```
 
-### 1.4 Extended Palette (untuk badge, tag, highlight)
+### 1.3 Semantic Colors
 
 ```
-PURPLE          #6A3EA1   → Tag teknis, role badge backend
-PURPLE BG       #F0EBFF
-TEAL            #0A7C8C   → Tag infrastruktur, database
-TEAL BG         #E0F5F8
-ORANGE          #D46B08   → Tag sedang/in-progress
-ORANGE BG       #FFF0DB
-GOLD            #B8860B   → Warning, paket Saset, bintang
-GOLD BG         #FDF3D8
+SUCCESS         #10B981   → Konfirmasi berhasil, kuota cukup, status aktif
+SUCCESS BG      #ECFDF5   → Background success state ringan
+WARNING         #F59E0B   → Kuota hampir habis, peringatan non-kritis
+WARNING BG      #FFFBEB   → Background warning state ringan
+ERROR           #EF4444   → Error state, field validasi gagal, danger action
+ERROR BG        #FEF2F2   → Background error state ringan
+INFO            #2563EB   → Informasi netral (sama dengan PRIMARY BLUE)
+INFO BG         #EFF6FF   → Background info state ringan
 ```
 
-### 1.5 Tailwind Custom Config
+### 1.4 Neutral / Text Colors
 
-Tambahkan di `tailwind.config.js`:
+```
+TEXT PRIMARY    #0F172A   → Heading, teks penting
+TEXT SECONDARY  #334155   → Body teks standar
+TEXT MUTED      #64748B   → Label, placeholder, teks sekunder, caption
+TEXT LIGHT      #94A3B8   → Placeholder, disabled teks
+BORDER          #E2E8F0   → Garis border normal
+BORDER FOCUS    #2563EB   → Border saat input terfokus
+BG DISABLED     #F1F5F9   → Background field disabled
+```
+
+### 1.5 Extended Palette (untuk badge, tag, highlight)
+
+```
+GREEN           #059669   → Fitur perpustakaan, status success kuat
+GREEN BG        #ECFDF5
+PURPLE          #7C3AED   → Fitur premium, Pro plan
+PURPLE BG       #EDE9FE
+ORANGE          #EA580C   → Fitur RPP & Modul (aksen), warning
+ORANGE BG       #FFF7ED
+CYAN            #0891B2   → Fitur speech, mascot aksen
+CYAN BG         #ECFEFF
+```
+
+### 1.6 Tailwind Custom Config (perbarui `tailwind.config.js`)
 
 ```js
 theme: {
   extend: {
     colors: {
       brand: {
-        red:      '#C84B2F',
-        dark:     '#1F4E79',
-        mid:      '#2E75B6',
-        light:    '#D6E4F0',
-        pale:     '#EBF3FB',
+        blue:   '#2563EB',
+        navy:   '#1E3A8A',
+        cyan:   '#22D3EE',
+        indigo: '#6366F1',
       },
-      success:  { DEFAULT: '#1A7A4A', bg: '#E8F5EE' },
-      warning:  { DEFAULT: '#B8860B', bg: '#FDF3D8' },
-      error:    { DEFAULT: '#C84B2F', bg: '#FCEAE6' },
-      ink:      '#1A1A2E',
-      muted:    '#737373',
-      rule:     '#C8BFB0',
-      cream:    '#FAF7F2',
-      page:     '#F5F0E8',
+      success:  { DEFAULT: '#10B981', bg: '#ECFDF5' },
+      warning:  { DEFAULT: '#F59E0B', bg: '#FFFBEB' },
+      error:    { DEFAULT: '#EF4444', bg: '#FEF2F2' },
     },
   },
 }
 ```
 
-### 1.6 Aturan Penggunaan Warna
+### 1.7 Aturan Penggunaan Warna
 
-- JANGAN gunakan warna merah (#C84B2F) untuk teks body — hanya untuk CTA, error, dan aksen
+- **Tombol CTA utama (submit form)**: `bg-[#1E3A8A]` (navy gelap), teks putih
+- **Tombol sekunder / link**: `text-[#2563EB]` (biru), border biru
+- **Focus ring**: `ring-blue-100` dan `border-blue-500`
+- **Background halaman auth**: gunakan gradient lavender `#EEF2FF → #E0E7FF → #F0F9FF`
+- **Background halaman app (dashboard, generate)**: `#F8FAFC` (slate-50)
 - Kontras minimum teks di atas background: 4.5:1 (WCAG AA)
-- Teks putih di atas: brand-dark, brand-red, success, brand-mid ✅
-- Teks hitam (ink) di atas: cream, page, white, warning-bg ✅
-- JANGAN pakai teks muted (#737373) di atas background gelap — kontras tidak cukup
+- JANGAN gunakan merah untuk CTA — sudah diganti navy/biru
 
 ---
 
@@ -723,20 +734,36 @@ Preview section (desktop only):
 "hidden lg:block sticky top-20 h-fit"
 ```
 
-### 7.4 Auth Pages Layout
+### 7.4 Auth Pages Layout (v2.0)
 
 ```
-Mobile  : Single column, centered, no illustration
-Desktop : Split — form kiri (40%), illustration kanan (60%)
+Mobile  : Single column, form card terpusat, tanpa ilustrasi
+Desktop : Split — maskot + tagline kiri (50%), form card kanan (50%)
+
+Background:
+linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #F0F9FF 100%)
 
 Container:
-"min-h-screen flex"
+"min-h-screen flex flex-col"
 
-Form side:
-"w-full lg:w-2/5 flex flex-col justify-center px-6 py-12 lg:px-12"
+Main content grid:
+"flex-1 max-w-7xl mx-auto w-full px-6 py-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
 
-Illustration side:
-"hidden lg:flex lg:w-3/5 bg-brand-dark items-center justify-center"
+Maskot side (kiri):
+"hidden lg:flex flex-col items-center text-center space-y-5 relative"
+- Ilustrasi maskot dalam frame rounded gradient (teal → indigo → purple)
+- Brand badge: GuruBantu AI (slate/blue/cyan)
+- Heading tagline: text-3xl font-extrabold text-blue-600
+- Deskripsi singkat dengan ikon circle
+
+Form card (kanan):
+"w-full max-w-md bg-white rounded-[2.5rem] border border-slate-100 shadow-2xl p-8"
+
+Tombol submit utama:
+"bg-[#1E3A8A] hover:bg-[#1e40af] text-white font-bold rounded-2xl"
+
+Maskot Login  : /mascot-login.png    (robot AI biru)
+Maskot Register: /mascot-register.png (guru wanita berhijab)
 ```
 
 ### 7.5 Landing Page Sections

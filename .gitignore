@@ -79,4 +79,7 @@ coverage/
 *.p12
 *.pfx
 .turbo/
-.vercel/
+
+# ─── Generated Word Documents ──────────────────────────────────────────────────
+*.docx
+**/*.docx

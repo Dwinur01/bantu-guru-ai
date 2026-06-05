@@ -327,7 +327,7 @@ export const Profile: React.FC = () => {
               <div className="min-w-0 flex-1">
                 <p className="text-xs text-muted font-medium uppercase tracking-wider">Nama Lengkap</p>
                 {isEditingName ? (
-                  <div className="mt-1 space-y-1.5">
+                  <div className="mt-1 space-y-1.5 animate-in slide-in-from-top-1 duration-200">
                     <input
                       id="profile-name-input"
                       type="text"
@@ -462,7 +462,7 @@ export const Profile: React.FC = () => {
             const Icon = p.icon;
             const isActive = profile?.plan === p.id;
             return (
-              <div key={p.id} className={`relative rounded-xl border-2 ${p.border} ${p.bg} p-4 flex flex-col gap-2 transition-all hover:shadow-md ${isActive ? 'ring-2 ring-offset-1 ring-brand-red' : ''}`}>
+              <div key={p.id} className={`relative rounded-xl border-2 ${p.border} ${p.bg} p-4 flex flex-col gap-2 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:border-brand-red/45 ${isActive ? 'ring-2 ring-offset-1 ring-brand-red' : ''}`}>
                 {p.popular && (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-red text-white text-[9px] font-black px-2.5 py-0.5 rounded-full">POPULER</span>
                 )}

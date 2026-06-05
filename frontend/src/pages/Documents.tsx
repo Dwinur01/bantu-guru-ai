@@ -347,7 +347,7 @@ export const Documents: React.FC = () => {
         /* Document Cards Grid */
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredDocs.map((doc) => {
+            {filteredDocs.map((doc, index) => {
               const dateObj = new Date(doc.createdAt);
               const dateFormatted = dateObj.toLocaleDateString('id-ID', {
                 day: 'numeric',
@@ -355,10 +355,12 @@ export const Documents: React.FC = () => {
                 year: 'numeric'
               });
 
+              const staggerClass = `animate-stagger-${(index % 4) + 1}`;
+
               return (
                 <div 
                   key={doc.id}
-                  className="bg-white border border-rule rounded-xl p-4 shadow-sm flex flex-col justify-between gap-4 hover:shadow-md transition-shadow"
+                  className={`bg-white border border-rule rounded-xl p-4 flex flex-col justify-between gap-4 hover-card-premium ${staggerClass}`}
                 >
                   <div className="flex items-start gap-3.5">
                     <div className={`p-2.5 rounded-lg flex-shrink-0 ${

@@ -101,6 +101,7 @@ export const GenerateSoal: React.FC = () => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [serverError, setServerError] = useState<string | null>(null);
   const [isListening, setIsListening] = useState(false);
+  const [activeTemplate, setActiveTemplate] = useState<string | null>(null);
 
   const startSpeechRecognition = () => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -155,6 +156,12 @@ export const GenerateSoal: React.FC = () => {
   });
 
   const selectedJenjang = watch('jenjang');
+  const watchKelas = watch('kelas');
+  const watchMapel = watch('mapel');
+  const watchTopik = watch('topik');
+  const watchJumlahPG = watch('jumlahPG');
+  const watchJumlahEssay = watch('jumlahEssay');
+  const watchTingkatKesulitan = watch('tingkatKesulitan');
 
   // Trigger cascade update ketika Jenjang berubah
   useEffect(() => {
@@ -239,14 +246,14 @@ export const GenerateSoal: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-page">
       {/* Tombol Kembali */}
       <div className="flex items-center gap-3">
         <Link 
           to="/dashboard" 
-          className="inline-flex items-center gap-1 text-sm font-bold text-brand-mid hover:underline"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors bg-white hover:bg-slate-50 border border-rule/50 px-3 py-1.5 rounded-xl shadow-sm"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 text-slate-400" />
           <span>Kembali ke Dashboard</span>
         </Link>
       </div>
@@ -254,7 +261,7 @@ export const GenerateSoal: React.FC = () => {
       {/* Judul Halaman */}
       <div className="space-y-1">
         <h2 className="font-display text-3xl font-black text-ink tracking-tight leading-tight">
-          Pembuat Soal Ujian Cerdas
+          Form Pembuat <span className="gradient-text-blue">Soal Ujian Cerdas</span>
         </h2>
         <p className="text-sm text-muted">
           Rancang materi evaluasi, butir Pilihan Ganda, esai kontekstual, dan pedoman rubrik penilaian secara instan.
@@ -263,7 +270,7 @@ export const GenerateSoal: React.FC = () => {
 
       {/* Error Server */}
       {serverError && (
-        <div className="p-4 bg-error-bg border border-error rounded-xl flex items-start gap-2.5 text-error">
+        <div className="p-4 bg-error/10 border border-error/20 rounded-xl flex items-start gap-2.5 text-error animate-scale-in">
           <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div className="text-sm font-semibold">{serverError}</div>
         </div>
@@ -271,30 +278,36 @@ export const GenerateSoal: React.FC = () => {
 
       {/* Layar Loading/Generasi Progress */}
       {isGenerating && (
-        <div className="bg-white border border-rule rounded-xl p-6 sm:p-10 text-center shadow-md space-y-6 animate-in fade-in duration-200">
-          <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
-            <Loader2 className="w-12 h-12 text-brand-red animate-spin" />
-            <Sparkles className="w-5 h-5 text-brand-mid absolute animate-bounce" />
+        <div className="glass-card border border-white/50 rounded-2xl p-6 sm:p-12 text-center shadow-premium space-y-8 max-w-2xl mx-auto py-16 animate-fade-up">
+          <div className="relative w-20 h-20 mx-auto flex items-center justify-center">
+            {/* Ambient Pulsing Aura */}
+            <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl animate-pulse" />
+            <div className="absolute -inset-2 rounded-full border border-blue-500/30 animate-spin-slow" />
+            
+            <Loader2 className="w-14 h-14 text-blue-600 animate-spin relative z-10" />
+            <Sparkles className="w-6 h-6 text-indigo-500 absolute animate-bounce-soft z-20" />
           </div>
 
-          <div className="space-y-2 max-w-md mx-auto">
-            <h3 className="text-lg font-bold text-ink transition-all">
+          <div className="space-y-3 max-w-md mx-auto">
+            <h3 className="text-xl font-display font-black text-ink tracking-tight transition-all">
               {loadingTexts[currentTextIndex]}
             </h3>
-            <p className="text-xs text-muted">Asisten cerdas kami sedang menyusun lembar soal dan halaman kunci jawaban di lembar terpisah.</p>
+            <p className="text-sm text-muted leading-relaxed">
+              Asisten cerdas kami sedang menyusun lembar soal dan halaman kunci jawaban di lembar terpisah.
+            </p>
           </div>
 
           {/* Progress Bar Visual */}
-          <div className="max-w-md mx-auto space-y-2">
-            <div className="w-full h-2 bg-[#F2F2F2] rounded-full overflow-hidden border border-rule/10">
+          <div className="max-w-md mx-auto space-y-2.5">
+            <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-rule/35 relative">
               <div 
-                className="h-full bg-brand-red rounded-full transition-all duration-300 ease-out"
+                className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full transition-all duration-300 ease-out animate-progress-shimmer"
                 style={{ width: `${loadingProgress}%` }}
               ></div>
             </div>
-            <div className="flex justify-between items-center text-[10px] text-muted">
-              <span>EST. WAKTU: 30 DETIK</span>
-              <span className="font-bold">{loadingProgress}% SELESAI</span>
+            <div className="flex justify-between items-center text-[10px] font-bold text-muted tracking-wider">
+              <span>ESTIMASI WAKTU: ~30 DETIK</span>
+              <span className="text-blue-600">{loadingProgress}% SELESAI</span>
             </div>
           </div>
         </div>
@@ -302,19 +315,20 @@ export const GenerateSoal: React.FC = () => {
 
       {/* Formulir Utama */}
       {!isGenerating && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           
           {/* Sisi Kiri: Formulir Input (50% Desktop) */}
-          <div className="bg-white border border-rule rounded-xl p-5 sm:p-6 shadow-sm">
+          <div className="glass-card border border-white/50 rounded-2xl p-6 sm:p-8 shadow-premium space-y-6">
             {/* Soal Instan Templates - Beginner Friendly */}
-            <div className="space-y-2.5 mb-6 border-b border-rule pb-5">
-              <span className="text-xs text-brand-mid font-bold uppercase tracking-wider block">✨ Soal Instan (Pilih Template Pengisian Cepat)</span>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div className="space-y-3 border-b border-rule/50 pb-5">
+              <span className="text-xs text-blue-600 font-bold uppercase tracking-wider block">✨ Soal Instan (Pilih Template Pengisian Cepat)</span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {popularTemplates.map((tpl) => (
                   <button
                     key={tpl.title}
                     type="button"
                     onClick={() => {
+                      setActiveTemplate(tpl.title);
                       setValue('jenjang', tpl.jenjang);
                       setTimeout(() => {
                         setValue('kelas', tpl.kelas);
@@ -325,10 +339,21 @@ export const GenerateSoal: React.FC = () => {
                         setValue('tingkatKesulitan', tpl.tingkatKesulitan);
                       }, 50);
                     }}
-                    className="px-3 py-2.5 border border-brand-mid/10 hover:border-brand-mid/40 bg-brand-light/10 hover:bg-brand-light/30 rounded-lg text-left transition-all duration-150 active:scale-95 group focus:outline-none focus:ring-2 focus:ring-brand-mid/20 w-full"
+                    className={`p-3 border rounded-xl text-left transition-all duration-200 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-blue-500/10 w-full flex items-center justify-between hover-card-premium ${
+                      activeTemplate === tpl.title
+                        ? 'border-blue-500 bg-blue-50/50 shadow-glow-sm border-2'
+                        : 'border-slate-200 hover:border-blue-300 bg-white/60 hover:bg-blue-50/10'
+                    }`}
                   >
-                    <span className="font-bold text-xs text-ink block group-hover:text-brand-mid">{tpl.title}</span>
-                    <span className="text-[9px] text-muted block mt-0.5">{tpl.mapel} · {tpl.kelas}</span>
+                    <div className="min-w-0 flex-1">
+                      <span className={`font-bold text-xs block truncate ${activeTemplate === tpl.title ? 'text-blue-600' : 'text-slate-800 group-hover:text-blue-600'}`}>{tpl.title}</span>
+                      <span className="text-[9px] text-muted block mt-1">{tpl.mapel} · {tpl.kelas}</span>
+                    </div>
+                    {activeTemplate === tpl.title && (
+                      <span className="w-4 h-4 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold animate-scale-check flex-shrink-0 ml-2 shadow-sm shadow-blue-500/30">
+                        ✓
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -338,13 +363,13 @@ export const GenerateSoal: React.FC = () => {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* 1. Dropdown Jenjang Sekolah */}
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="jenjang" className="text-sm font-medium text-ink">
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="jenjang" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
                     Jenjang Sekolah *
                   </label>
                   <select
                     id="jenjang"
-                    className="w-full px-3 py-2.5 text-base text-ink bg-white border border-rule rounded-lg focus:outline-none focus:border-brand-mid focus:ring-2 focus:ring-brand-mid/20 cursor-pointer min-h-[44px]"
+                    className="input-premium w-full px-3.5 py-2.5 text-sm text-ink cursor-pointer min-h-[44px]"
                     {...register('jenjang')}
                   >
                     {jenjangOptions.map((opt) => (
@@ -354,13 +379,13 @@ export const GenerateSoal: React.FC = () => {
                 </div>
 
                 {/* 2. Dropdown Kelas (Cascade) */}
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="kelas" className="text-sm font-medium text-ink">
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="kelas" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
                     Kelas *
                   </label>
                   <select
                     id="kelas"
-                    className="w-full px-3 py-2.5 text-base text-ink bg-white border border-rule rounded-lg focus:outline-none focus:border-brand-mid focus:ring-2 focus:ring-brand-mid/20 cursor-pointer min-h-[44px]"
+                    className="input-premium w-full px-3.5 py-2.5 text-sm text-ink cursor-pointer min-h-[44px]"
                     {...register('kelas')}
                   >
                     {(kelasOptions[selectedJenjang] || []).map((opt) => (
@@ -371,13 +396,13 @@ export const GenerateSoal: React.FC = () => {
               </div>
 
               {/* 3. Dropdown Mata Pelajaran (Cascade) */}
-              <div className="flex flex-col gap-1">
-                <label htmlFor="mapel" className="text-sm font-medium text-ink">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="mapel" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
                   Mata Pelajaran *
                 </label>
                 <select
                   id="mapel"
-                  className="w-full px-3 py-2.5 text-base text-ink bg-white border border-rule rounded-lg focus:outline-none focus:border-brand-mid focus:ring-2 focus:ring-brand-mid/20 cursor-pointer min-h-[44px]"
+                  className="input-premium w-full px-3.5 py-2.5 text-sm text-ink cursor-pointer min-h-[44px]"
                   {...register('mapel')}
                 >
                   {(mapelOptions[selectedJenjang] || []).map((opt) => (
@@ -387,26 +412,32 @@ export const GenerateSoal: React.FC = () => {
               </div>
 
               {/* 4. Input Topik / Materi Pokok */}
-              <div className="flex flex-col gap-1">
-                <label htmlFor="topik" className="text-sm font-medium text-ink flex justify-between items-center">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="topik" className="text-xs font-bold text-slate-700 uppercase tracking-wide flex justify-between items-center">
                   <span>Materi Pokok / Topik Evaluasi *</span>
                   <button
                     type="button"
                     onClick={startSpeechRecognition}
-                    className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold transition-all duration-150 active:scale-95 ${
+                    className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold transition-all duration-200 active:scale-95 ${
                       isListening
-                        ? 'bg-brand-red text-white animate-pulse'
-                        : 'bg-brand-light text-brand-mid hover:bg-brand-light/75'
+                        ? 'bg-red-500 text-white shadow-sm'
+                        : 'bg-blue-50 text-blue-600 hover:bg-blue-100'
                     }`}
                   >
+                    {isListening && (
+                      <>
+                        <span className="absolute inset-0 rounded-full bg-red-500 animate-ripple pointer-events-none" />
+                        <span className="absolute inset-0 rounded-full bg-red-500 animate-ripple-delay pointer-events-none" />
+                      </>
+                    )}
                     {isListening ? (
                       <>
-                        <MicOff className="w-3.5 h-3.5 animate-spin" />
-                        <span>Mendengarkan...</span>
+                        <MicOff className="w-3 h-3 animate-spin relative z-10" />
+                        <span className="relative z-10">Mendengarkan...</span>
                       </>
                     ) : (
                       <>
-                        <Mic className="w-3.5 h-3.5" />
+                        <Mic className="w-3 h-3" />
                         <span>Isi Pakai Suara</span>
                       </>
                     )}
@@ -416,15 +447,13 @@ export const GenerateSoal: React.FC = () => {
                   id="topik"
                   type="text"
                   placeholder="Misal: Aljabar Linear, Pencernaan Manusia, Newton"
-                  className={`w-full px-4 py-2.5 text-base text-slate-900 bg-white border rounded-xl min-h-[44px] transition-all placeholder:text-slate-400 focus:outline-none ${
-                    errors.topik
-                      ? 'border-error bg-[#FFF2F2] focus:ring-2 focus:ring-error/20'
-                      : 'border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20'
+                  className={`input-premium w-full px-4 py-2.5 text-sm text-slate-900 min-h-[44px] ${
+                    errors.topik ? 'error' : ''
                   }`}
                   {...register('topik')}
                 />
                 {errors.topik && (
-                  <p className="flex items-center gap-1 mt-1 text-xs text-error">
+                  <p className="flex items-center gap-1 mt-1 text-xs text-error animate-fade-in">
                     <AlertCircle className="w-3.5 h-3.5" />
                     {errors.topik.message}
                   </p>
@@ -432,12 +461,12 @@ export const GenerateSoal: React.FC = () => {
               </div>
 
               {/* 5. Jumlah PG (Number Input / Slider) */}
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1.5">
                 <div className="flex justify-between items-center">
-                  <label htmlFor="jumlahPG" className="text-sm font-medium text-ink">
+                  <label htmlFor="jumlahPG" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
                     Jumlah Butir Soal PG *
                   </label>
-                  <span className="text-sm font-bold text-brand-mid">{watch('jumlahPG')} Butir</span>
+                  <span className="text-xs font-black text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100">{watchJumlahPG} Butir</span>
                 </div>
                 <input
                   id="jumlahPG"
@@ -445,22 +474,22 @@ export const GenerateSoal: React.FC = () => {
                   min="1"
                   max="40"
                   step="1"
-                  className="w-full h-2 bg-[#F2F2F2] rounded-lg appearance-none cursor-pointer accent-blue-600"
+                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600 mt-2"
                   {...register('jumlahPG', { valueAsNumber: true })}
                 />
-                <div className="flex justify-between text-[10px] text-muted font-bold mt-1">
+                <div className="flex justify-between text-[9px] text-muted font-bold mt-1.5 tracking-wider">
                   <span>1 SOAL</span>
                   <span>40 SOAL</span>
                 </div>
               </div>
 
               {/* 6. Jumlah Essay (Number Input / Slider) */}
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1.5">
                 <div className="flex justify-between items-center">
-                  <label htmlFor="jumlahEssay" className="text-sm font-medium text-ink">
+                  <label htmlFor="jumlahEssay" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
                     Jumlah Butir Soal Esai *
                   </label>
-                  <span className="text-sm font-bold text-brand-mid">{watch('jumlahEssay')} Butir</span>
+                  <span className="text-xs font-black text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100">{watchJumlahEssay} Uraian</span>
                 </div>
                 <input
                   id="jumlahEssay"
@@ -468,23 +497,23 @@ export const GenerateSoal: React.FC = () => {
                   min="0"
                   max="10"
                   step="1"
-                  className="w-full h-2 bg-[#F2F2F2] rounded-lg appearance-none cursor-pointer accent-blue-600"
+                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600 mt-2"
                   {...register('jumlahEssay', { valueAsNumber: true })}
                 />
-                <div className="flex justify-between text-[10px] text-muted font-bold mt-1">
+                <div className="flex justify-between text-[9px] text-muted font-bold mt-1.5 tracking-wider">
                   <span>0 SOAL (NO ESSAY)</span>
                   <span>10 SOAL</span>
                 </div>
               </div>
 
               {/* 7. Dropdown Tingkat Kesulitan */}
-              <div className="flex flex-col gap-1">
-                <label htmlFor="tingkatKesulitan" className="text-sm font-medium text-ink">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="tingkatKesulitan" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
                   Tingkat Kesulitan & Evaluasi Bloom *
                 </label>
                 <select
                   id="tingkatKesulitan"
-                  className="w-full px-3 py-2.5 text-base text-ink bg-white border border-rule rounded-lg focus:outline-none focus:border-brand-mid focus:ring-2 focus:ring-brand-mid/20 cursor-pointer min-h-[44px]"
+                  className="input-premium w-full px-3.5 py-2.5 text-sm text-ink cursor-pointer min-h-[44px]"
                   {...register('tingkatKesulitan')}
                 >
                   {kesulitanOptions.map((opt) => (
@@ -496,7 +525,7 @@ export const GenerateSoal: React.FC = () => {
               {/* Tombol Generate */}
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 text-white font-bold text-sm rounded-xl min-h-[44px] shadow-lg shadow-blue-500/10 transition-all duration-150 hover:bg-blue-700 hover:shadow-xl active:scale-95 text-center mt-4"
+                className="btn-primary w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 text-white font-bold text-sm rounded-xl min-h-[48px] shadow-lg shadow-blue-500/10 hover:shadow-xl mt-4"
               >
                 <Sparkles className="w-4.5 h-4.5" />
                 <span>Generate Soal Ujian Cerdas</span>
@@ -505,14 +534,121 @@ export const GenerateSoal: React.FC = () => {
             </form>
           </div>
 
-          {/* Sisi Kanan: Panel Edukasi (50% Desktop, Sticky) */}
-          <div className="hidden lg:block lg:sticky lg:top-20 space-y-6">
-            
+          {/* Sisi Kanan: Live Preview & Panduan (Sticky Desktop) */}
+          <div className="hidden lg:flex flex-col gap-6 lg:sticky lg:top-20">
+            {/* A4 Paper Live Preview */}
+            <div className="glass-card rounded-2xl border border-white/50 shadow-premium overflow-hidden transition-all duration-300 hover:shadow-card-hover text-left flex flex-col">
+              {/* Header of paper preview */}
+              <div className="bg-gradient-to-r from-blue-600/10 to-indigo-600/5 px-5 py-3.5 border-b border-rule/50 flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
+                  <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">Live Draft Preview</span>
+                </div>
+                <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">
+                  UKURAN A4
+                </span>
+              </div>
+              
+              {/* A4 Paper Sheet Body */}
+              <div className="p-8 bg-white min-h-[480px] flex flex-col justify-between relative shadow-inner text-slate-800 font-sans text-xs border-b border-rule/30">
+                <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
+                
+                {/* Exam Header */}
+                <div className="text-center space-y-1.5 border-b-2 border-slate-900 pb-3.5 relative">
+                  <h4 className="font-extrabold text-[12px] tracking-wide text-slate-900 uppercase leading-snug">
+                    PENILAIAN AKHIR SEMESTER / ULANGAN HARIAN
+                  </h4>
+                  <h5 className="font-bold text-[10px] text-slate-700 tracking-wider">
+                    TAHUN PELAJARAN 2026/2027
+                  </h5>
+                  <div className="absolute bottom-0.5 left-0 right-0 h-[1px] bg-slate-900" />
+                </div>
+
+                {/* Metadata Grid */}
+                <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-1.5 border-b border-slate-200 pb-3 text-[10px]">
+                  <div className="space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Mata Pelajaran:</span>
+                      <span className="font-bold text-slate-800 truncate max-w-[120px]">{watchMapel}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Kelas:</span>
+                      <span className="font-bold text-slate-800">{watchKelas} ({selectedJenjang})</span>
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Kesulitan:</span>
+                      <span className="font-bold text-emerald-600">{watchTingkatKesulitan}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Topik/Materi:</span>
+                      <span className="font-bold text-blue-600 truncate max-w-[120px]">{watchTopik || '(Belum diisi)'}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Core Questions Preview */}
+                <div className="mt-4 flex-grow space-y-4 text-[10px] leading-relaxed text-slate-700">
+                  {/* Pilihan Ganda */}
+                  <div className="space-y-2.5">
+                    <p className="font-bold text-[10.5px]">I. Pilihlah salah satu jawaban yang paling tepat!</p>
+                    {watchJumlahPG > 0 ? (
+                      Array.from({ length: Math.min(watchJumlahPG, 2) }).map((_, idx) => (
+                        <div key={idx} className="pl-2 space-y-1">
+                          <p className="font-medium">{idx + 1}. Bagaimana pengaplikasian konsep <span className="font-bold text-slate-900">{watchTopik || 'materi ini'}</span> yang paling efektif menurut standar Kemendikbud?</p>
+                          <div className="pl-3.5 grid grid-cols-2 gap-1 text-[9px] text-slate-500">
+                            <span>A. Jawaban teoretis kesatu</span>
+                            <span>B. Jawaban teoretis kedua</span>
+                            <span>C. Jawaban teoretis ketiga</span>
+                            <span>D. Jawaban teoretis keempat</span>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-slate-400 italic">Jumlah PG diatur ke 0...</p>
+                    )}
+                    {watchJumlahPG > 2 && (
+                      <p className="text-[9px] text-blue-600 font-bold pl-2 italic animate-pulse">
+                        + {watchJumlahPG - 2} soal pilihan ganda lainnya sedang disusun...
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Essay */}
+                  <div className="space-y-2.5 pt-2.5 border-t border-slate-100">
+                    <p className="font-bold text-[10.5px]">II. Jawablah pertanyaan di bawah ini dengan uraian yang jelas!</p>
+                    {watchJumlahEssay > 0 ? (
+                      Array.from({ length: Math.min(watchJumlahEssay, 1) }).map((_, idx) => (
+                        <div key={idx} className="pl-2 space-y-1">
+                          <p className="font-medium">{idx + 1}. Jelaskan secara rinci dan berikan contoh konkret penerapan <span className="font-bold text-slate-900">{watchTopik || 'materi ini'}</span>!</p>
+                          <div className="h-6 border-b border-dashed border-slate-200 w-11/12 mt-1" />
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-slate-400 italic">Jumlah Esai diatur ke 0...</p>
+                    )}
+                    {watchJumlahEssay > 1 && (
+                      <p className="text-[9px] text-blue-600 font-bold pl-2 italic animate-pulse">
+                        + {watchJumlahEssay - 1} soal esai lainnya sedang disusun...
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Footer Signature */}
+                <div className="mt-5 border-t border-slate-100 pt-3 flex justify-between items-center text-[9px] text-slate-400">
+                  <div className="h-4 bg-slate-50 w-24 rounded" />
+                  <div className="h-4 bg-slate-50 w-32 rounded text-right" />
+                </div>
+              </div>
+            </div>
+
             {/* Box 1: Panduan Evaluasi Kognitif */}
-            <div className="bg-white border border-rule rounded-xl p-5 sm:p-6 space-y-4 shadow-sm text-left">
-              <div className="flex items-center gap-2.5 text-brand-dark">
-                <HelpCircle className="w-5 h-5" />
-                <h3 className="font-bold text-base">Panduan Evaluasi Kognitif</h3>
+            <div className="glass-card border border-white/50 rounded-2xl p-5 space-y-4 shadow-sm text-left hover-card-premium">
+              <div className="flex items-center gap-2.5 text-blue-600">
+                <HelpCircle className="w-5 h-5 animate-pulse" />
+                <h3 className="font-bold text-base text-ink">Panduan Evaluasi Kognitif</h3>
               </div>
               
               <div className="space-y-3.5 text-sm leading-relaxed text-muted">
@@ -520,23 +656,23 @@ export const GenerateSoal: React.FC = () => {
                   Penyusunan evaluasi pembelajaran di Kurikulum Merdeka menganjurkan asesmen yang merefleksikan kecakapan literasi, numerasi, dan **High-Order Thinking Skills (HOTS)**.
                 </p>
                 
-                <div className="border-l-2 border-[#1A7A4A] pl-3 space-y-2 mt-2">
-                  <span className="font-bold text-ink text-xs block">Aturan Standar Soal GuruBantu AI:</span>
-                  <p className="text-xs">
+                <div className="border-l-2 border-green-500 pl-3 space-y-2 mt-2 bg-green-50/50 p-2.5 rounded-r-xl">
+                  <span className="font-bold text-green-950 text-xs block">Aturan Standar Soal GuruBantu AI:</span>
+                  <p className="text-xs text-green-800 leading-relaxed">
                     1. **Opsi Pilihan Ganda:** Wajib menyajikan 5 alternatif pilihan (A-E) untuk SMP & SMA guna membatasi faktor tebakan acak.<br />
-                    2. **Lembar Kunci Terpisah:** Halaman kunci jawaban dicetak eksklusif di halaman paling akhir dengan page break otomatis.<br />
-                    3. **Rubrik Esai:** Wajib menyajikan parameter penentuan skor terformat untuk memudahkan koreksi subjektif Guru.
+                    2. **Lembar Kunci Terpisah:** Kunci jawaban dicetak eksklusif di halaman paling akhir dengan page break otomatis.<br />
+                    3. **Rubrik Esai:** Menyajikan parameter penentuan skor terformat untuk memudahkan koreksi.
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Box 2: Info Kuota */}
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 flex items-start gap-3.5 shadow-sm text-left">
-              <Sparkles className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" />
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 flex items-start gap-3.5 shadow-inner text-left">
+              <Sparkles className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <h4 className="font-bold text-sm text-ink">Keandalan Transaksional</h4>
-                <p className="text-xs text-muted leading-relaxed">
+                <h4 className="font-bold text-xs text-ink">Keandalan Transaksional</h4>
+                <p className="text-[11px] text-muted leading-relaxed">
                   Batas kuota bulanan Anda hanya akan terpotong setelah file bank soal Word berhasil dikompilasi dan disimpan di penyimpanan cloud kami. Transaksi Anda 100% aman dari hang/timeout.
                 </p>
               </div>

@@ -48,6 +48,17 @@ Dokumen dihasilkan dalam format **Microsoft Word (.docx)** yang siap cetak dan l
 
 ---
 
+## 🎨 Premium UI Overhaul & Live Preview (Baru)
+
+Aplikasi telah diperbarui dengan sistem visual kelas dunia berkonsep **Glassmorphism & Dynamic Interactive UI**:
+- **Hero Landing** — Dark Mode hero section dilengkapi dengan dynamic floating light-orbs (blobs) dan glowing gradient text.
+- **Glassmorphism** — Panel navigasi, form input, dan card dashboard menggunakan translucent backdrop blur (`glass-card`) dengan focus ring dan border glow.
+- **A4 Live Document Preview** — Halaman generator (RPP, Modul Ajar, Soal Ujian) dilengkapi dengan lembar kertas virtual A4 reaktif di sebelah kanan desktop yang menampilkan draft teks secara instan saat guru mengisi formulir.
+- **Speech Mic Ripples** — Animasi denyut radar konsentris melingkar pada tombol mikrofon input suara saat mendengarkan masukan guru.
+- **Neon Pricing Cards** — Kartu paket langganan yang memancarkan pendaran cahaya neon (glow shadow) sesuai tingkat paket dengan FAQ accordion beranimasi halus.
+
+---
+
 ## 🏗️ Arsitektur & Tech Stack
 
 ```

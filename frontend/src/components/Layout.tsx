@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Sparkles, ClipboardList, FolderOpen, User, LogOut, Tag, CreditCard, BookOpen, GraduationCap } from 'lucide-react';
+import {
+  Home, Sparkles, ClipboardList, FolderOpen, User,
+  LogOut, Tag, CreditCard, BookOpen, GraduationCap,
+  Menu, X, ChevronRight
+} from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../services/api';
 import QuotaBanner, { UpgradeModal } from './QuotaBanner';
@@ -14,8 +18,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const { user, clearAuth } = useAuthStore();
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
-  // Tampil banner jika user Free/Saset dengan kuota ≤ 20%
   const shouldShowBanner =
     user &&
     (user.plan === 'free' || user.plan === 'saset') &&
@@ -23,139 +27,211 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const handleLogout = async () => {
     try {
-      // Panggil API logout di backend agar HTTP-only cookie dicabut
       await api.post('/auth/logout');
     } catch (err) {
       console.error('Logout API error:', err);
     } finally {
-      // Selalu bersihkan status auth lokal demi kehandalan
       clearAuth();
       navigate('/login');
     }
   };
 
   const navItems = [
-    { label: 'Dashboard', mobileLabel: 'Dashboard', path: '/dashboard', icon: Home },
-    { label: 'Buat RPP', mobileLabel: 'Buat RPP', path: '/rpp', icon: Sparkles },
-    { label: 'Buat Soal Ujian', mobileLabel: 'Buat Soal', path: '/soal', icon: ClipboardList },
-    { label: 'Buat Modul Ajar', mobileLabel: 'Modul', path: '/modul-ajar', icon: BookOpen },
-    { label: 'Riwayat Dokumen', mobileLabel: 'Riwayat', path: '/riwayat', icon: FolderOpen },
-    { label: 'Perpustakaan Guru', mobileLabel: 'Perpustakaan', path: '/perpustakaan', icon: GraduationCap },
-    { label: 'Paket Langganan', mobileLabel: 'Paket', path: '/pricing', icon: Tag },
-    { label: 'Riwayat Transaksi', mobileLabel: 'Transaksi', path: '/billing', icon: CreditCard },
-    { label: 'Profil Guru', mobileLabel: 'Profil', path: '/profile', icon: User },
+    { label: 'Dashboard',         mobileLabel: 'Dashboard',   path: '/dashboard',    icon: Home,         color: 'text-blue-400',   glow: 'rgba(59,130,246,0.6)' },
+    { label: 'Buat RPP',          mobileLabel: 'Buat RPP',    path: '/rpp',          icon: Sparkles,     color: 'text-amber-400',  glow: 'rgba(251,191,36,0.6)' },
+    { label: 'Buat Soal Ujian',   mobileLabel: 'Buat Soal',   path: '/soal',         icon: ClipboardList,color: 'text-green-400',  glow: 'rgba(52,211,153,0.6)' },
+    { label: 'Buat Modul Ajar',   mobileLabel: 'Modul',       path: '/modul-ajar',   icon: BookOpen,     color: 'text-purple-400', glow: 'rgba(167,139,250,0.6)' },
+    { label: 'Riwayat Dokumen',   mobileLabel: 'Riwayat',     path: '/riwayat',      icon: FolderOpen,   color: 'text-cyan-400',   glow: 'rgba(34,211,238,0.6)' },
+    { label: 'Perpustakaan Guru', mobileLabel: 'Perpustakaan',path: '/perpustakaan', icon: GraduationCap,color: 'text-rose-400',   glow: 'rgba(251,113,133,0.6)' },
+    { label: 'Paket Langganan',   mobileLabel: 'Paket',       path: '/pricing',      icon: Tag,          color: 'text-yellow-400', glow: 'rgba(250,204,21,0.6)' },
+    { label: 'Riwayat Transaksi', mobileLabel: 'Transaksi',   path: '/billing',      icon: CreditCard,   color: 'text-indigo-400', glow: 'rgba(129,140,248,0.6)' },
+    { label: 'Profil Guru',       mobileLabel: 'Profil',      path: '/profile',      icon: User,         color: 'text-sky-400',    glow: 'rgba(56,189,248,0.6)' },
   ];
 
   const activeItem = navItems.find((item) => location.pathname === item.path);
 
+  const getPlanBadgeStyle = (plan: string) => {
+    switch(plan) {
+      case 'pro':   return 'bg-gradient-to-r from-purple-500 to-violet-600 text-white';
+      case 'basic': return 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white';
+      case 'saset': return 'bg-gradient-to-r from-amber-400 to-orange-500 text-white';
+      default:      return 'bg-white/10 text-white/70';
+    }
+  };
+
+  // Sidebar content — reusable for both desktop and mobile
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full">
+      {/* Logo */}
+      <div className="h-16 flex items-center px-4 lg:px-5 border-b border-white/[0.07] gap-3">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg flex-shrink-0 animate-glow-blue">
+          <img src="/logo-gurubantu.png" alt="GuruBantu AI" className="w-7 h-7 object-contain rounded-lg" onError={(e) => { (e.target as HTMLImageElement).style.display='none'; }} />
+        </div>
+        <div className="hidden lg:block overflow-hidden">
+          <span className="font-display font-black text-white text-base leading-tight block">
+            GuruBantu <span className="gradient-text-blue">AI</span>
+          </span>
+          <span className="text-white/40 text-[10px] font-medium">Admin Guru Otomatis</span>
+        </div>
+      </div>
+
+      {/* Nav Items */}
+      <nav className="flex-1 px-2 py-4 space-y-0.5 overflow-y-auto">
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              onClick={() => setMobileSidebarOpen(false)}
+              className={`nav-item group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                isActive
+                  ? 'active bg-gradient-to-r from-white/[0.12] to-white/[0.05] border-l-[3px] border-l-blue-400 text-white'
+                  : 'text-white/60 hover:text-white'
+              }`}
+              style={isActive ? { boxShadow: 'inset 0 0 20px rgba(59,130,246,0.08)' } : {}}
+            >
+              <Icon
+                className={`w-[18px] h-[18px] flex-shrink-0 transition-all duration-200 ${isActive ? item.color : 'text-white/40 group-hover:text-white/80'}`}
+                style={isActive ? { filter: `drop-shadow(0 0 6px ${item.glow})` } : {}}
+              />
+              <span className="hidden lg:inline flex-1">{item.label}</span>
+              {isActive && <ChevronRight className="hidden lg:block w-3.5 h-3.5 text-white/30 flex-shrink-0" />}
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* User + Logout */}
+      <div className="p-3 border-t border-white/[0.07] space-y-1">
+        {/* User info (desktop) */}
+        {user && (
+          <div className="hidden lg:flex items-center gap-2.5 px-3 py-2 mb-1">
+            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
+              user.emailVerified
+                ? 'bg-gradient-to-br from-green-400 to-emerald-500 text-white shadow-[0_0_10px_rgba(52,211,153,0.5)]'
+                : 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white'
+            }`}>
+              {user.name ? user.name.substring(0,2).toUpperCase() : 'G'}
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <div className="text-white text-xs font-bold truncate leading-tight">{user.name || 'Guru'}</div>
+              <div className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full inline-block mt-0.5 ${getPlanBadgeStyle(user.plan)}`}>
+                {(user.plan || 'FREE').toUpperCase()}
+              </div>
+            </div>
+          </div>
+        )}
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 w-full text-white/50 hover:text-red-400 hover:bg-red-500/10 active:scale-95 group"
+          title="Keluar dari Akun"
+        >
+          <LogOut className="w-[18px] h-[18px] flex-shrink-0 group-hover:text-red-400" />
+          <span className="hidden lg:inline">Keluar</span>
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-page text-ink flex flex-col font-sans">
-      {/* 1. Sidebar untuk Tablet (768px-1023px) & Desktop (≥1024px) */}
-      <aside className="hidden md:flex fixed left-0 top-0 h-screen w-16 lg:w-60 bg-brand-dark flex-col z-30 transition-all duration-200 shadow-sm border-r border-white/5">
-        {/* Logo Area */}
-        <div className="h-14 flex items-center px-4 lg:px-6 border-b border-white/10 justify-center lg:justify-start gap-2.5">
-          <div className="bg-[#E8F5EE] text-[#1A7A4A] p-2 rounded-lg flex-shrink-0 shadow-sm">
-            <Sparkles className="w-5 h-5 text-success" />
-          </div>
-          <span className="font-display font-black text-lg text-white hidden lg:inline tracking-wide">
-            GuruBantu <span className="text-brand-red">AI</span>
-          </span>
-        </div>
 
-        {/* Menu Navigasi Utama */}
-        <nav className="flex-1 px-2 py-6 space-y-1.5 overflow-y-auto">
-          {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex items-center gap-3 px-3 py-3 lg:py-2.5 rounded-lg text-sm font-semibold transition-all duration-150 justify-center lg:justify-start ${
-                  isActive
-                    ? 'bg-white/15 text-white border-l-[3px] border-brand-red shadow-inner'
-                    : 'text-white/70 hover:bg-white/10 hover:text-white hover:-translate-y-0.5 lg:hover:translate-y-0'
-                }`}
-              >
-                <item.icon className="w-5 h-5 flex-shrink-0" />
-                <span className="hidden lg:inline">{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Tombol Logout Sidebar */}
-        <div className="p-3 border-t border-white/10">
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-3 px-3 py-3 lg:py-2.5 rounded-lg text-sm font-semibold transition-all duration-150 justify-center lg:justify-start w-full text-white/60 hover:bg-red-500/10 hover:text-red-400 active:scale-95 group"
-            title="Keluar dari Akun"
-          >
-            <LogOut className="w-5 h-5 flex-shrink-0 group-hover:animate-pulse" />
-            <span className="hidden lg:inline">Keluar</span>
-          </button>
-        </div>
+      {/* ── Desktop Sidebar ── */}
+      <aside className="hidden md:flex fixed left-0 top-0 h-screen w-[64px] lg:w-[240px] glass-dark flex-col z-30 transition-all duration-300">
+        <SidebarContent />
       </aside>
 
-      {/* 2. Main Content Wrapper */}
-      <div className="md:ml-16 lg:ml-60 flex-grow flex flex-col transition-all duration-200">
-        {/* Top Header Responsif */}
-        <header className="h-14 border-b border-rule bg-white/95 backdrop-blur-sm flex items-center justify-between px-4 md:px-6 sticky top-0 z-20 shadow-sm">
-          {/* Sisi Kiri: Judul Halaman atau Logo Mobile */}
-          <div className="flex items-center gap-2.5">
-            {/* Logo Mobile saja (hidden di tablet/desktop) */}
+      {/* ── Mobile Sidebar Overlay ── */}
+      {mobileSidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden animate-glass-fade"
+          onClick={() => setMobileSidebarOpen(false)}
+        />
+      )}
+      <aside
+        className={`fixed left-0 top-0 h-screen w-[260px] glass-dark flex-col z-50 md:hidden transition-transform duration-300 ${
+          mobileSidebarOpen ? 'flex translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="absolute top-4 right-4">
+          <button
+            onClick={() => setMobileSidebarOpen(false)}
+            className="p-2 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+        <SidebarContent />
+      </aside>
+
+      {/* ── Main Content ── */}
+      <div className="md:ml-[64px] lg:ml-[240px] flex-grow flex flex-col transition-all duration-300">
+
+        {/* Top Header */}
+        <header className="h-14 glass-light border-b border-rule/60 flex items-center justify-between px-4 md:px-6 sticky top-0 z-20 shadow-sm">
+          {/* Left: Hamburger (mobile) + Page Title */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className="md:hidden p-2 rounded-lg text-ink hover:bg-slate-100 transition-colors"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            {/* Logo Mobile */}
             <div className="md:hidden flex items-center gap-2">
-              <div className="bg-[#E8F5EE] text-[#1A7A4A] p-1.5 rounded-lg">
-                <Sparkles className="w-4 h-4 text-success" />
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                <img src="/logo-gurubantu.png" alt="GuruBantu AI" className="w-5 h-5 object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display='none'; }} />
               </div>
-              <span className="font-display font-black text-sm text-brand-dark tracking-wide">
-                GuruBantu <span className="text-brand-red">AI</span>
+              <span className="font-display font-black text-sm text-slate-900">
+                GuruBantu <span className="text-blue-600">AI</span>
               </span>
             </div>
-
-            {/* Judul Halaman Desktop/Tablet */}
-            <h1 className="hidden md:block font-bold text-lg text-ink font-sans">
-              {activeItem ? activeItem.label : 'GuruBantu AI'}
-            </h1>
+            {/* Page Title — Desktop */}
+            <div className="hidden md:flex items-center gap-2">
+              {activeItem && (
+                <div className={`w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-500/10 flex items-center justify-center`}>
+                  <activeItem.icon className={`w-3.5 h-3.5 ${activeItem.color}`} />
+                </div>
+              )}
+              <h1 className="font-bold text-base text-ink">
+                {activeItem ? activeItem.label : 'GuruBantu AI'}
+              </h1>
+            </div>
           </div>
 
-          {/* Sisi Kanan: Status Akun / Profil */}
-          <div className="flex items-center gap-3.5">
-            {/* Nama Panggilan Pengguna */}
-            <span className="hidden sm:inline text-sm text-ink font-medium">
-              Halo, <span className="font-bold text-[#1F4E79]">{user?.name || 'Guru'}</span>
+          {/* Right: User info */}
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline text-sm text-muted font-medium">
+              Halo, <span className="font-bold text-ink">{user?.name?.split(' ')[0] || 'Guru'}</span>
             </span>
-
-            {/* Status Plan Badge */}
             {user?.plan && (
-              <span className={`hidden lg:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                user.plan === 'free'
-                  ? 'bg-[#F2F2F2] text-[#737373]'
-                  : user.plan === 'saset'
-                  ? 'bg-warning-bg text-warning border border-warning/20'
-                  : 'bg-brand-pale text-brand-mid border border-brand-mid/20'
-              }`}>
+              <span className={`hidden lg:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black tracking-wide ${getPlanBadgeStyle(user.plan)}`}>
                 {user.plan.toUpperCase()}
               </span>
             )}
-
-            {/* Avatar Inisial */}
-            <div className="w-8 h-8 rounded-full bg-brand-light flex items-center justify-center text-brand-dark text-xs font-bold border border-brand-mid/20 shadow-sm">
+            {/* Avatar */}
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${
+              user?.emailVerified
+                ? 'bg-gradient-to-br from-green-400 to-emerald-500 shadow-[0_0_12px_rgba(52,211,153,0.5)]'
+                : 'bg-gradient-to-br from-blue-500 to-indigo-600 shadow-[0_0_12px_rgba(59,130,246,0.4)]'
+            }`}>
               {user?.name ? user.name.substring(0, 2).toUpperCase() : 'G'}
             </div>
-
-            {/* Quick Logout Header (Mobile Only) */}
+            {/* Quick Logout — Mobile only */}
             <button
               onClick={handleLogout}
-              className="p-2 text-muted hover:text-red-500 rounded-lg transition-colors hover:bg-neutral-100 md:hidden"
-              title="Keluar dari Akun"
+              className="p-2 text-muted hover:text-red-500 rounded-lg transition-colors hover:bg-red-50 md:hidden"
+              title="Keluar"
               aria-label="Logout"
             >
-              <LogOut className="w-4.5 h-4.5" />
+              <LogOut className="w-4 h-4" />
             </button>
           </div>
         </header>
 
-        {/* QuotaBanner — Tampil di bawah header jika kuota hampir/sudah habis */}
+        {/* Quota Banner */}
         {shouldShowBanner && (
           <QuotaBanner
             quotaRemaining={user?.quotaRemaining ?? user?.quota_remaining ?? 0}
@@ -165,55 +241,61 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           />
         )}
 
-        {/* Halaman Utama Anak */}
+        {/* Page Content */}
         <main key={location.pathname} className="p-4 md:p-6 lg:p-8 max-w-7xl w-full mx-auto flex-grow animate-page">
           {children}
         </main>
 
-        {/* Buffer Spacing Bottom Mobile untuk Nav Tab */}
-        <div className="md:hidden h-14" />
+        {/* Mobile bottom spacer */}
+        <div className="md:hidden h-20" />
       </div>
 
-      {/* 3. Bottom Tab Bar untuk Mobile (≤767px) */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-rule flex items-center justify-around h-14 px-2 safe-area-bottom shadow-[0_-2px_10px_rgba(0,0,0,0.03)]">
-        {navItems.map((item) => {
+      {/* ── Mobile Bottom Tab Bar ── */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 glass-light border-t border-rule/60 flex items-center justify-around px-1 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        {navItems.slice(0, 5).map((item) => {
           const isActive = location.pathname === item.path;
+          const Icon = item.icon;
           return (
             <Link
               key={item.path}
               to={item.path}
-              className={`flex flex-col items-center justify-center gap-0.5 flex-1 h-full py-1.5 px-1 transition-all duration-150 ${
-                isActive
-                  ? 'text-brand-red border-t-2 border-brand-red font-bold'
-                  : 'text-muted border-t-2 border-transparent'
+              className={`flex flex-col items-center justify-center gap-0.5 flex-1 h-full py-2 px-1 transition-all duration-200 ${
+                isActive ? 'text-blue-600' : 'text-muted'
               }`}
             >
-              <item.icon className="w-5 h-5 flex-shrink-0" />
-              <span className="text-[10px] tracking-tight">{item.mobileLabel}</span>
+              <div className={`p-1.5 rounded-xl transition-all duration-200 ${
+                isActive ? 'bg-blue-50 shadow-sm' : ''
+              }`}>
+                <Icon
+                  className={`w-4.5 h-4.5 transition-all ${isActive ? item.color : ''}`}
+                  style={isActive ? { filter: `drop-shadow(0 0 4px ${item.glow})` } : {}}
+                />
+              </div>
+              <span className="text-[9px] font-bold tracking-tight">{item.mobileLabel}</span>
             </Link>
           );
         })}
       </nav>
 
-      {/* Upgrade Modal — Muncul saat kuota habis */}
+      {/* Upgrade Modal */}
       <UpgradeModal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
         onNavigatePricing={() => { setShowUpgradeModal(false); navigate('/profile'); }}
       />
 
-      {/* Floating WhatsApp Support Button - Beginner Friendly */}
+      {/* Floating WhatsApp */}
       <a
-        href="https://wa.me/6282132775342?text=Halo%20Admin%20GuruBantu%20AI,%20saya%20guru%20honorer%20pengguna%20GuruBantu%20dan%20memerlukan%20bantuan..."
+        href="https://wa.me/6282132775342?text=Halo%20Admin%20GuruBantu%20AI%2C%20saya%20guru%20pengguna%20GuruBantu%20dan%20memerlukan%20bantuan..."
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-30 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl active:scale-95 transition-all duration-150 font-bold text-sm"
-        title="Butuh bantuan? Chat Admin GuruBantu di WhatsApp"
+        className="fixed bottom-20 right-4 md:bottom-6 md:right-6 z-30 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.4)] hover:shadow-[0_8px_30px_rgba(37,211,102,0.5)] active:scale-95 transition-all duration-200 font-bold text-sm"
+        title="Chat Admin GuruBantu via WhatsApp"
       >
-        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg className="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.008c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
         </svg>
-        <span>Bantuan WA</span>
+        <span className="hidden sm:inline">Bantuan</span>
       </a>
     </div>
   );

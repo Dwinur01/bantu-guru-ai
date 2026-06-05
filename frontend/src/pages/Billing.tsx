@@ -125,11 +125,12 @@ export const Billing: React.FC = () => {
         </div>
       ) : (
         <div className="space-y-3">
-          {transactions.map((tx) => {
+          {transactions.map((tx, index) => {
             const statusCfg = STATUS_CONFIG[tx.status] || STATUS_CONFIG.pending;
             const StatusIcon = statusCfg.icon;
+            const staggerClass = `animate-stagger-${(index % 4) + 1}`;
             return (
-              <div key={tx.id} className="bg-white border border-rule rounded-xl p-5 flex items-start justify-between gap-4 hover:shadow-sm transition-shadow">
+              <div key={tx.id} className={`bg-white border border-rule rounded-xl p-5 flex items-start justify-between gap-4 hover-card-premium ${staggerClass}`}>
                 <div className="flex items-start gap-3 min-w-0">
                   <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${statusCfg.bg}`}>
                     <StatusIcon className={`w-4.5 h-4.5 ${statusCfg.color}`} />

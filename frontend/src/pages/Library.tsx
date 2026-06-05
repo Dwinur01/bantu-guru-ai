@@ -265,13 +265,14 @@ export const Library: React.FC = () => {
         /* ── Document Cards Grid ── */
         <div className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredDocs.map((doc) => {
+            {filteredDocs.map((doc, index) => {
               const cfg = getTypeConfig(doc.type);
               const Icon = cfg.Icon;
+              const staggerClass = `animate-stagger-${(index % 4) + 1}`;
               return (
                 <div
                   key={doc.id}
-                  className="bg-white border border-rule rounded-xl p-4 shadow-sm flex flex-col justify-between gap-4 hover:shadow-md hover:-translate-y-0.5 transition-all duration-150"
+                  className={`bg-white border border-rule rounded-xl p-4 flex flex-col justify-between gap-4 hover-card-premium ${staggerClass}`}
                 >
                   {/* Card Top */}
                   <div className="flex items-start gap-3.5">
@@ -314,7 +315,7 @@ export const Library: React.FC = () => {
                     <button
                       onClick={() => handleDownload(doc.id)}
                       disabled={downloadingId === doc.id}
-                      className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 border rounded-lg text-xs font-bold min-h-[40px] transition-colors disabled:opacity-50 ${
+                      className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 border rounded-lg text-xs font-bold min-h-[40px] transition-colors disabled:opacity-50 hover-bounce-down ${
                         doc.type === 'rpp'
                           ? 'border-brand-mid/30 text-brand-mid hover:bg-[#EBF3FB]/60'
                           : doc.type === 'soal'

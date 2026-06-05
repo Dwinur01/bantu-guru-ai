@@ -2,6 +2,7 @@ export interface User {
   id: string | number;
   name: string;
   email: string;
+  emailVerified?: boolean;
   plan: 'free' | 'saset' | 'basic' | 'pro' | 'kkg';
   quota_remaining?: number;
   quotaRemaining?: number;
