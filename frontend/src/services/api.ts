@@ -18,6 +18,76 @@ api.interceptors.request.use(
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // MOCK ADAPTER UNTUK DEMO ACCOUNTS
+    if (token === 'mock-demo-jwt-token-from-json') {
+      config.adapter = async (cfg) => {
+        let responseData: any = { success: true, data: {} };
+        const url = cfg.url || '';
+
+        if (url.includes('/user/me')) {
+          responseData = {
+            success: true,
+            data: {
+              id: 999,
+              name: "Guru Honor Demo",
+              email: "guru.demo@gurubantu.ai",
+              plan: "pro",
+              quotaRemaining: 100,
+              quotaPercentage: 100,
+              documentsCreated: 12
+            }
+          };
+        } else if (url.includes('/documents/generate')) {
+          let docType = 'rpp';
+          try {
+            if (cfg.data) {
+              const body = typeof cfg.data === 'string' ? JSON.parse(cfg.data) : cfg.data;
+              docType = body.type || 'rpp';
+            }
+          } catch (e) {}
+          
+          responseData = {
+            success: true,
+            data: {
+              id: 101,
+              title: "Dokumen Pembelajaran - Hasil Demo",
+              type: docType,
+              gcsPath: "#"
+            }
+          };
+        } else if (url.includes('/documents')) {
+          responseData = {
+            success: true,
+            data: [
+              {
+                id: 101,
+                title: "RPP Bahasa Indonesia Kelas VII",
+                type: "rpp",
+                created_at: new Date().toISOString(),
+                is_public: false
+              },
+              {
+                id: 102,
+                title: "Modul Ajar Matematika Fase D",
+                type: "modul-ajar",
+                created_at: new Date(Date.now() - 86400000).toISOString(),
+                is_public: true
+              }
+            ]
+          };
+        }
+
+        return {
+          data: responseData,
+          status: 200,
+          statusText: 'OK',
+          headers: cfg.headers as any,
+          config: cfg,
+        };
+      };
+    }
+
     return config;
   },
   (error) => Promise.reject(error)

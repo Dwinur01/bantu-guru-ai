@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, AlertCircle, Mail, Lock, Sparkles, ArrowRight } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../services/api';
+import demoAccounts from '../demo-accounts.json';
 
 const loginSchema = z.object({
   email: z.string().min(1, 'Alamat email wajib diisi').email('Format alamat email tidak valid'),
@@ -34,6 +35,30 @@ export const Login: React.FC = () => {
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     setServerError(null);
+
+    // Cek kecocokan akun demo dari file JSON
+    const matchingDemo = demoAccounts.find(
+      (acc) => acc.email.toLowerCase() === data.email.toLowerCase() && acc.password === data.password
+    );
+
+    if (matchingDemo) {
+      setTimeout(() => {
+        setAuth(
+          {
+            id: 999,
+            name: matchingDemo.name,
+            email: matchingDemo.email,
+            plan: matchingDemo.plan as any,
+            quotaRemaining: matchingDemo.quotaRemaining,
+          },
+          'mock-demo-jwt-token-from-json'
+        );
+        setIsLoading(false);
+        navigate('/dashboard');
+      }, 1000);
+      return;
+    }
+
     try {
       const response = await api.post('/auth/login', data);
       const { accessToken, user } = response.data.data;
