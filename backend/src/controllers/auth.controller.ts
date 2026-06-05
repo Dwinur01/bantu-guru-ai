@@ -139,16 +139,17 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     const { email, password } = result.data;
 
     // Auto-create/verify demo account dynamically on login
-    if (email === 'demo@gurubantu.ai' && password === 'Password123') {
+    const isDemoEmail = email === 'demo@gurubantu.ai' || email === 'guru.demo@gurubantu.ai' || email === 'demo.guru@gurubantu.ai';
+    if (isDemoEmail && password === 'Password123') {
       const existingDemoUser = await prisma.user.findUnique({
-        where: { email: 'demo@gurubantu.ai' },
+        where: { email },
       });
       if (!existingDemoUser) {
         const passwordHash = await bcrypt.hash('Password123', 12);
         await prisma.user.create({
           data: {
             name: 'Guru Demo',
-            email: 'demo@gurubantu.ai',
+            email,
             password_hash: passwordHash,
             email_verified: true,
             plan: 'pro',
@@ -157,7 +158,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
         });
       } else if (!existingDemoUser.email_verified || existingDemoUser.plan !== 'pro' || existingDemoUser.quota_remaining < 10) {
         await prisma.user.update({
-          where: { email: 'demo@gurubantu.ai' },
+          where: { email },
           data: {
             email_verified: true,
             plan: 'pro',
