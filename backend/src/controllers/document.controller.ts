@@ -507,7 +507,7 @@ export const getPublicLibrary = async (
     res.status(200).json({
       success: true,
       data: {
-        documents: documents.map((doc) => ({
+        documents: documents.map((doc: any) => ({
           id: doc.id,
           type: doc.type,
           title: doc.title,
