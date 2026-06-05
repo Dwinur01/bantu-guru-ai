@@ -1,6 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
-import { Layers, Users, FileText, Award, Sparkles, ArrowRight } from 'lucide-react';
+import { 
+  Layers, 
+  Users, 
+  FileText, 
+  Award, 
+  Sparkles, 
+  ArrowRight, 
+  Phone, 
+  Mail, 
+  Clock, 
+  MapPin, 
+  Send, 
+  Check 
+} from 'lucide-react';
 import { useAuthStore } from './store/authStore';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
@@ -16,6 +29,8 @@ import { Pricing } from './pages/Pricing';
 import { PaymentConfirm, PaymentSuccess, PaymentFailed } from './pages/Payment';
 import { Billing } from './pages/Billing';
 import { Library } from './pages/Library';
+import { About } from './pages/About';
+import { LearnMore } from './pages/LearnMore';
 
 // Helper: animated count-up
 const AnimatedCounter: React.FC<{ target: number; duration?: number; suffix?: string }> = ({
@@ -59,6 +74,21 @@ const AnimatedCounter: React.FC<{ target: number; duration?: number; suffix?: st
 
 // ── 1. Landing Page ────────────────────────────────────────────────
 const LandingPage: React.FC = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', subject: 'umum', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) return;
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      setFormData({ name: '', email: '', subject: 'umum', message: '' });
+    }, 1500);
+  };
+
   return (
     <div className="min-h-screen font-sans overflow-x-hidden text-slate-900 animate-page">
 
@@ -120,9 +150,9 @@ const LandingPage: React.FC = () => {
               Coba Gratis Sekarang
               <ArrowRight className="w-4 h-4" />
             </Link>
-            <a href="#fitur" className="btn-glow-white inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-base text-slate-800 border border-slate-200">
+            <Link to="/learn-more" className="btn-glow-white inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-base text-slate-800 border border-slate-200 bg-white/95 shadow-sm">
               Pelajari Lebih Lanjut
-            </a>
+            </Link>
           </div>
 
           <div className="hidden lg:flex items-center justify-center gap-4 mt-14 animate-fade-up-4">
@@ -269,8 +299,166 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* HUBUNGI KAMI */}
+      <section id="kontak" className="bg-white py-24 px-6 md:px-12 border-t border-slate-100 relative overflow-hidden">
+        {/* Blobs background */}
+        <div className="absolute top-1/2 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-purple-500/5 rounded-full blur-[80px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-black border border-blue-100 mb-4">
+              💬 HUBUNGI KAMI
+            </span>
+            <h2 className="font-display font-black text-4xl md:text-5xl text-slate-900 tracking-tight">
+              Ada Pertanyaan? <span className="gradient-text-blue">Hubungi Kami</span>
+            </h2>
+            <p className="text-slate-500 mt-3 max-w-lg mx-auto">Kami siap membantu menjawab pertanyaan atau kendala Anda seputar platform GuruBantu AI.</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            {/* Info kontak */}
+            <div className="lg:col-span-5 space-y-8 text-left">
+              <div className="space-y-6">
+                <h3 className="font-display font-black text-xl text-slate-900">Saluran Kontak Resmi</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">
+                  Jangan ragu untuk mengirimkan pesan melalui form di samping, atau hubungi kami secara langsung melalui kontak di bawah ini. Tim support kami akan merespons dalam waktu 1x24 jam.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {[
+                  { icon: Phone, title: 'WhatsApp Support', detail: '+62 821-3277-5342', link: 'https://wa.me/6282132775342', cClass: 'text-emerald-600 bg-emerald-50 border-emerald-100' },
+                  { icon: Mail, title: 'Email Support', detail: 'support@gurubantu.ai', link: 'mailto:support@gurubantu.ai', cClass: 'text-blue-600 bg-blue-50 border-blue-100' },
+                  { icon: Clock, title: 'Jam Layanan', detail: 'Senin - Jumat, 08:00 - 17:00 WIB', link: null, cClass: 'text-amber-600 bg-amber-50 border-amber-100' },
+                  { icon: MapPin, title: 'Lokasi Kantor', detail: 'Jakarta, Indonesia', link: null, cClass: 'text-purple-600 bg-purple-50 border-purple-100' },
+                ].map((item, idx) => {
+                  const Icon = item.icon;
+                  const Content = () => (
+                    <div className="flex items-center gap-4 p-4 bg-slate-50 border border-slate-100 rounded-2xl hover:bg-slate-100/50 transition-colors">
+                      <div className={`w-11 h-11 rounded-xl flex items-center justify-center border ${item.cClass} flex-shrink-0`}>
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <div className="space-y-0.5">
+                        <p className="text-[10px] font-black uppercase text-slate-400 tracking-wider">{item.title}</p>
+                        <p className="text-xs sm:text-sm font-bold text-slate-800">{item.detail}</p>
+                      </div>
+                    </div>
+                  );
+
+                  return item.link ? (
+                    <a key={idx} href={item.link} target="_blank" rel="noopener noreferrer" className="block transition-transform hover:-translate-y-0.5">
+                      <Content />
+                    </a>
+                  ) : (
+                    <div key={idx}>
+                      <Content />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Form kontak */}
+            <div className="lg:col-span-7 bg-[#F8FAFC] border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm hover-card-premium">
+              {isSubmitted ? (
+                <div className="py-12 flex flex-col items-center justify-center text-center space-y-4 animate-page">
+                  <div className="w-16 h-16 rounded-full bg-emerald-50 border-2 border-emerald-500 flex items-center justify-center text-emerald-500 shadow-lg animate-bounce">
+                    <Check className="w-8 h-8" />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="font-display font-black text-xl text-slate-900">Pesan Terkirim!</h3>
+                    <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
+                      Terima kasih atas pesan Anda. Tim dukungan GuruBantu AI akan segera menanggapi melalui email yang telah didaftarkan.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsSubmitted(false)}
+                    className="px-5 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl text-xs font-bold text-slate-700 transition-colors shadow-sm"
+                  >
+                    Kirim Pesan Baru
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5 text-left">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black uppercase text-slate-500 tracking-wider">Nama Lengkap</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Nama Anda..."
+                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-100 outline-none transition-all"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-[10px] font-black uppercase text-slate-500 tracking-wider">Alamat Email</label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="name@example.com"
+                        className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-100 outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-wider">Subjek Pesan</label>
+                    <select
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-100 outline-none transition-all"
+                    >
+                      <option value="umum">Pertanyaan Umum</option>
+                      <option value="kemitraan">Kemitraan Sekolah / KKG</option>
+                      <option value="fitur">Saran Fitur Baru</option>
+                      <option value="kendala">Kendala Akun & Pembayaran</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-wider">Isi Pesan</label>
+                    <textarea
+                      required
+                      rows={4}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Tuliskan detail pertanyaan atau masukan Anda di sini..."
+                      className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs sm:text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-100 outline-none transition-all resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full btn-primary py-3.5 rounded-xl text-xs sm:text-sm font-black text-white flex items-center justify-center gap-2 shadow-lg shadow-blue-500/10 disabled:opacity-75 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Mengirimkan Pesan...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Kirim Pesan</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FOOTER */}
-      <footer id="kontak" className="bg-slate-900 text-white py-10 px-6">
+      <footer className="bg-slate-900 text-white py-10 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
@@ -296,28 +484,7 @@ const LandingPage: React.FC = () => {
   );
 };
 
-// ── 2. About Page ──────────────────────────────────────────────────
-const AboutPage: React.FC = () => {
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 animate-page"
-      style={{background: 'linear-gradient(135deg, #EEF2FF, #E0E7FF, #F0F9FF)'}}>
-      <div className="max-w-md w-full bg-white rounded-3xl border border-slate-100 shadow-2xl p-10 text-center">
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mx-auto mb-6 shadow-glow-blue">
-          <Layers className="w-8 h-8 text-white" />
-        </div>
-        <h2 className="font-display text-2xl font-black text-slate-900 mb-3">Tentang GuruBantu AI</h2>
-        <p className="text-sm text-slate-600 mb-8 leading-relaxed">
-          Platform SaaS yang dirancang khusus untuk membebaskan waktu berharga para guru honorer di Indonesia dari beban administrasi sekolah yang rumit.
-        </p>
-        <Link to="/" className="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-black text-white w-full">
-          ← Kembali ke Home
-        </Link>
-      </div>
-    </div>
-  );
-};
-
-// ── 3. Protected Route ─────────────────────────────────────────────
+// ── 2. Protected Route ─────────────────────────────────────────────
 interface ProtectedRouteProps { children: React.ReactElement; }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
@@ -326,7 +493,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   return children;
 };
 
-// ── 4. Page Loader ─────────────────────────────────────────────────
+// ── 3. Page Loader ─────────────────────────────────────────────────
 const GlobalPageLoader: React.FC = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
@@ -372,7 +539,7 @@ const GlobalPageLoader: React.FC = () => {
   );
 };
 
-// ── 5. App ─────────────────────────────────────────────────────────
+// ── 4. App ─────────────────────────────────────────────────────────
 const App: React.FC = () => {
   return (
     <BrowserRouter>
@@ -380,7 +547,8 @@ const App: React.FC = () => {
       <Routes>
         {/* Public */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/about" element={<AboutPage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/learn-more" element={<LearnMore />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
