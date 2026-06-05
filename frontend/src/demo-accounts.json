@@ -1,0 +1,16 @@
+[
+  {
+    "email": "guru.demo@gurubantu.ai",
+    "password": "Password123",
+    "name": "Guru Honor Demo",
+    "plan": "pro",
+    "quotaRemaining": 100
+  },
+  {
+    "email": "demo.guru@gurubantu.ai",
+    "password": "Password123",
+    "name": "Guru Honor Demo",
+    "plan": "pro",
+    "quotaRemaining": 100
+  }
+]
