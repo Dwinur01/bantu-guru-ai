@@ -119,7 +119,7 @@ export const generateDocument = async (
     let updatedQuotaRemaining = user.quota_remaining;
 
     try {
-      const resultTx = await prisma.$transaction(async (tx) => {
+      const resultTx = await prisma.$transaction(async (tx: any) => {
         // Tentukan judul dokumen
         const mapel = parsedData.identitas?.mapel || inputData.mapel || 'Administrasi';
         const topik = parsedData.identitas?.topik || inputData.topik || 'Topik';
@@ -255,7 +255,7 @@ export const listDocuments = async (
     res.status(200).json({
       success: true,
       data: {
-        documents: docs.map((doc) => ({
+        documents: docs.map((doc: any) => ({
           id: doc.id,
           type: doc.type,
           title: doc.title,
