@@ -56,25 +56,53 @@ api.interceptors.request.use(
               gcsPath: "#"
             }
           };
+        } else if (url.includes('/download')) {
+          responseData = {
+            success: true,
+            data: {
+              signedUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+            }
+          };
+        } else if (url.includes('/share')) {
+          responseData = {
+            success: true,
+            data: {
+              isPublic: true,
+              sharedAt: new Date().toISOString(),
+              message: "Dokumen berhasil dibagikan ke Perpustakaan Guru!"
+            }
+          };
+        } else if (cfg.method?.toLowerCase() === 'delete' && /\/documents\/\d+/.test(url)) {
+          responseData = {
+            success: true,
+            message: "Dokumen berhasil dihapus."
+          };
         } else if (url.includes('/documents')) {
           responseData = {
             success: true,
-            data: [
-              {
-                id: 101,
-                title: "RPP Bahasa Indonesia Kelas VII",
-                type: "rpp",
-                created_at: new Date().toISOString(),
-                is_public: false
-              },
-              {
-                id: 102,
-                title: "Modul Ajar Matematika Fase D",
-                type: "modul-ajar",
-                created_at: new Date(Date.now() - 86400000).toISOString(),
-                is_public: true
-              }
-            ]
+            data: {
+              documents: [
+                {
+                  id: 101,
+                  title: "RPP Bahasa Indonesia Kelas VII",
+                  type: "rpp",
+                  gcsPath: "#",
+                  createdAt: new Date().toISOString(),
+                  isPublic: false,
+                  sharedAt: null
+                },
+                {
+                  id: 102,
+                  title: "Bank Soal Matematika Fase D",
+                  type: "soal",
+                  gcsPath: "#",
+                  createdAt: new Date(Date.now() - 86400000).toISOString(),
+                  isPublic: true,
+                  sharedAt: new Date(Date.now() - 86400000).toISOString()
+                }
+              ],
+              nextCursor: null
+            }
           };
         }
 
