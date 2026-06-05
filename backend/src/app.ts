@@ -53,8 +53,10 @@ app.use('/api', apiRouter);
 app.use(errorHandler);
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`[Server] GuruBantu AI Backend is running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`[Server] GuruBantu AI Backend is running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
+  });
+}
 
 export default app;
