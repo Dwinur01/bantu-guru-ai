@@ -177,9 +177,9 @@ export const LearnMore: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 animate-page">
+    <div className="min-h-screen bg-[#0a0a0f] font-sans text-slate-300 animate-page">
       {/* Header / Hero */}
-      <header className="w-full bg-slate-900 py-20 px-6 text-center text-white relative overflow-hidden">
+      <header className="w-full bg-[#0d0d12] py-20 px-6 text-center text-white relative overflow-hidden border-b border-white/[0.05]">
         {/* Background Blobs */}
         <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[90px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[90px]" />
@@ -211,13 +211,13 @@ export const LearnMore: React.FC = () => {
         {/* Interactive Steps Section */}
         <section className="space-y-10">
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-1 text-blue-600 bg-blue-50 px-3 py-1 rounded-full text-xs font-bold border border-blue-100">
+            <div className="inline-flex items-center gap-1 text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full text-xs font-bold border border-blue-500/20">
               🛠️ ALUR GENERATOR DOKUMEN
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            <h2 className="font-display text-2xl sm:text-3xl font-black text-white tracking-tight">
               3 Langkah Praktis Pembuatan RPP & Soal
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+            <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
               Klik pada setiap langkah di bawah untuk melihat simulasi visual proses kecerdasan buatan kami bekerja.
             </p>
           </div>
@@ -236,8 +236,8 @@ export const LearnMore: React.FC = () => {
                     onClick={() => setActiveStep(idx)}
                     className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 flex items-start gap-4 hover-card-premium ${
                       isActive 
-                        ? 'bg-white border-blue-200 shadow-lg shadow-blue-500/5 ring-1 ring-blue-100' 
-                        : 'bg-white/60 border-slate-200 hover:bg-white'
+                        ? 'bg-[#1c1c24]/90 border-blue-500/50 shadow-lg shadow-blue-500/5 ring-1 ring-blue-500/10 text-white' 
+                        : 'bg-[#131318]/90 border-white/[0.08] text-slate-400 hover:bg-[#1c1c24]/80'
                     }`}
                   >
                     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${step.colorClass} flex items-center justify-center text-white font-black text-sm flex-shrink-0 shadow-md`}>
@@ -245,10 +245,10 @@ export const LearnMore: React.FC = () => {
                     </div>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-black uppercase text-blue-600 tracking-wider">Langkah {step.number}</span>
+                        <span className="text-[10px] font-black uppercase text-blue-400 tracking-wider">Langkah {step.number}</span>
                         {isActive && <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
                       </div>
-                      <h3 className="font-black text-sm text-slate-950">{step.title}</h3>
+                      <h3 className="font-black text-sm text-white">{step.title}</h3>
                       <p className="text-xs text-slate-400">{step.subtitle}</p>
                     </div>
                   </button>
@@ -257,14 +257,14 @@ export const LearnMore: React.FC = () => {
             </div>
 
             {/* Interactive Visual Display */}
-            <div className="lg:col-span-7 bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between min-h-[380px] relative hover-card-premium">
+            <div className="lg:col-span-7 bg-[#131318]/90 border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between min-h-[380px] relative hover-card-premium">
               <div className="absolute top-4 left-4 flex gap-1.5">
                 <span className="w-3 h-3 bg-red-400 rounded-full opacity-60" />
                 <span className="w-3 h-3 bg-amber-400 rounded-full opacity-60" />
                 <span className="w-3 h-3 bg-green-400 rounded-full opacity-60" />
               </div>
               <div className="mb-4 text-right">
-                <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-3 py-1 rounded-full border border-slate-200">
+                <span className="text-[10px] font-bold bg-white/5 border border-white/10 text-slate-400 px-3 py-1 rounded-full">
                   Interactive Simulator
                 </span>
               </div>
@@ -272,13 +272,13 @@ export const LearnMore: React.FC = () => {
               {/* Dynamic Content (Mock Visual & Description) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center flex-grow">
                 <div className="order-2 md:order-1 space-y-3">
-                  <div className="inline-flex items-center gap-1 bg-blue-50 text-blue-600 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <div className="inline-flex items-center gap-1 bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded text-[10px] font-bold">
                     INFO LANGKAH
                   </div>
-                  <h4 className="font-black text-sm text-slate-900 leading-snug">
+                  <h4 className="font-black text-sm text-white leading-snug">
                     {steps[activeStep].title}
                   </h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">
+                  <p className="text-xs text-slate-400 leading-relaxed">
                     {steps[activeStep].description}
                   </p>
                 </div>
@@ -332,13 +332,13 @@ export const LearnMore: React.FC = () => {
         {/* FAQ Accordion Section */}
         <section className="space-y-10">
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-1 text-purple-600 bg-purple-50 px-3 py-1 rounded-full text-xs font-bold border border-purple-100">
+            <div className="inline-flex items-center gap-1 text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full text-xs font-bold border border-purple-500/20">
               💡 PERTANYAAN UMUM
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            <h2 className="font-display text-2xl sm:text-3xl font-black text-white tracking-tight">
               Tanya Jawab Terpopuler
             </h2>
-            <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+            <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
               Temukan jawaban cepat atas pertanyaan Anda tentang platform kecerdasan buatan asisten guru kami.
             </p>
           </div>
@@ -349,14 +349,14 @@ export const LearnMore: React.FC = () => {
               return (
                 <div 
                   key={idx} 
-                  className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm transition-all duration-300"
+                  className="bg-[#131318]/90 border border-white/[0.08] rounded-2xl overflow-hidden shadow-sm transition-all duration-300"
                 >
                   <button
                     onClick={() => toggleFaq(idx)}
-                    className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-bold text-slate-900 text-sm hover:bg-slate-50 transition-colors"
+                    className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-bold text-white text-sm hover:bg-white/5 transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <HelpCircle className="w-4.5 h-4.5 text-blue-500 flex-shrink-0" />
+                      <HelpCircle className="w-4.5 h-4.5 text-blue-400 flex-shrink-0" />
                       <span>{faq.q}</span>
                     </div>
                     {isOpen ? (
@@ -366,7 +366,7 @@ export const LearnMore: React.FC = () => {
                     )}
                   </button>
                   {isOpen && (
-                    <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-slate-500 leading-relaxed border-t border-slate-50 bg-slate-50/50 animate-fade-in">
+                    <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-white/[0.05] bg-white/[0.02] animate-fade-in">
                       {faq.a}
                     </div>
                   )}
@@ -377,7 +377,7 @@ export const LearnMore: React.FC = () => {
         </section>
 
         {/* Call to Action */}
-        <section className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden shadow-premium">
+        <section className="bg-gradient-to-br from-[#131318] to-[#0d0d12] border border-white/[0.08] text-white rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden shadow-premium">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/10 to-purple-600/10 blur-xl" />
           <div className="space-y-6 relative z-10">
             <h3 className="font-display text-2xl sm:text-3xl font-black tracking-tight">Sudah Siap Memulai?</h3>
@@ -388,7 +388,7 @@ export const LearnMore: React.FC = () => {
               <Link to="/register" className="btn-primary px-8 py-3.5 rounded-xl text-xs font-bold text-white shadow-lg shadow-blue-500/10 hover:shadow-xl">
                 Daftar Akun Gratis
               </Link>
-              <Link to="/about" className="btn-glow-white px-6 py-3.5 rounded-xl text-xs font-bold text-slate-800 border border-slate-200 bg-white/90">
+              <Link to="/about" className="px-6 py-3.5 rounded-xl text-xs font-bold text-white border border-white/10 bg-white/5 hover:bg-white/10 transition-colors">
                 Tentang Kami
               </Link>
             </div>

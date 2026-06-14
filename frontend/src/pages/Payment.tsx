@@ -11,19 +11,19 @@ const PLAN_CONFIG: Record<string, {
 }> = {
   saset: {
     name: 'Saset', price: 'Rp 15.000', period: '/ minggu', quota: '25 dokumen/minggu',
-    color: 'text-[#D97706]', bg: 'bg-[#FFF8E7]', border: 'border-[#FDE68A]',
+    color: 'text-amber-400', bg: 'bg-[#1E1B15]', border: 'border-amber-500/30',
     icon: Zap,
     features: ['25 dokumen per minggu', 'RPP Kurikulum Merdeka', 'Soal Ujian + Rubrik', 'Download .docx'],
   },
   basic: {
     name: 'Basic', price: 'Rp 29.000', period: '/ bulan', quota: 'Unlimited dokumen',
-    color: 'text-brand-red', bg: 'bg-brand-pale', border: 'border-brand-red',
+    color: 'text-blue-400', bg: 'bg-[#121217]', border: 'border-blue-500/30',
     icon: Sparkles,
     features: ['Dokumen unlimited', 'RPP Kurikulum Merdeka', 'Soal Ujian + Rubrik', 'Download .docx', 'Prioritas AI', 'Email support'],
   },
   pro: {
     name: 'Pro', price: 'Rp 49.000', period: '/ bulan', quota: 'Unlimited + Fitur Pro',
-    color: 'text-[#7C3AED]', bg: 'bg-[#F5F3FF]', border: 'border-[#DDD6FE]',
+    color: 'text-purple-400', bg: 'bg-[#0B0B0F]', border: 'border-purple-500/30',
     icon: Crown,
     features: ['Semua fitur Basic', 'Template eksklusif KKG', 'Format Kemendikbud terbaru', 'Prioritas 24/7'],
   },
@@ -80,11 +80,11 @@ export const PaymentConfirm: React.FC = () => {
         </button>
 
         {/* Card Konfirmasi */}
-        <div className="bg-white rounded-2xl border border-rule shadow-sm overflow-hidden">
+        <div className="bg-[#131318]/90 rounded-2xl border border-[#272730] shadow-sm overflow-hidden">
           {/* Header Plan */}
           <div className={`p-6 ${config.bg} border-b ${config.border}`}>
             <div className="flex items-center gap-3">
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 ${config.border} bg-white`}>
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 ${config.border} bg-[#0B0B0F]/70`}>
                 <Icon className={`w-6 h-6 ${config.color}`} />
               </div>
               <div>
@@ -97,7 +97,7 @@ export const PaymentConfirm: React.FC = () => {
           {/* Detail */}
           <div className="p-6 space-y-5">
             {/* Harga */}
-            <div className="flex items-center justify-between py-3 border-b border-rule">
+            <div className="flex items-center justify-between py-3 border-b border-white/5">
               <span className="text-sm text-muted font-medium">Total Pembayaran</span>
               <div className="text-right">
                 <div className={`text-2xl font-black ${config.color}`}>{config.price}</div>
@@ -111,7 +111,7 @@ export const PaymentConfirm: React.FC = () => {
               <ul className="space-y-1.5">
                 {config.features.map((f) => (
                   <li key={f} className="flex items-center gap-2 text-sm text-ink">
-                    <CheckCircle className="w-4 h-4 text-success flex-shrink-0" />
+                    <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                     {f}
                   </li>
                 ))}
@@ -119,7 +119,7 @@ export const PaymentConfirm: React.FC = () => {
             </div>
 
             {/* Info User */}
-            <div className="bg-neutral-50 rounded-xl p-3 text-xs text-muted space-y-1 border border-rule">
+            <div className="bg-[#0B0B0F]/60 rounded-xl p-3 text-xs text-muted space-y-1 border border-white/5">
               <div className="flex justify-between">
                 <span>Akun</span>
                 <span className="font-medium text-ink">{user?.email}</span>
@@ -132,7 +132,7 @@ export const PaymentConfirm: React.FC = () => {
 
             {/* Error */}
             {error && (
-              <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl p-3 text-sm text-red-700">
+              <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-sm text-red-400">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0" />
                 {error}
               </div>
@@ -143,10 +143,10 @@ export const PaymentConfirm: React.FC = () => {
               id="payment-confirm-btn"
               onClick={handlePay}
               disabled={isLoading}
-              className={`w-full py-3.5 rounded-xl text-white font-bold text-sm transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
-                plan === 'pro' ? 'bg-[#7C3AED] hover:bg-[#6D28D9]' :
-                plan === 'basic' ? 'bg-brand-red hover:bg-blue-700' :
-                'bg-[#D97706] hover:bg-[#B45309]'
+              className={`w-full py-3.5 rounded-xl font-extrabold text-sm transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
+                plan === 'pro' ? 'bg-[#6B21A8] hover:bg-[#581C87] text-white' :
+                plan === 'basic' ? 'bg-brand-red hover:bg-blue-400 text-slate-950' :
+                'bg-[#EA580C] hover:bg-[#D97706] text-white'
               }`}
             >
               {isLoading ? (
@@ -205,18 +205,18 @@ export const PaymentSuccess: React.FC = () => {
   }, [pollCount, orderId, navigate, user, accessToken, setAuth]);
 
   return (
-    <div className="min-h-screen bg-page flex items-center justify-center p-4">
+    <div className="min-h-screen bg-page flex items-center justify-center p-4 text-white">
       <div className="w-full max-w-md text-center space-y-6">
         {status === 'active' ? (
           <>
-            <div className="w-20 h-20 bg-[#E8F5EE] rounded-full flex items-center justify-center mx-auto shadow-lg">
-              <CheckCircle className="w-10 h-10 text-success" />
+            <div className="w-20 h-20 bg-emerald-500/15 rounded-full flex items-center justify-center mx-auto shadow-lg">
+              <CheckCircle className="w-10 h-10 text-emerald-400" />
             </div>
             <div className="space-y-2">
               <h1 className="font-display font-black text-2xl text-ink">Pembayaran Berhasil! 🎉</h1>
               <p className="text-muted text-sm">Paket langganan Anda telah aktif. Kuota telah diperbarui.</p>
             </div>
-            <div className="bg-white border border-rule rounded-2xl p-5 text-left space-y-2">
+            <div className="bg-[#131318]/90 border border-white/5 rounded-2xl p-5 text-left space-y-2">
               <p className="text-xs text-muted font-semibold uppercase tracking-wider">Order ID</p>
               <p className="font-mono text-sm text-ink font-bold">{orderId}</p>
             </div>
@@ -224,29 +224,29 @@ export const PaymentSuccess: React.FC = () => {
               <button
                 id="payment-success-generate-btn"
                 onClick={() => navigate('/rpp')}
-                className="w-full py-3 bg-brand-red text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-all"
+                className="w-full py-3 bg-brand-red text-slate-950 rounded-xl font-bold text-sm hover:bg-blue-400 transition-all"
               >
                 Mulai Buat Dokumen →
               </button>
-              <button onClick={() => navigate('/dashboard')} className="w-full py-2.5 border border-rule rounded-xl text-sm font-medium text-muted hover:bg-neutral-50 transition-colors">
+              <button onClick={() => navigate('/dashboard')} className="w-full py-2.5 border border-white/5 rounded-xl text-sm font-medium text-muted hover:bg-white/5 transition-colors">
                 Kembali ke Dashboard
               </button>
             </div>
           </>
         ) : status === 'pending' ? (
           <>
-            <div className="w-20 h-20 bg-[#FFF8E7] rounded-full flex items-center justify-center mx-auto">
-              <Clock className="w-10 h-10 text-[#D97706]" />
+            <div className="w-20 h-20 bg-amber-500/15 rounded-full flex items-center justify-center mx-auto">
+              <Clock className="w-10 h-10 text-amber-400" />
             </div>
             <h1 className="font-display font-black text-2xl text-ink">Menunggu Konfirmasi</h1>
             <p className="text-muted text-sm max-w-sm mx-auto">Pembayaran Anda sedang diverifikasi. Biasanya selesai dalam 1-5 menit. Cek email Anda untuk konfirmasi.</p>
-            <button onClick={() => navigate('/dashboard')} className="w-full py-3 bg-brand-red text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-all">
+            <button onClick={() => navigate('/dashboard')} className="w-full py-3 bg-brand-red text-slate-950 rounded-xl font-bold text-sm hover:bg-blue-400 transition-all">
               Kembali ke Dashboard
             </button>
           </>
         ) : (
           <>
-            <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto">
+            <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto">
               <Loader2 className="w-10 h-10 text-muted animate-spin" />
             </div>
             <h1 className="font-display font-black text-2xl text-ink">Memverifikasi Pembayaran...</h1>
@@ -265,17 +265,17 @@ export const PaymentFailed: React.FC = () => {
   const orderId = searchParams.get('order_id') || '';
 
   return (
-    <div className="min-h-screen bg-page flex items-center justify-center p-4">
+    <div className="min-h-screen bg-page flex items-center justify-center p-4 text-white">
       <div className="w-full max-w-md text-center space-y-6">
-        <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto">
-          <XCircle className="w-10 h-10 text-error" />
+        <div className="w-20 h-20 bg-red-500/15 rounded-full flex items-center justify-center mx-auto">
+          <XCircle className="w-10 h-10 text-red-400" />
         </div>
         <div className="space-y-2">
           <h1 className="font-display font-black text-2xl text-ink">Pembayaran Gagal</h1>
           <p className="text-muted text-sm">Transaksi tidak dapat diproses. Tidak ada biaya yang dikenakan.</p>
         </div>
         {orderId && (
-          <div className="bg-white border border-rule rounded-2xl p-4 text-left">
+          <div className="bg-[#131318]/90 border border-white/5 rounded-2xl p-4 text-left">
             <p className="text-xs text-muted font-semibold uppercase tracking-wider">Order ID</p>
             <p className="font-mono text-sm text-ink font-bold mt-1">{orderId}</p>
           </div>
@@ -288,7 +288,7 @@ export const PaymentFailed: React.FC = () => {
           >
             Coba Bayar Lagi
           </button>
-          <button onClick={() => navigate('/dashboard')} className="w-full py-2.5 border border-rule rounded-xl text-sm font-medium text-muted hover:bg-neutral-50 transition-colors">
+          <button onClick={() => navigate('/dashboard')} className="w-full py-2.5 border border-white/5 rounded-xl text-sm font-medium text-muted hover:bg-white/5 transition-colors">
             Kembali ke Dashboard
           </button>
         </div>

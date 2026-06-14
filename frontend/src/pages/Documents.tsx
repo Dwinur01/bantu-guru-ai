@@ -192,21 +192,21 @@ export const Documents: React.FC = () => {
   );
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
+    <div className="space-y-6 animate-page text-white">
       {/* Header & Back Button */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="space-y-1 text-left">
           <Link 
             to="/dashboard" 
-            className="inline-flex items-center gap-1 text-sm font-bold text-brand-mid hover:underline mb-1"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-brand-red transition-colors bg-white/5 hover:bg-white/10 border border-white/5 px-3 py-1.5 rounded-xl shadow-sm backdrop-blur-md mb-1"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 text-slate-500" />
             <span>Kembali ke Dashboard</span>
           </Link>
-          <h2 className="font-display text-3xl font-black text-ink tracking-tight leading-tight">
+          <h2 className="font-display text-3xl font-black text-white tracking-tight leading-tight">
             Riwayat Administrasi Guru
           </h2>
-          <p className="text-sm text-muted">
+          <p className="text-sm text-slate-400">
             Kelola, unduh ulang, dan hapus berkas bank soal atau RPP yang telah Anda generate sebelumnya.
           </p>
         </div>
@@ -214,7 +214,7 @@ export const Documents: React.FC = () => {
 
       {/* Error Alert */}
       {errorMsg && (
-        <div className="p-4 bg-error-bg border border-error rounded-xl flex items-start gap-2.5 text-error">
+        <div className="p-4 bg-red-950/40 border border-red-500/30 rounded-xl flex items-start gap-2.5 text-red-400 animate-scale-in">
           <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div className="text-sm font-semibold">{errorMsg}</div>
         </div>
@@ -222,33 +222,33 @@ export const Documents: React.FC = () => {
 
       {/* Stats Summary Cards (Only visible if loading succeeds) */}
       {!isLoading && documents.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white border border-rule rounded-xl p-4 flex items-center justify-between shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+          <div className="glass-card border border-white/5 rounded-xl p-4 flex items-center justify-between shadow-premium">
             <div>
-              <span className="text-xs text-muted font-bold uppercase tracking-wide">Total Riwayat Terload</span>
-              <h4 className="text-2xl font-black text-ink mt-0.5">{stats.total} Dokumen</h4>
+              <span className="text-xs text-slate-500 font-bold uppercase tracking-wide">Total Riwayat Terload</span>
+              <h4 className="text-2xl font-black text-white mt-0.5">{stats.total} Dokumen</h4>
             </div>
-            <div className="p-2.5 bg-neutral-50 border border-rule/50 text-muted rounded-lg">
+            <div className="p-2.5 bg-white/5 border border-white/5 text-slate-400 rounded-lg">
               <FolderOpen className="w-5 h-5" />
             </div>
           </div>
 
-          <div className="bg-white border border-rule rounded-xl p-4 flex items-center justify-between shadow-sm">
+          <div className="glass-card border border-white/5 rounded-xl p-4 flex items-center justify-between shadow-premium">
             <div>
-              <span className="text-xs text-muted font-bold uppercase tracking-wide">Total RPP Terload</span>
-              <h4 className="text-2xl font-black text-brand-mid mt-0.5">{stats.rpp} Modul</h4>
+              <span className="text-xs text-slate-500 font-bold uppercase tracking-wide">Total RPP Terload</span>
+              <h4 className="text-2xl font-black text-brand-red mt-0.5">{stats.rpp} Modul</h4>
             </div>
-            <div className="p-2.5 bg-[#EBF3FB] text-brand-mid rounded-lg">
+            <div className="p-2.5 bg-[#00f2ff]/10 text-brand-red rounded-lg">
               <FileText className="w-5 h-5" />
             </div>
           </div>
 
-          <div className="bg-white border border-rule rounded-xl p-4 flex items-center justify-between shadow-sm">
+          <div className="glass-card border border-white/5 rounded-xl p-4 flex items-center justify-between shadow-premium">
             <div>
-              <span className="text-xs text-muted font-bold uppercase tracking-wide">Total Soal Terload</span>
-              <h4 className="text-2xl font-black text-[#1A7A4A] mt-0.5">{stats.soal} Ujian</h4>
+              <span className="text-xs text-slate-500 font-bold uppercase tracking-wide">Total Soal Terload</span>
+              <h4 className="text-2xl font-black text-emerald-400 mt-0.5">{stats.soal} Ujian</h4>
             </div>
-            <div className="p-2.5 bg-[#E8F5EE] text-[#1A7A4A] rounded-lg">
+            <div className="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-lg">
               <FileQuestion className="w-5 h-5" />
             </div>
           </div>
@@ -256,16 +256,16 @@ export const Documents: React.FC = () => {
       )}
 
       {/* Filter & Search Bar */}
-      <div className="bg-white border border-rule rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+      <div className="glass-card border border-white/5 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-premium">
         {/* Search */}
-        <div className="relative w-full md:max-w-xs">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+        <div className="relative w-full md:max-w-xs text-left">
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 z-10" />
           <input
             type="text"
             placeholder="Cari judul berkas..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm text-ink bg-white border border-rule rounded-lg focus:outline-none focus:border-brand-mid focus:ring-2 focus:ring-brand-mid/20 min-h-[44px]"
+            className="w-full pl-9 pr-4 py-2 text-sm text-white input-premium min-h-[44px]"
           />
         </div>
 
@@ -275,8 +275,8 @@ export const Documents: React.FC = () => {
             onClick={() => setFilterType('all')}
             className={`px-4 py-2 text-xs font-bold rounded-lg border min-h-[44px] transition-all whitespace-nowrap ${
               filterType === 'all'
-                ? 'bg-brand-dark text-white border-brand-dark'
-                : 'bg-white text-muted border-rule hover:bg-neutral-50'
+                ? 'bg-brand-red text-slate-950 border-brand-red shadow-glow-blue/20'
+                : 'bg-white/5 text-slate-400 border-white/5 hover:bg-[#131318] hover:text-white'
             }`}
           >
             Semua Dokumen
@@ -286,8 +286,8 @@ export const Documents: React.FC = () => {
             onClick={() => setFilterType('rpp')}
             className={`px-4 py-2 text-xs font-bold rounded-lg border min-h-[44px] transition-all whitespace-nowrap ${
               filterType === 'rpp'
-                ? 'bg-brand-mid text-white border-brand-mid'
-                : 'bg-white text-muted border-rule hover:bg-neutral-50'
+                ? 'bg-brand-mid text-white border-brand-mid shadow-glow-purple/20'
+                : 'bg-white/5 text-slate-400 border-white/5 hover:bg-[#131318] hover:text-white'
             }`}
           >
             Rencana Pelaksanaan Pembelajaran (RPP)
@@ -297,8 +297,8 @@ export const Documents: React.FC = () => {
             onClick={() => setFilterType('soal')}
             className={`px-4 py-2 text-xs font-bold rounded-lg border min-h-[44px] transition-all whitespace-nowrap ${
               filterType === 'soal'
-                ? 'bg-[#1A7A4A] text-white border-[#1A7A4A]'
-                : 'bg-white text-muted border-rule hover:bg-neutral-50'
+                ? 'bg-emerald-500 text-slate-950 border-emerald-500 shadow-glow-green/20'
+                : 'bg-white/5 text-slate-400 border-white/5 hover:bg-[#131318] hover:text-white'
             }`}
           >
             Bank Soal Ujian
@@ -309,19 +309,19 @@ export const Documents: React.FC = () => {
       {/* Main Grid / List */}
       {isLoading ? (
         <div className="py-20 flex flex-col items-center justify-center gap-3">
-          <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
-          <p className="text-sm font-semibold text-muted">Menyinkronkan riwayat dokumen...</p>
+          <Loader2 className="w-10 h-10 text-brand-red animate-spin" />
+          <p className="text-sm font-semibold text-slate-450">Menyinkronkan riwayat dokumen...</p>
         </div>
       ) : filteredDocs.length === 0 ? (
         /* Empty State */
-        <div className="bg-white border border-rule rounded-xl p-8 sm:p-14 text-center shadow-sm flex flex-col items-center justify-center max-w-2xl mx-auto">
-          <div className="w-16 h-16 rounded-full bg-slate-50 text-blue-600 flex items-center justify-center mb-5 border border-slate-200">
+        <div className="glass-card border border-white/5 rounded-xl p-8 sm:p-14 text-center shadow-premium flex flex-col items-center justify-center max-w-2xl mx-auto">
+          <div className="w-16 h-16 rounded-full bg-white/5 text-brand-red flex items-center justify-center mb-5 border border-white/5">
             <FolderOpen className="w-8 h-8" />
           </div>
-          <h4 className="text-base font-bold text-ink mb-2">
+          <h4 className="text-base font-bold text-white mb-2">
             Tidak Ada Dokumen
           </h4>
-          <p className="text-sm text-muted max-w-sm mx-auto mb-6 leading-relaxed">
+          <p className="text-sm text-slate-400 max-w-sm mx-auto mb-6 leading-relaxed">
             {searchQuery 
               ? 'Tidak ada dokumen yang cocok dengan kata kunci pencarian Anda.' 
               : 'Mulai buat berkas kurikulum baru dan hemat ribuan jam kerja administrasi Anda sekarang!'}
@@ -330,13 +330,13 @@ export const Documents: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3 justify-center">
               <Link 
                 to="/rpp"
-                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-blue-600 text-white font-bold text-sm rounded-xl min-h-[44px] shadow-lg shadow-blue-500/10 hover:bg-blue-700 hover:shadow-xl transition-all"
+                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-brand-red text-slate-950 font-bold text-sm rounded-xl min-h-[44px] shadow-lg hover:shadow-xl transition-all"
               >
                 <span>Generate RPP</span>
               </Link>
               <Link 
                 to="/soal"
-                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-brand-dark text-white font-semibold text-sm rounded-lg min-h-[44px] hover:bg-[#153857] transition-all"
+                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-white/5 border border-white/5 text-slate-300 font-semibold text-sm rounded-xl min-h-[44px] hover:bg-white/10 transition-all"
               >
                 <span>Generate Soal</span>
               </Link>
@@ -360,11 +360,11 @@ export const Documents: React.FC = () => {
               return (
                 <div 
                   key={doc.id}
-                  className={`bg-white border border-rule rounded-xl p-4 flex flex-col justify-between gap-4 hover-card-premium ${staggerClass}`}
+                  className={`glass-card border border-white/5 rounded-xl p-4 flex flex-col justify-between gap-4 hover-card-premium ${staggerClass}`}
                 >
                   <div className="flex items-start gap-3.5">
                     <div className={`p-2.5 rounded-lg flex-shrink-0 ${
-                      doc.type === 'rpp' ? 'bg-[#EBF3FB] text-brand-mid' : 'bg-[#E8F5EE] text-[#1A7A4A]'
+                      doc.type === 'rpp' ? 'bg-[#00f2ff]/10 text-[#00f2ff]' : 'bg-emerald-500/10 text-emerald-400'
                     }`}>
                       {doc.type === 'rpp' ? (
                         <FileText className="w-5 h-5" />
@@ -377,29 +377,29 @@ export const Documents: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${
                           doc.type === 'rpp' 
-                            ? 'bg-[#EBF3FB] text-brand-mid border border-brand-mid/10' 
-                            : 'bg-[#E8F5EE] text-[#1A7A4A] border border-[#1A7A4A]/10'
+                            ? 'bg-[#00f2ff]/10 text-brand-red border border-brand-red/20' 
+                            : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
                         }`}>
                           {doc.type === 'rpp' ? 'RPP' : 'SOAL'}
                         </span>
                         
-                        <span className="text-[10px] text-muted flex items-center gap-1 font-semibold">
-                          <Calendar className="w-3 h-3" />
+                        <span className="text-[10px] text-slate-500 flex items-center gap-1 font-semibold">
+                          <Calendar className="w-3 h-3 text-slate-500" />
                           {dateFormatted}
                         </span>
                       </div>
                       
-                      <h4 className="text-sm font-bold text-ink truncate" title={doc.title}>
+                      <h4 className="text-sm font-bold text-white truncate" title={doc.title}>
                         {doc.title}
                       </h4>
                     </div>
                   </div>
 
                   {/* Actions footer inside card */}
-                  <div className="flex items-center justify-between pt-3 border-t border-rule/35">
+                  <div className="flex items-center justify-between pt-3 border-t border-white/5">
                     <button
                       onClick={() => setDocumentToDelete(doc)}
-                      className="inline-flex items-center justify-center p-2 text-neutral-400 hover:text-red-500 hover:bg-error-bg rounded-lg transition-colors min-h-[44px] min-w-[44px]"
+                      className="inline-flex items-center justify-center p-2 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors min-h-[44px] min-w-[44px]"
                       title="Hapus Dokumen"
                     >
                       <Trash2 className="w-4.5 h-4.5" />
@@ -413,8 +413,8 @@ export const Documents: React.FC = () => {
                         title={doc.isPublic ? 'Sembunyikan dari Perpustakaan' : 'Bagikan ke Perpustakaan Guru'}
                         className={`inline-flex items-center justify-center gap-1.5 px-3 py-2 border rounded-lg text-xs font-bold min-h-[44px] transition-colors disabled:opacity-50 ${
                           doc.isPublic
-                            ? 'border-[#1A7A4A]/30 text-[#1A7A4A] bg-[#E8F5EE]/60 hover:bg-[#E8F5EE]'
-                            : 'border-rule text-muted hover:bg-neutral-50 hover:text-ink'
+                            ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20'
+                            : 'border-white/5 text-slate-400 hover:bg-[#131318] hover:text-white bg-[#131318]/40'
                         }`}
                       >
                         {sharingId === doc.id ? (
@@ -434,8 +434,8 @@ export const Documents: React.FC = () => {
                         onClick={() => handleDownload(doc.id)}
                         className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 border rounded-lg text-xs font-bold min-h-[44px] transition-colors ${
                           doc.type === 'rpp' 
-                            ? 'border-brand-mid/30 text-brand-mid hover:bg-[#EBF3FB]/50'
-                            : 'border-[#1A7A4A]/30 text-[#1A7A4A] hover:bg-[#E8F5EE]/50'
+                            ? 'border-[#00f2ff]/30 text-[#00f2ff] hover:bg-[#00f2ff]/10'
+                            : 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10'
                         }`}
                       >
                         <Download className="w-3.5 h-3.5" />
@@ -454,11 +454,11 @@ export const Documents: React.FC = () => {
               <button
                 onClick={handleLoadMore}
                 disabled={isLoadingMore}
-                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white border border-rule text-ink font-bold text-xs rounded-lg min-h-[44px] shadow-sm hover:bg-neutral-50 transition-colors disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white/5 border border-white/5 text-slate-350 font-bold text-xs rounded-xl min-h-[44px] shadow-sm hover:bg-white/10 hover:text-white transition-colors disabled:opacity-50"
               >
                 {isLoadingMore ? (
                   <>
-                    <Loader2 className="w-4 h-4 text-blue-600 animate-spin" />
+                    <Loader2 className="w-4 h-4 text-brand-red animate-spin" />
                     <span>Memuat berkas selanjutnya...</span>
                   </>
                 ) : (
@@ -472,16 +472,16 @@ export const Documents: React.FC = () => {
 
       {/* Dangerous Confirmation Modal Hapus */}
       {documentToDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="bg-white border border-rule rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-xl text-center transform animate-in scale-in-95 duration-150">
-            <div className="w-12 h-12 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto shadow-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-150">
+          <div className="glass-card border border-white/10 rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-xl text-center transform animate-in scale-in-95 duration-150">
+            <div className="w-12 h-12 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center mx-auto shadow-sm border border-red-500/20">
               <AlertTriangle className="w-6 h-6" />
             </div>
 
             <div className="space-y-1">
-              <h4 className="text-lg font-bold text-ink">Hapus Dokumen Permanen?</h4>
-              <p className="text-xs text-muted leading-relaxed">
-                Anda akan menghapus berkas <strong className="text-ink">"{documentToDelete.title}"</strong> secara permanen dari server database dan cloud storage. Tindakan ini tidak dapat dibatalkan.
+              <h4 className="text-lg font-bold text-white">Hapus Dokumen Permanen?</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Anda akan menghapus berkas <strong className="text-white">"{documentToDelete.title}"</strong> secara permanen dari server database dan cloud storage. Tindakan ini tidak dapat dibatalkan.
               </p>
             </div>
 
@@ -489,7 +489,7 @@ export const Documents: React.FC = () => {
               <button
                 onClick={() => setDocumentToDelete(null)}
                 disabled={isDeleting}
-                className="flex-1 px-4 py-2.5 border border-rule text-ink font-semibold text-sm rounded-lg min-h-[44px] hover:bg-neutral-50 transition-colors disabled:opacity-50"
+                className="flex-1 px-4 py-2.5 border border-white/5 text-slate-300 font-semibold text-sm rounded-xl min-h-[44px] hover:bg-white/5 hover:text-white transition-colors disabled:opacity-50"
               >
                 Batal
               </button>

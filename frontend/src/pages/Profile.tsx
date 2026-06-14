@@ -37,10 +37,10 @@ interface ProfileData {
 
 // ─── Plan Config ────────────────────────────────────────────────────────────
 const planConfig: Record<string, { label: string; color: string; bg: string; border: string; icon: React.ElementType }> = {
-  free:  { label: 'Gratis',  color: 'text-neutral-500', bg: 'bg-neutral-100', border: 'border-neutral-200', icon: User },
-  saset: { label: 'Saset',   color: 'text-[#D97706]',   bg: 'bg-[#FFF8E7]',   border: 'border-[#FDE68A]',   icon: Zap },
-  basic: { label: 'Basic',   color: 'text-brand-red',   bg: 'bg-brand-pale',  border: 'border-brand-red/30', icon: Sparkles },
-  pro:   { label: 'Pro',     color: 'text-[#7C3AED]',   bg: 'bg-[#F5F3FF]',   border: 'border-[#DDD6FE]',   icon: Crown },
+  free:  { label: 'Gratis',  color: 'text-slate-400',   bg: 'bg-white/5',          border: 'border-white/10',             icon: User },
+  saset: { label: 'Saset',   color: 'text-amber-400',   bg: 'bg-amber-500/10',     border: 'border-amber-500/20',         icon: Zap },
+  basic: { label: 'Basic',   color: 'text-blue-400',    bg: 'bg-blue-500/10',      border: 'border-blue-500/20',          icon: Sparkles },
+  pro:   { label: 'Pro',     color: 'text-purple-400',  bg: 'bg-purple-500/10',    border: 'border-purple-500/20',        icon: Crown },
 };
 
 // ─── Delete Confirmation Modal ───────────────────────────────────────────────
@@ -61,10 +61,10 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onConfirm, i
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-5 animate-bounce-in">
+      <div className="relative bg-[#131318] border border-[#272730] rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-5 animate-bounce-in">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
-            <AlertTriangle className="w-5 h-5 text-red-600" />
+          <div className="w-11 h-11 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
+            <AlertTriangle className="w-5 h-5 text-red-500" />
           </div>
           <div>
             <h3 className="font-display font-black text-ink text-lg">
@@ -79,7 +79,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onConfirm, i
         </div>
 
         {step === 1 ? (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700 space-y-2">
+          <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-sm text-red-400 space-y-2">
             <p className="font-bold">Dengan menghapus akun, Anda akan kehilangan:</p>
             <ul className="space-y-1 text-xs list-disc list-inside">
               <li>Semua dokumen RPP dan Soal Ujian yang tersimpan</li>
@@ -95,14 +95,14 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, onConfirm, i
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 border border-rule rounded-xl text-sm font-semibold text-ink hover:bg-neutral-50 transition-colors"
+            className="flex-1 py-2.5 border border-white/5 rounded-xl text-sm font-semibold text-slate-350 hover:bg-white/5 transition-colors"
           >
             Batal
           </button>
           {step === 1 && (
             <button
               onClick={onNextStep}
-              className="flex-1 py-2.5 bg-brand-red text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-colors"
+              className="flex-1 py-2.5 bg-brand-red text-slate-950 rounded-xl text-sm font-bold hover:bg-blue-400 transition-colors"
             >
               Lanjutkan
             </button>
@@ -117,12 +117,12 @@ const ConfirmDeleteInput: React.FC<{ onConfirm: () => void; isLoading: boolean }
   const [value, setValue] = useState('');
   return (
     <div className="space-y-3">
-      <p className="text-sm text-ink">Ketik <strong className="text-error font-bold">HAPUS</strong> di bawah untuk konfirmasi:</p>
+      <p className="text-sm text-ink">Ketik <strong className="text-red-500 font-bold">HAPUS</strong> di bawah untuk konfirmasi:</p>
       <input
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="w-full px-4 py-2.5 border-2 border-red-350 rounded-xl text-sm font-mono focus:outline-none focus:border-red-500"
+        className="w-full px-4 py-2.5 bg-[#0a0a0f] border border-red-500/40 rounded-xl text-sm font-mono focus:outline-none focus:border-red-500 text-white"
         placeholder="Ketik HAPUS"
         autoFocus
       />
@@ -253,10 +253,10 @@ export const Profile: React.FC = () => {
     return (
       <div className="max-w-2xl mx-auto space-y-5 animate-pulse">
         {[1,2,3].map(i => (
-          <div key={i} className="bg-white rounded-xl p-6 space-y-4 border border-rule">
-            <div className="h-4 bg-neutral-200 rounded w-1/3" />
-            <div className="h-8 bg-neutral-200 rounded w-2/3" />
-            <div className="h-3 bg-neutral-200 rounded w-full" />
+          <div key={i} className="bg-[#131318]/90 rounded-xl p-6 space-y-4 border border-[#272730]">
+            <div className="h-4 bg-white/5 rounded w-1/3" />
+            <div className="h-8 bg-white/5 rounded w-2/3" />
+            <div className="h-3 bg-white/5 rounded w-full" />
           </div>
         ))}
       </div>
@@ -272,23 +272,23 @@ export const Profile: React.FC = () => {
 
       {/* Delete success notice */}
       {deleteSuccess && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3 text-red-700 text-sm">
+        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-center gap-3 text-red-400 text-sm">
           <AlertTriangle className="w-5 h-5 flex-shrink-0" />
           <span>Permintaan penghapusan akun diterima. Akun akan dihapus dalam 24 jam. Silakan cek email Anda untuk membatalkan jika berubah pikiran.</span>
         </div>
       )}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm flex items-center gap-2">
+        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-400 text-sm flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 flex-shrink-0" />
           {error}
         </div>
       )}
 
       {/* ── 1. Informasi Akun ─────────────────────────────────────────────── */}
-      <div className="bg-white border border-rule rounded-xl p-6 space-y-5 shadow-sm">
+      <div className="bg-[#131318]/90 border border-[#272730] rounded-xl p-6 space-y-5 shadow-sm">
         {/* Avatar + Plan Badge */}
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-brand-pale flex items-center justify-center text-brand-dark text-2xl font-black border border-brand-mid/20 shadow-sm">
+          <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-brand-red text-2xl font-black border border-white/5 shadow-sm">
             {(profile?.name || user?.name || 'G').substring(0, 2).toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
@@ -316,7 +316,7 @@ export const Profile: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-t border-rule" />
+        <div className="border-t border-white/5" />
 
         {/* Info Fields */}
         <div className="space-y-4">
@@ -333,7 +333,7 @@ export const Profile: React.FC = () => {
                       type="text"
                       value={newName}
                       onChange={(e) => { setNewName(e.target.value); setNameError(''); }}
-                      className={`w-full px-3 py-2 border-2 rounded-xl text-sm font-medium focus:outline-none transition-colors ${nameError ? 'border-error' : 'border-slate-200 focus:border-blue-600'}`}
+                      className={`w-full px-3 py-2 bg-[#0a0a0f] border-2 rounded-xl text-sm font-medium focus:outline-none transition-colors ${nameError ? 'border-red-500' : 'border-white/10 focus:border-blue-500 text-white'}`}
                       placeholder="Nama lengkap Anda"
                       autoFocus
                       onKeyDown={(e) => { if (e.key === 'Enter') handleSaveName(); if (e.key === 'Escape') setIsEditingName(false); }}
@@ -349,7 +349,7 @@ export const Profile: React.FC = () => {
                         <Check className="w-3 h-3" />
                         {isSavingName ? 'Menyimpan...' : 'Simpan'}
                       </button>
-                      <button onClick={() => setIsEditingName(false)} className="px-3 py-1.5 border border-rule rounded-lg text-xs font-semibold text-muted hover:bg-neutral-50 transition-colors">
+                      <button onClick={() => setIsEditingName(false)} className="px-3 py-1.5 border border-white/5 rounded-lg text-xs font-semibold text-muted hover:bg-white/5 transition-colors">
                         Batal
                       </button>
                     </div>
@@ -363,7 +363,7 @@ export const Profile: React.FC = () => {
               <button
                 id="edit-name-btn"
                 onClick={handleStartEdit}
-                className="p-2 rounded-lg hover:bg-neutral-100 transition-colors text-muted hover:text-ink flex-shrink-0"
+                className="p-2 rounded-lg hover:bg-white/5 transition-colors text-muted hover:text-ink flex-shrink-0"
                 title="Edit nama"
               >
                 <Edit3 className="w-4 h-4" />
@@ -396,7 +396,7 @@ export const Profile: React.FC = () => {
       </div>
 
       {/* ── 2. Kuota & Status Langganan ────────────────────────────────────── */}
-      <div className="bg-white border border-rule rounded-xl p-6 space-y-4 shadow-sm">
+      <div className="bg-[#131318]/90 border border-[#272730] rounded-xl p-6 space-y-4 shadow-sm">
         <h3 className="font-display font-bold text-base text-ink flex items-center gap-2">
           <Zap className="w-4 h-4 text-brand-red" /> Status Kuota & Langganan
         </h3>
@@ -410,7 +410,7 @@ export const Profile: React.FC = () => {
             </span>
           </div>
           {!isUnlimited && (
-            <div className="w-full h-2.5 bg-neutral-100 rounded-full overflow-hidden border border-rule/50">
+            <div className="w-full h-2.5 bg-white/5 rounded-full overflow-hidden border border-white/5">
               <div
                 className={`h-full rounded-full transition-all duration-700 ${quotaBarColor}`}
                 style={{ width: `${Math.max(2, quotaPct)}%` }}
@@ -432,7 +432,7 @@ export const Profile: React.FC = () => {
             <PlanIcon className={`w-8 h-8 ${cfg.color} opacity-50`} />
           </div>
         ) : (
-          <div className="bg-neutral-50 rounded-xl p-4 border border-rule flex items-center justify-between">
+          <div className="bg-white/5 rounded-xl p-4 border border-white/5 flex items-center justify-between">
             <div>
               <p className="text-xs text-muted font-bold uppercase tracking-wider">Paket Aktif</p>
               <p className="text-sm font-bold text-ink mt-0.5">Gratis — 5 dokumen / bulan</p>
@@ -440,7 +440,7 @@ export const Profile: React.FC = () => {
             <button
               id="profile-upgrade-btn"
               onClick={() => navigate('/pricing')}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-red text-white rounded-lg text-xs font-bold hover:bg-blue-700 transition-all hover:scale-105"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-red text-slate-950 rounded-lg text-xs font-bold hover:bg-blue-400 transition-all hover:scale-105"
             >
               <Zap className="w-3 h-3" /> Upgrade
             </button>
@@ -449,25 +449,25 @@ export const Profile: React.FC = () => {
       </div>
 
       {/* ── 3. Pilihan Paket ────────────────────────────────────────────────── */}
-      <div className="bg-white border border-rule rounded-xl p-6 space-y-4 shadow-sm">
+      <div className="bg-[#131318]/90 border border-[#272730] rounded-xl p-6 space-y-4 shadow-sm">
         <h3 className="font-display font-bold text-base text-ink flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-brand-red" /> Tingkatkan Paket
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
-            { id: 'saset', name: 'Saset', price: 'Rp 15.000', period: '/ minggu', quota: '25 dok/minggu', icon: Zap, color: 'text-[#D97706]', bg: 'bg-[#FFF8E7]', border: 'border-[#FDE68A]', cta: 'bg-[#D97706] hover:bg-[#B45309]' },
-            { id: 'basic', name: 'Basic', price: 'Rp 29.000', period: '/ bulan', quota: 'Unlimited', icon: Sparkles, color: 'text-brand-red', bg: 'bg-brand-pale', border: 'border-brand-red', cta: 'bg-brand-red hover:bg-blue-700', popular: true },
-            { id: 'pro',   name: 'Pro',   price: 'Rp 49.000', period: '/ bulan', quota: 'Unlimited + Pro', icon: Crown, color: 'text-[#7C3AED]', bg: 'bg-[#F5F3FF]', border: 'border-[#DDD6FE]', cta: 'bg-[#7C3AED] hover:bg-[#6D28D9]' },
+            { id: 'saset', name: 'Saset', price: 'Rp 15.000', period: '/ minggu', quota: '25 dok/minggu', icon: Zap, color: 'text-amber-400', bg: 'bg-[#1E1B15]', border: 'border-amber-500/30', cta: 'bg-[#EA580C] hover:bg-[#D97706]' },
+            { id: 'basic', name: 'Basic', price: 'Rp 29.000', period: '/ bulan', quota: 'Unlimited', icon: Sparkles, color: 'text-blue-400', bg: 'bg-[#121217]', border: 'border-blue-500/30', cta: 'bg-[#2563EB] hover:bg-[#1D4ED8]', popular: true },
+            { id: 'pro',   name: 'Pro',   price: 'Rp 49.000', period: '/ bulan', quota: 'Unlimited + Pro', icon: Crown, color: 'text-purple-400', bg: 'bg-[#0B0B0F]', border: 'border-purple-500/30', cta: 'bg-[#6B21A8] hover:bg-[#581C87]' },
           ].map((p) => {
             const Icon = p.icon;
             const isActive = profile?.plan === p.id;
             return (
-              <div key={p.id} className={`relative rounded-xl border-2 ${p.border} ${p.bg} p-4 flex flex-col gap-2 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:border-brand-red/45 ${isActive ? 'ring-2 ring-offset-1 ring-brand-red' : ''}`}>
+              <div key={p.id} className={`relative rounded-xl border-2 ${p.border} ${p.bg} p-4 flex flex-col gap-2 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg ${isActive ? 'ring-2 ring-offset-1 ring-[#00f2ff]' : ''}`}>
                 {p.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-red text-white text-[9px] font-black px-2.5 py-0.5 rounded-full">POPULER</span>
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-red text-slate-950 text-[9px] font-black px-2.5 py-0.5 rounded-full shadow-md">POPULER</span>
                 )}
                 {isActive && (
-                  <span className="absolute -top-3 right-3 bg-success text-white text-[9px] font-black px-2 py-0.5 rounded-full">AKTIF</span>
+                  <span className="absolute -top-3 right-3 bg-success text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-md">AKTIF</span>
                 )}
                 <div className="flex items-center gap-2">
                   <Icon className={`w-4 h-4 ${p.color}`} />
@@ -493,33 +493,33 @@ export const Profile: React.FC = () => {
       </div>
 
       {/* ── 4. Aksi Akun ─────────────────────────────────────────────────────── */}
-      <div className="bg-white border border-rule rounded-xl p-6 space-y-3 shadow-sm">
+      <div className="bg-[#131318]/90 border border-[#272730] rounded-xl p-6 space-y-3 shadow-sm">
         <h3 className="font-display font-bold text-base text-ink">Pengaturan Akun</h3>
 
         <button
           id="profile-logout-btn"
           onClick={handleLogout}
-          className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-rule hover:bg-neutral-50 transition-colors text-sm font-medium text-ink group"
+          className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-white/5 hover:bg-white/5 transition-colors text-sm font-medium text-ink group"
         >
           <div className="flex items-center gap-3">
-            <LogOut className="w-4 h-4 text-muted group-hover:text-brand-red transition-colors" />
+            <LogOut className="w-4 h-4 text-muted group-hover:text-red-400 transition-colors" />
             <span>Keluar dari Akun</span>
           </div>
           <ChevronRight className="w-4 h-4 text-muted" />
         </button>
 
-        <div className="border-t border-rule pt-3">
+        <div className="border-t border-white/5 pt-3">
           <p className="text-xs text-muted mb-2 font-semibold uppercase tracking-wider">Zona Bahaya</p>
           <button
             id="profile-delete-account-btn"
             onClick={() => { setDeleteStep(1); setShowDeleteModal(true); }}
-            className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-red-100 hover:bg-red-50 transition-colors text-sm font-medium text-error group"
+            className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-red-500/10 hover:bg-red-500/5 transition-colors text-sm font-medium text-red-400 group"
           >
             <div className="flex items-center gap-3">
               <Trash2 className="w-4 h-4" />
               <span>Hapus Akun Saya</span>
             </div>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4 text-muted" />
           </button>
           <p className="text-xs text-muted mt-1.5 px-1">Akun akan dihapus permanen setelah 24 jam. Seluruh dokumen dan data Anda akan ikut terhapus.</p>
         </div>

@@ -261,31 +261,31 @@ export const GenerateModulAjar: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-page">
+    <div className="space-y-6 animate-page text-white">
       {/* Tombol Kembali */}
       <div className="flex items-center gap-3">
         <Link
           to="/dashboard"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-purple-600 transition-colors bg-white hover:bg-slate-50 border border-rule/50 px-3 py-1.5 rounded-xl shadow-sm"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-brand-red transition-colors bg-white/5 hover:bg-white/10 border border-white/5 px-3 py-1.5 rounded-xl shadow-sm backdrop-blur-md"
         >
-          <ArrowLeft className="w-4 h-4 text-slate-400" />
+          <ArrowLeft className="w-4 h-4 text-slate-500" />
           <span>Kembali ke Dashboard</span>
         </Link>
       </div>
 
       {/* Judul */}
       <div className="space-y-1">
-        <h2 className="font-display text-3xl font-black text-ink tracking-tight leading-tight">
-          Form Pembuat <span className="text-purple-600">Modul Ajar Otomatis</span>
+        <h2 className="font-display text-3xl font-black text-white tracking-tight leading-tight">
+          Form Pembuat <span className="gradient-text-hero">Modul Ajar Otomatis</span>
         </h2>
-        <p className="text-sm text-muted">
+        <p className="text-sm text-slate-400">
           Isi detail informasi di bawah ini untuk membuat Modul Ajar Kurikulum Merdeka lengkap dalam hitungan detik.
         </p>
       </div>
 
       {/* Error Server */}
       {serverError && (
-        <div className="p-4 bg-error/10 border border-error/20 rounded-xl flex items-start gap-2.5 text-error animate-scale-in">
+        <div className="p-4 bg-red-950/40 border border-red-500/30 rounded-xl flex items-start gap-2.5 text-red-400 animate-scale-in">
           <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div className="text-sm font-semibold">{serverError}</div>
         </div>
@@ -293,35 +293,35 @@ export const GenerateModulAjar: React.FC = () => {
 
       {/* Loading Overlay */}
       {isGenerating && (
-        <div className="glass-card border border-white/50 rounded-2xl p-6 sm:p-12 text-center shadow-premium space-y-8 max-w-2xl mx-auto py-16 animate-fade-up">
+        <div className="glass-card border border-white/5 rounded-2xl p-6 sm:p-12 text-center shadow-premium space-y-8 max-w-2xl mx-auto py-16 animate-fade-up">
           <div className="relative w-20 h-20 mx-auto flex items-center justify-center">
             {/* Ambient Pulsing Aura */}
-            <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-xl animate-pulse" />
-            <div className="absolute -inset-2 rounded-full border border-purple-500/30 animate-spin-slow" />
+            <div className="absolute inset-0 bg-brand-mid/20 rounded-full blur-xl animate-pulse" />
+            <div className="absolute -inset-2 rounded-full border border-brand-mid/30 animate-spin-slow" />
             
-            <Loader2 className="w-14 h-14 text-purple-600 animate-spin relative z-10" />
-            <BookOpen className="w-6 h-6 text-violet-500 absolute animate-bounce-soft z-20" />
+            <Loader2 className="w-14 h-14 text-brand-red animate-spin relative z-10" />
+            <BookOpen className="w-6 h-6 text-brand-mid absolute animate-bounce-soft z-20" />
           </div>
 
           <div className="space-y-3 max-w-md mx-auto">
-            <h3 className="text-xl font-display font-black text-ink tracking-tight transition-all">
+            <h3 className="text-xl font-display font-black text-white tracking-tight transition-all">
               {loadingTexts[currentTextIndex]}
             </h3>
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-sm text-slate-400 leading-relaxed">
               Mesin AI kami sedang memproses data materi Modul Ajar Anda secara atomik. Modul Ajar lengkap dengan format Kemendikbud sedang dibuat.
             </p>
           </div>
 
           <div className="max-w-md mx-auto space-y-2.5">
-            <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-rule/35 relative">
+            <div className="w-full h-3 bg-[#0a0a0f] rounded-full overflow-hidden border border-white/5 relative">
               <div
-                className="h-full bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full transition-all duration-300 ease-out animate-progress-shimmer"
+                className="h-full bg-gradient-to-r from-brand-mid to-brand-navy rounded-full transition-all duration-300 ease-out animate-progress-shimmer"
                 style={{ width: `${loadingProgress}%` }}
               ></div>
             </div>
-            <div className="flex justify-between items-center text-[10px] font-bold text-muted tracking-wider">
+            <div className="flex justify-between items-center text-[10px] font-bold text-slate-500 tracking-wider">
               <span>ESTIMASI WAKTU: ~30 DETIK</span>
-              <span className="text-purple-600">{loadingProgress}% SELESAI</span>
+              <span className="text-brand-red">{loadingProgress}% SELESAI</span>
             </div>
           </div>
         </div>
@@ -331,10 +331,10 @@ export const GenerateModulAjar: React.FC = () => {
       {!isGenerating && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           {/* Sisi Kiri: Form Input */}
-          <div className="glass-card border border-white/50 rounded-2xl p-6 sm:p-8 shadow-premium space-y-6">
+          <div className="glass-card border border-white/5 rounded-2xl p-6 sm:p-8 shadow-premium space-y-6">
             {/* Template Modul Ajar Instan */}
-            <div className="space-y-3 border-b border-rule/50 pb-5">
-              <span className="text-xs text-purple-600 font-bold uppercase tracking-wider block">
+            <div className="space-y-3 border-b border-white/5 pb-5">
+              <span className="text-xs text-brand-red font-bold uppercase tracking-wider block">
                 📚 Modul Ajar Instan (Pilih Template Pengisian Cepat)
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -354,18 +354,18 @@ export const GenerateModulAjar: React.FC = () => {
                         setValue('profilPelajarPancasila', tpl.profilPelajarPancasila);
                       }, 50);
                     }}
-                    className={`p-3 border rounded-xl text-left transition-all duration-200 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-purple-500/10 w-full flex items-center justify-between hover-card-premium ${
+                    className={`p-3 border rounded-xl text-left transition-all duration-200 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-brand-red/10 w-full flex items-center justify-between hover-card-premium ${
                       activeTemplate === tpl.title
-                        ? 'border-purple-500 bg-purple-50/50 shadow-glow-sm border-2'
-                        : 'border-slate-200 hover:border-purple-300 bg-white/60 hover:bg-purple-50/10'
+                        ? 'border-brand-red bg-[#00f2ff]/10 shadow-glow-blue/20 border-2'
+                        : 'border-white/5 hover:border-brand-red/30 bg-[#131318]/40 hover:bg-[#131318]'
                     }`}
                   >
                     <div className="min-w-0 flex-1">
-                      <span className={`font-bold text-xs block truncate ${activeTemplate === tpl.title ? 'text-purple-600' : 'text-slate-800 group-hover:text-purple-600'}`}>{tpl.title}</span>
-                      <span className="text-[9px] text-muted block mt-1">{tpl.mapel} · {tpl.kelas}</span>
+                      <span className={`font-bold text-xs block truncate ${activeTemplate === tpl.title ? 'text-brand-red' : 'text-white group-hover:text-brand-red'}`}>{tpl.title}</span>
+                      <span className="text-[9px] text-slate-400 block mt-1">{tpl.mapel} · {tpl.kelas}</span>
                     </div>
                     {activeTemplate === tpl.title && (
-                      <span className="w-4 h-4 bg-purple-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold animate-scale-check flex-shrink-0 ml-2 shadow-sm shadow-purple-500/30">
+                      <span className="w-4 h-4 bg-brand-red text-slate-950 rounded-full flex items-center justify-center text-[10px] font-bold animate-scale-check flex-shrink-0 ml-2 shadow-sm shadow-brand-red/30">
                         ✓
                       </span>
                     )}
@@ -377,71 +377,71 @@ export const GenerateModulAjar: React.FC = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* 1. Jenjang */}
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="jenjang" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+                <div className="flex flex-col gap-1.5 text-left">
+                  <label htmlFor="jenjang" className="text-xs font-bold text-slate-300 uppercase tracking-wide">
                     Jenjang Sekolah *
                   </label>
                   <select
                     id="jenjang"
-                    className="input-premium w-full px-3.5 py-2.5 text-sm text-ink cursor-pointer min-h-[44px]"
+                    className="input-premium w-full px-3.5 py-2.5 text-sm text-white cursor-pointer min-h-[44px] bg-[#131318]"
                     {...register('jenjang')}
                   >
                     {jenjangOptions.map((opt) => (
-                      <option key={opt} value={opt}>{opt}</option>
+                      <option key={opt} value={opt} className="bg-[#131318] text-white">{opt}</option>
                     ))}
                   </select>
                 </div>
 
                 {/* 2. Kelas (Cascade) */}
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="kelas" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+                <div className="flex flex-col gap-1.5 text-left">
+                  <label htmlFor="kelas" className="text-xs font-bold text-slate-300 uppercase tracking-wide">
                     Kelas *
                   </label>
                   <select
                     id="kelas"
-                    className="input-premium w-full px-3.5 py-2.5 text-sm text-ink cursor-pointer min-h-[44px]"
+                    className="input-premium w-full px-3.5 py-2.5 text-sm text-white cursor-pointer min-h-[44px] bg-[#131318]"
                     {...register('kelas')}
                   >
                     {(kelasOptions[selectedJenjang] || []).map((opt) => (
-                      <option key={opt} value={opt}>{opt}</option>
+                      <option key={opt} value={opt} className="bg-[#131318] text-white">{opt}</option>
                     ))}
                   </select>
                 </div>
               </div>
 
               {/* 3. Mata Pelajaran */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="mapel" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+              <div className="flex flex-col gap-1.5 text-left">
+                <label htmlFor="mapel" className="text-xs font-bold text-slate-300 uppercase tracking-wide">
                   Mata Pelajaran *
                 </label>
                 <select
                   id="mapel"
-                  className="input-premium w-full px-3.5 py-2.5 text-sm text-ink cursor-pointer min-h-[44px]"
+                  className="input-premium w-full px-3.5 py-2.5 text-sm text-white cursor-pointer min-h-[44px] bg-[#131318]"
                   {...register('mapel')}
                 >
                   {(mapelOptions[selectedJenjang] || []).map((opt) => (
-                    <option key={opt} value={opt}>{opt}</option>
+                    <option key={opt} value={opt} className="bg-[#131318] text-white">{opt}</option>
                   ))}
                 </select>
               </div>
 
               {/* 4. Topik dengan Speech-to-Text */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="topik" className="text-xs font-bold text-slate-700 uppercase tracking-wide flex justify-between items-center">
+              <div className="flex flex-col gap-1.5 text-left">
+                <label htmlFor="topik" className="text-xs font-bold text-slate-300 uppercase tracking-wide flex justify-between items-center">
                   <span>Topik Utama Modul Ajar *</span>
                   <button
                     type="button"
                     onClick={startSpeechRecognition}
                     className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold transition-all duration-200 active:scale-95 ${
                       isListening
-                        ? 'bg-purple-600 text-white shadow-sm'
-                        : 'bg-purple-50 text-[#6A3EA1] hover:bg-purple-100'
+                        ? 'bg-red-500 text-white shadow-sm shadow-red-500/20'
+                        : 'bg-white/5 border border-white/10 text-brand-red hover:bg-white/10'
                     }`}
                   >
                     {isListening && (
                       <>
-                        <span className="absolute inset-0 rounded-full bg-purple-500 animate-ripple pointer-events-none" />
-                        <span className="absolute inset-0 rounded-full bg-purple-500 animate-ripple-delay pointer-events-none" />
+                        <span className="absolute inset-0 rounded-full bg-red-500 animate-ripple pointer-events-none" />
+                        <span className="absolute inset-0 rounded-full bg-red-500 animate-ripple-delay pointer-events-none" />
                       </>
                     )}
                     {isListening ? (
@@ -461,13 +461,13 @@ export const GenerateModulAjar: React.FC = () => {
                   id="topik"
                   type="text"
                   placeholder="Misal: Fotosintesis, Sistem Persamaan Linear, Siklus Air"
-                  className={`input-premium w-full px-4 py-2.5 text-sm text-slate-900 min-h-[44px] ${
+                  className={`input-premium w-full px-4 py-2.5 text-sm text-white placeholder-slate-500 min-h-[44px] ${
                     errors.topik ? 'error' : ''
                   }`}
                   {...register('topik')}
                 />
                 {errors.topik && (
-                  <p className="flex items-center gap-1 mt-1 text-xs text-error animate-fade-in">
+                  <p className="flex items-center gap-1 mt-1 text-xs text-red-400 animate-fade-in">
                     <AlertCircle className="w-3.5 h-3.5" />
                     {errors.topik.message}
                   </p>
@@ -475,40 +475,40 @@ export const GenerateModulAjar: React.FC = () => {
               </div>
 
               {/* 5. Alokasi Waktu */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="alokasiWaktu" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+              <div className="flex flex-col gap-1.5 text-left">
+                <label htmlFor="alokasiWaktu" className="text-xs font-bold text-slate-300 uppercase tracking-wide">
                   Alokasi Waktu *
                 </label>
                 <select
                   id="alokasiWaktu"
-                  className="input-premium w-full px-3.5 py-2.5 text-sm text-ink cursor-pointer min-h-[44px]"
+                  className="input-premium w-full px-3.5 py-2.5 text-sm text-white cursor-pointer min-h-[44px] bg-[#131318]"
                   {...register('alokasiWaktu')}
                 >
                   {(alokasiWaktuOptions[selectedJenjang] || []).map((opt) => (
-                    <option key={opt} value={opt}>{opt}</option>
+                    <option key={opt} value={opt} className="bg-[#131318] text-white">{opt}</option>
                   ))}
                 </select>
               </div>
 
               {/* 6. Model Pembelajaran */}
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="modelPembelajaran" className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+              <div className="flex flex-col gap-1.5 text-left">
+                <label htmlFor="modelPembelajaran" className="text-xs font-bold text-slate-300 uppercase tracking-wide">
                   Model Pembelajaran *
                 </label>
                 <select
                   id="modelPembelajaran"
-                  className="input-premium w-full px-3.5 py-2.5 text-sm text-ink cursor-pointer min-h-[44px]"
+                  className="input-premium w-full px-3.5 py-2.5 text-sm text-white cursor-pointer min-h-[44px] bg-[#131318]"
                   {...register('modelPembelajaran')}
                 >
                   {modelPembelajaranOptions.map((opt) => (
-                    <option key={opt} value={opt}>{opt}</option>
+                    <option key={opt} value={opt} className="bg-[#131318] text-white">{opt}</option>
                   ))}
                 </select>
               </div>
 
               {/* 7. Profil Pelajar Pancasila (Multi-checkbox) */}
-              <div className="flex flex-col gap-2">
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">Profil Pelajar Pancasila *</span>
+              <div className="flex flex-col gap-2 text-left">
+                <span className="text-xs font-bold text-slate-300 uppercase tracking-wide">Profil Pelajar Pancasila *</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
                   {profilPelajarPancasilaOptions.map((opt) => {
                     const currentValues = watch('profilPelajarPancasila') || [];
@@ -518,13 +518,13 @@ export const GenerateModulAjar: React.FC = () => {
                         key={opt.id}
                         className={`flex items-center gap-2.5 cursor-pointer select-none px-3 py-2.5 rounded-xl border transition-all duration-150 text-xs font-semibold ${
                           isChecked
-                            ? 'border-purple-500 bg-purple-50/40 text-purple-700'
-                            : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                            ? 'border-brand-red bg-[#00f2ff]/10 text-brand-red'
+                            : 'border-white/5 hover:border-brand-red/30 bg-[#131318]/40 hover:bg-[#131318] text-slate-300'
                         }`}
                       >
                         <input
                           type="checkbox"
-                          className="w-4 h-4 text-purple-600 border-slate-300 rounded cursor-pointer focus:ring-purple-500 accent-purple-600"
+                          className="w-4 h-4 text-brand-red border-white/10 bg-[#0a0a0f] rounded cursor-pointer focus:ring-brand-red accent-brand-red"
                           checked={isChecked}
                           onChange={(e) => handleCheckboxChange(opt.id, e.target.checked)}
                         />
@@ -534,7 +534,7 @@ export const GenerateModulAjar: React.FC = () => {
                   })}
                 </div>
                 {errors.profilPelajarPancasila && (
-                  <p className="flex items-center gap-1 mt-1 text-xs text-error animate-fade-in">
+                  <p className="flex items-center gap-1 mt-1 text-xs text-red-400 animate-fade-in">
                     <AlertCircle className="w-3.5 h-3.5" />
                     {errors.profilPelajarPancasila.message}
                   </p>
@@ -544,8 +544,7 @@ export const GenerateModulAjar: React.FC = () => {
               {/* Tombol Generate */}
               <button
                 type="submit"
-                className="btn-primary w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 text-white font-bold text-sm rounded-xl min-h-[48px] shadow-lg shadow-purple-500/10 hover:shadow-xl mt-4"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #6D28D9)' }}
+                className="btn-primary w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 text-slate-950 font-bold text-sm rounded-xl min-h-[48px] shadow-lg hover:shadow-xl mt-4"
               >
                 <BookOpen className="w-4.5 h-4.5" />
                 <span>Generate Modul Ajar Kurikulum Merdeka</span>
@@ -556,53 +555,53 @@ export const GenerateModulAjar: React.FC = () => {
           {/* Sisi Kanan: Panel Info (Sticky Desktop) */}
           <div className="hidden lg:flex flex-col gap-6 lg:sticky lg:top-20">
             {/* A4 Paper Live Preview */}
-            <div className="glass-card rounded-2xl border border-white/50 shadow-premium overflow-hidden transition-all duration-300 hover:shadow-card-hover text-left flex flex-col">
+            <div className="glass-card rounded-2xl border border-white/10 shadow-premium overflow-hidden transition-all duration-300 hover:shadow-card-hover text-left flex flex-col">
               {/* Header of paper preview */}
-              <div className="bg-gradient-to-r from-purple-600/10 to-indigo-600/5 px-5 py-3.5 border-b border-rule/50 flex justify-between items-center">
+              <div className="bg-gradient-to-r from-brand-red/10 to-brand-mid/5 px-5 py-3.5 border-b border-white/10 flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse" />
-                  <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">Live Draft Preview</span>
+                  <div className="w-2.5 h-2.5 rounded-full bg-brand-red animate-pulse" />
+                  <span className="text-xs font-bold text-slate-300 uppercase tracking-wide">Live Draft Preview</span>
                 </div>
-                <span className="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
+                <span className="text-[10px] font-bold text-brand-red bg-brand-red/10 px-2 py-0.5 rounded-full border border-brand-red/20">
                   UKURAN A4
                 </span>
               </div>
               
               {/* A4 Paper Sheet Body */}
-              <div className="p-8 bg-white min-h-[480px] flex flex-col justify-between relative shadow-inner text-slate-800 font-sans text-xs border-b border-rule/30">
-                <div className="absolute inset-0 opacity-[0.015] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
+              <div className="p-8 bg-white text-slate-800 min-h-[480px] flex flex-col justify-between relative shadow-lg font-sans text-xs border border-slate-200 rounded-xl">
+                <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
                 
                 {/* Modul Ajar Header */}
-                <div className="text-center space-y-1.5 border-b-2 border-slate-900 pb-4 relative">
+                <div className="text-center space-y-1.5 border-b-2 border-slate-300 pb-4 relative">
                   <h4 className="font-extrabold text-[13px] tracking-wide text-slate-900 uppercase">
                     MODUL AJAR KURIKULUM MERDEKA
                   </h4>
-                  <h5 className="font-bold text-[11px] text-slate-700 tracking-wider uppercase">
+                  <h5 className="font-bold text-[11px] text-slate-500 tracking-wider uppercase">
                     Mata Pelajaran: {watchMapel || 'Matematika'}
                   </h5>
-                  <div className="absolute bottom-0.5 left-0 right-0 h-[1px] bg-slate-900" />
+                  <div className="absolute bottom-0.5 left-0 right-0 h-[1px] bg-slate-200" />
                 </div>
 
                 {/* Metadata Grid */}
                 <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 border-b border-slate-200 pb-4 text-[11px]">
                   <div className="space-y-1">
                     <div className="flex justify-between border-b border-slate-100 pb-0.5">
-                      <span className="text-slate-400 font-medium">Jenjang Sekolah</span>
-                      <span className="font-bold text-slate-800">{selectedJenjang || 'SD/SMP/SMA'}</span>
+                      <span className="text-slate-500 font-medium">Jenjang Sekolah</span>
+                      <span className="font-bold text-slate-950">{selectedJenjang || 'SD/SMP/SMA'}</span>
                     </div>
                     <div className="flex justify-between border-b border-slate-100 pb-0.5">
-                      <span className="text-slate-400 font-medium">Kelas / Fase</span>
-                      <span className="font-bold text-slate-800">{watchKelas || 'Kelas I'}</span>
+                      <span className="text-slate-500 font-medium">Kelas / Fase</span>
+                      <span className="font-bold text-slate-950">{watchKelas || 'Kelas I'}</span>
                     </div>
                   </div>
                   <div className="space-y-1">
                     <div className="flex justify-between border-b border-slate-100 pb-0.5">
-                      <span className="text-slate-400 font-medium">Alokasi Waktu</span>
-                      <span className="font-bold text-slate-800">{watchAlokasiWaktu || '2 JP'}</span>
+                      <span className="text-slate-500 font-medium">Alokasi Waktu</span>
+                      <span className="font-bold text-slate-950">{watchAlokasiWaktu || '2 JP'}</span>
                     </div>
                     <div className="flex justify-between border-b border-slate-100 pb-0.5">
-                      <span className="text-slate-400 font-medium">Model Belajar</span>
-                      <span className="font-bold text-slate-800">{watchModelPembelajaran || 'PBL'}</span>
+                      <span className="text-slate-500 font-medium">Model Belajar</span>
+                      <span className="font-bold text-slate-950">{watchModelPembelajaran || 'PBL'}</span>
                     </div>
                   </div>
                 </div>
@@ -612,12 +611,12 @@ export const GenerateModulAjar: React.FC = () => {
                   {/* Topik / Kompetensi */}
                   <div className="space-y-1">
                     <div className="font-extrabold text-[10px] text-slate-900 tracking-wider uppercase flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-600" />
                       1. Tujuan Pembelajaran (TP)
                     </div>
-                    <div className="pl-3.5 text-slate-600 leading-relaxed text-[10.5px]">
+                    <div className="pl-3.5 text-slate-600 leading-relaxed text-[10.5px] text-left">
                       {watchTopik ? (
-                        <p>Siswa mampu memahami, menganalisis, serta menerapkan pengetahuan teoritis mengenai <span className="font-bold text-slate-800">{watchTopik}</span> dalam pemecahan masalah kehidupan sehari-hari.</p>
+                        <p>Siswa mampu memahami, menganalisis, serta menerapkan pengetahuan teoritis mengenai <span className="font-bold text-slate-950">{watchTopik}</span> dalam pemecahan masalah kehidupan sehari-hari.</p>
                       ) : (
                         <div className="space-y-1.5 pt-1 animate-pulse">
                           <div className="h-2.5 bg-slate-100 rounded w-10/12" />
@@ -630,7 +629,7 @@ export const GenerateModulAjar: React.FC = () => {
                   {/* Profil Pelajar Pancasila */}
                   <div className="space-y-1">
                     <div className="font-extrabold text-[10px] text-slate-900 tracking-wider uppercase flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-600" />
                       2. Profil Pelajar Pancasila
                     </div>
                     <div className="pl-3.5 flex flex-wrap gap-1.5 pt-1">
@@ -638,7 +637,7 @@ export const GenerateModulAjar: React.FC = () => {
                         watchProfilPelajarPancasila.map((p: string) => {
                           const label = p.split(',')[0];
                           return (
-                            <span key={p} className="px-2 py-0.5 bg-purple-50 text-[#6A3EA1] font-bold border border-purple-100 rounded-full text-[9px]">
+                            <span key={p} className="px-2 py-0.5 bg-slate-100 text-slate-700 font-bold border border-slate-200 rounded-full text-[9px]">
                               🌱 {label}
                             </span>
                           );
@@ -652,48 +651,48 @@ export const GenerateModulAjar: React.FC = () => {
                   {/* Pertanyaan Pemantik */}
                   <div className="space-y-1">
                     <div className="font-extrabold text-[10px] text-slate-900 tracking-wider uppercase flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-600" />
                       3. Pertanyaan Pemantik
                     </div>
-                    <div className="pl-3.5 text-slate-600 leading-relaxed text-[10.5px] italic">
+                    <div className="pl-3.5 text-slate-600 leading-relaxed text-[10.5px] italic text-left">
                       {watchTopik ? (
                         <p>"Bagaimana peranan penting dari konsep {watchTopik} dalam ekosistem / aktivitas keseharian kita?"</p>
                       ) : (
-                        <div className="h-3.5 bg-slate-50 rounded w-9/12 pt-1 animate-pulse" />
+                        <div className="h-3.5 bg-slate-100 rounded w-9/12 pt-1 animate-pulse" />
                       )}
                     </div>
                   </div>
                 </div>
 
                 {/* Signature Mock */}
-                <div className="mt-6 border-t border-slate-100 pt-3 flex justify-between items-center text-[9px] text-slate-400">
+                <div className="mt-6 border-t border-slate-200 pt-3 flex justify-between items-center text-[9px] text-slate-500">
                   <div>
                     <p>Mengetahui,</p>
                     <p className="font-bold text-slate-700 mt-5">Kepala Sekolah</p>
                   </div>
                   <div className="text-right">
                     <p>Jakarta, ____________ 2026</p>
-                    <p className="font-bold text-purple-600 mt-5">Guru Mata Pelajaran</p>
+                    <p className="font-bold text-slate-700 mt-5">Guru Mata Pelajaran</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Box 1: Panduan Modul Ajar */}
-            <div className="glass-card border border-white/50 rounded-2xl p-5 space-y-4 shadow-sm text-left hover-card-premium">
-              <div className="flex items-center gap-2.5 text-[#6A3EA1]">
+            <div className="glass-card border border-white/10 rounded-2xl p-5 space-y-4 shadow-sm text-left hover-card-premium">
+              <div className="flex items-center gap-2.5 text-brand-red">
                 <Info className="w-5 h-5 animate-pulse" />
-                <h3 className="font-bold text-base text-ink font-display">Panduan Modul Ajar</h3>
+                <h3 className="font-bold text-base text-white font-display">Panduan Modul Ajar</h3>
               </div>
 
-              <div className="space-y-3.5 text-sm leading-relaxed text-muted">
+              <div className="space-y-3.5 text-sm leading-relaxed text-slate-350">
                 <p>
                   Modul Ajar merupakan perluasan RPP Kurikulum Merdeka yang memuat **komponen inti & lampiran** secara lengkap.
                 </p>
 
-                <div className="border-l-2 border-[#6A3EA1] pl-3 space-y-2 mt-2 bg-purple-50/50 p-2.5 rounded-r-xl">
-                  <span className="font-bold text-purple-950 text-xs block">Elemen Kunci Modul Ajar:</span>
-                  <p className="text-xs text-purple-900 leading-relaxed">
+                <div className="border-l-2 border-brand-red pl-3 space-y-2 mt-2 bg-brand-red/5 p-2.5 rounded-r-xl">
+                  <span className="font-bold text-brand-red text-xs block">Elemen Kunci Modul Ajar:</span>
+                  <p className="text-xs text-slate-300 leading-relaxed">
                     - **Pemahaman Bermakna:** Konten manfaat esensial setelah belajar.<br />
                     - **Asesmen Diagnostik:** Mengukur kesiapan kognitif awal siswa.<br />
                     - **Langkah Remedial:** Bantuan belajar diferensiasi siswa tertinggal.
@@ -703,11 +702,11 @@ export const GenerateModulAjar: React.FC = () => {
             </div>
 
             {/* Box 2: Info Keandalan */}
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 flex items-start gap-3.5 shadow-inner text-left">
-              <Sparkles className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
+            <div className="glass-card border border-white/5 bg-[#131318]/40 rounded-xl p-5 flex items-start gap-3.5 shadow-inner text-left">
+              <Sparkles className="w-5 h-5 text-brand-red flex-shrink-0 mt-0.5" />
               <div className="space-y-1">
-                <h4 className="font-bold text-xs text-ink">Keandalan Transaksional</h4>
-                <p className="text-[11px] text-muted leading-relaxed">
+                <h4 className="font-bold text-xs text-white">Keandalan Transaksional</h4>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
                   Batas kuota bulanan Anda hanya akan terpotong setelah file Modul Ajar Word berhasil dikompilasi
                   dan disimpan di cloud. Transaksi Anda 100% aman dari hang/timeout.
                 </p>

@@ -49,23 +49,23 @@ const TYPE_CONFIG: Record<
 > = {
   rpp: {
     label: 'RPP',
-    badgeCls: 'bg-[#EBF3FB] text-brand-mid border border-brand-mid/10',
-    iconBg: 'bg-[#EBF3FB]',
-    iconColor: 'text-brand-mid',
+    badgeCls: 'bg-[#00f2ff]/10 text-[#00f2ff] border border-[#00f2ff]/20',
+    iconBg: 'bg-[#00f2ff]/10',
+    iconColor: 'text-[#00f2ff]',
     Icon: FileText,
   },
   soal: {
     label: 'Soal Ujian',
-    badgeCls: 'bg-[#E8F5EE] text-[#1A7A4A] border border-[#1A7A4A]/10',
-    iconBg: 'bg-[#E8F5EE]',
-    iconColor: 'text-[#1A7A4A]',
+    badgeCls: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
+    iconBg: 'bg-emerald-500/10',
+    iconColor: 'text-emerald-400',
     Icon: FileQuestion,
   },
   modul_ajar: {
     label: 'Modul Ajar',
-    badgeCls: 'bg-purple-50 text-purple-700 border border-purple-200',
-    iconBg: 'bg-purple-50',
-    iconColor: 'text-purple-700',
+    badgeCls: 'bg-[#6366f1]/10 text-[#6366f1] border border-[#6366f1]/20',
+    iconBg: 'bg-[#6366f1]/10',
+    iconColor: 'text-[#6366f1]',
     Icon: BookMarked,
   },
 };
@@ -73,26 +73,26 @@ const TYPE_CONFIG: Record<
 const getTypeConfig = (type: string) =>
   TYPE_CONFIG[type] ?? {
     label: type.toUpperCase(),
-    badgeCls: 'bg-neutral-100 text-neutral-600 border border-neutral-200',
-    iconBg: 'bg-neutral-100',
-    iconColor: 'text-neutral-600',
+    badgeCls: 'bg-white/5 text-slate-350 border border-white/10',
+    iconBg: 'bg-white/5',
+    iconColor: 'text-slate-350',
     Icon: BookOpen,
   };
 
 // ─── Skeleton Card ─────────────────────────────────────────────────────────────
 const SkeletonCard: React.FC = () => (
-  <div className="bg-white border border-rule rounded-xl p-4 shadow-sm flex flex-col gap-4 animate-pulse">
+  <div className="glass-card border border-white/5 rounded-xl p-4 shadow-premium flex flex-col gap-4 animate-pulse">
     <div className="flex items-start gap-3.5">
-      <div className="w-10 h-10 bg-neutral-200 rounded-lg flex-shrink-0" />
+      <div className="w-10 h-10 bg-white/5 rounded-lg flex-shrink-0" />
       <div className="flex-1 space-y-2">
-        <div className="h-3 bg-neutral-200 rounded w-1/4" />
-        <div className="h-4 bg-neutral-200 rounded w-3/4" />
-        <div className="h-3 bg-neutral-200 rounded w-1/2" />
+        <div className="h-3 bg-white/5 rounded w-1/4" />
+        <div className="h-4 bg-white/5 rounded w-3/4" />
+        <div className="h-3 bg-white/5 rounded w-1/2" />
       </div>
     </div>
-    <div className="flex items-center justify-between pt-3 border-t border-rule/35">
-      <div className="h-3 bg-neutral-200 rounded w-24" />
-      <div className="h-8 bg-neutral-200 rounded-lg w-28" />
+    <div className="flex items-center justify-between pt-3 border-t border-white/5">
+      <div className="h-3 bg-white/5 rounded w-24" />
+      <div className="h-8 bg-white/5 rounded-lg w-28" />
     </div>
   </div>
 );
@@ -172,41 +172,41 @@ export const Library: React.FC = () => {
   );
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
+    <div className="space-y-6 animate-page text-white">
       {/* ── Header ── */}
       <div className="space-y-1 text-left">
         <div className="flex items-center gap-2 mb-1">
-          <div className="p-2 bg-[#EBF3FB] text-brand-mid rounded-lg">
+          <div className="p-2 bg-brand-red/10 text-brand-red rounded-lg">
             <BookOpen className="w-5 h-5" />
           </div>
-          <h2 className="font-display text-3xl font-black text-ink tracking-tight leading-tight">
+          <h2 className="font-display text-3xl font-black text-white tracking-tight leading-tight">
             Perpustakaan Guru
           </h2>
         </div>
-        <p className="text-sm text-muted">
+        <p className="text-sm text-slate-400">
           Jelajahi dan unduh dokumen yang dibagikan oleh sesama guru Indonesia. Temukan inspirasi untuk RPP, Soal Ujian, dan Modul Ajar.
         </p>
       </div>
 
       {/* ── Error Alert ── */}
       {errorMsg && (
-        <div className="p-4 bg-error-bg border border-error rounded-xl flex items-start gap-2.5 text-error">
+        <div className="p-4 bg-red-950/40 border border-red-500/30 rounded-xl flex items-start gap-2.5 text-red-400 animate-scale-in">
           <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
           <div className="text-sm font-semibold">{errorMsg}</div>
         </div>
       )}
 
       {/* ── Filter Bar ── */}
-      <div className="bg-white border border-rule rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
+      <div className="glass-card border border-white/5 rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-premium">
         {/* Search */}
-        <div className="relative w-full md:max-w-xs">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+        <div className="relative w-full md:max-w-xs text-left">
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 z-10" />
           <input
             type="text"
             placeholder="Cari judul atau nama guru..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm text-ink bg-white border border-rule rounded-lg focus:outline-none focus:border-brand-mid focus:ring-2 focus:ring-brand-mid/20 min-h-[44px]"
+            className="w-full pl-9 pr-4 py-2 text-sm text-white input-premium min-h-[44px]"
           />
         </div>
 
@@ -218,8 +218,8 @@ export const Library: React.FC = () => {
               onClick={() => setFilterType(tab.value)}
               className={`px-4 py-2 text-xs font-bold rounded-lg border min-h-[44px] transition-all whitespace-nowrap ${
                 filterType === tab.value
-                  ? 'bg-brand-dark text-white border-brand-dark'
-                  : 'bg-white text-muted border-rule hover:bg-neutral-50'
+                  ? 'bg-brand-red text-slate-950 border-brand-red shadow-glow-blue/20'
+                  : 'bg-white/5 text-slate-400 border-white/5 hover:bg-[#131318] hover:text-white'
               }`}
             >
               {tab.label}
@@ -230,11 +230,11 @@ export const Library: React.FC = () => {
 
       {/* ── Count & Stats ── */}
       {!isLoading && pagination && (
-        <div className="flex items-center gap-2 text-sm text-muted font-medium">
-          <Users className="w-4 h-4" />
+        <div className="flex items-center gap-2 text-sm text-slate-450 font-medium">
+          <Users className="w-4 h-4 text-slate-500" />
           <span>
-            Menampilkan <span className="font-bold text-ink">{filteredDocs.length}</span> dari{' '}
-            <span className="font-bold text-ink">{pagination.total}</span> dokumen publik
+            Menampilkan <span className="font-bold text-white">{filteredDocs.length}</span> dari{' '}
+            <span className="font-bold text-white">{pagination.total}</span> dokumen publik
           </span>
         </div>
       )}
@@ -248,14 +248,14 @@ export const Library: React.FC = () => {
         </div>
       ) : filteredDocs.length === 0 ? (
         /* ── Empty State ── */
-        <div className="bg-white border border-rule rounded-xl p-8 sm:p-14 text-center shadow-sm flex flex-col items-center justify-center max-w-2xl mx-auto">
-          <div className="w-16 h-16 rounded-full bg-[#EBF3FB] text-brand-mid flex items-center justify-center mb-5 border border-brand-mid/10">
+        <div className="glass-card border border-white/5 rounded-xl p-8 sm:p-14 text-center shadow-premium flex flex-col items-center justify-center max-w-2xl mx-auto">
+          <div className="w-16 h-16 rounded-full bg-brand-red/10 text-brand-red flex items-center justify-center mb-5 border border-brand-red/20">
             <BookOpen className="w-8 h-8" />
           </div>
-          <h4 className="text-base font-bold text-ink mb-2">
-            {searchQuery ? 'Tidak Ada Hasil Pencarian' : 'Perpustakaan Masih Kosong'}
+          <h4 className="text-base font-bold text-white mb-2">
+            {searchQuery ? 'Tidak Ada Hasil Pencarian' : 'Perpustakaan Guru Masih Kosong'}
           </h4>
-          <p className="text-sm text-muted max-w-sm mx-auto leading-relaxed">
+          <p className="text-sm text-slate-400 max-w-sm mx-auto leading-relaxed">
             {searchQuery
               ? `Tidak ada dokumen yang cocok dengan kata kunci "${searchQuery}". Coba kata kunci lain.`
               : 'Belum ada guru yang membagikan dokumen ke perpustakaan ini. Jadilah yang pertama berbagi!'}
@@ -272,10 +272,10 @@ export const Library: React.FC = () => {
               return (
                 <div
                   key={doc.id}
-                  className={`bg-white border border-rule rounded-xl p-4 flex flex-col justify-between gap-4 hover-card-premium ${staggerClass}`}
+                  className={`glass-card border border-white/5 rounded-xl p-4 flex flex-col justify-between gap-4 hover-card-premium ${staggerClass}`}
                 >
                   {/* Card Top */}
-                  <div className="flex items-start gap-3.5">
+                  <div className="flex items-start gap-3.5 text-left">
                     <div
                       className={`p-2.5 rounded-lg flex-shrink-0 ${cfg.iconBg} ${cfg.iconColor}`}
                     >
@@ -292,7 +292,7 @@ export const Library: React.FC = () => {
 
                       {/* Title */}
                       <h4
-                        className="text-sm font-bold text-ink line-clamp-2 leading-snug"
+                        className="text-sm font-bold text-white line-clamp-2 leading-snug"
                         title={doc.title}
                       >
                         {doc.title}
@@ -300,10 +300,10 @@ export const Library: React.FC = () => {
 
                       {/* Author & Date */}
                       <div className="flex flex-col gap-0.5">
-                        <span className="text-[11px] text-muted font-medium">
-                          oleh <span className="text-ink font-semibold">{doc.authorName}</span>
+                        <span className="text-[11px] text-slate-400 font-medium">
+                          oleh <span className="text-white font-semibold">{doc.authorName}</span>
                         </span>
-                        <span className="text-[10px] text-muted">
+                        <span className="text-[10px] text-slate-500">
                           Dibagikan: {formatDate(doc.sharedAt)}
                         </span>
                       </div>
@@ -311,16 +311,16 @@ export const Library: React.FC = () => {
                   </div>
 
                   {/* Card Footer – Download Button */}
-                  <div className="pt-3 border-t border-rule/35 flex justify-end">
+                  <div className="pt-3 border-t border-white/5 flex justify-end">
                     <button
                       onClick={() => handleDownload(doc.id)}
                       disabled={downloadingId === doc.id}
                       className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 border rounded-lg text-xs font-bold min-h-[40px] transition-colors disabled:opacity-50 hover-bounce-down ${
                         doc.type === 'rpp'
-                          ? 'border-brand-mid/30 text-brand-mid hover:bg-[#EBF3FB]/60'
+                          ? 'border-[#00f2ff]/30 text-[#00f2ff] hover:bg-[#00f2ff]/10'
                           : doc.type === 'soal'
-                          ? 'border-[#1A7A4A]/30 text-[#1A7A4A] hover:bg-[#E8F5EE]/60'
-                          : 'border-purple-300 text-purple-700 hover:bg-purple-50/60'
+                          ? 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10'
+                          : 'border-[#6366f1]/30 text-[#6366f1] hover:bg-[#6366f1]/10'
                       }`}
                     >
                       {downloadingId === doc.id ? (
@@ -347,7 +347,7 @@ export const Library: React.FC = () => {
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-rule text-muted hover:bg-neutral-50 hover:text-ink transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/5 text-slate-400 hover:bg-white/5 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -364,7 +364,7 @@ export const Library: React.FC = () => {
                 }, [])
                 .map((item, idx) =>
                   item === 'ellipsis' ? (
-                    <span key={`ellipsis-${idx}`} className="px-1 text-muted text-sm">
+                    <span key={`ellipsis-${idx}`} className="px-1 text-slate-500 text-sm">
                       …
                     </span>
                   ) : (
@@ -373,8 +373,8 @@ export const Library: React.FC = () => {
                       onClick={() => handlePageChange(item as number)}
                       className={`inline-flex items-center justify-center w-10 h-10 rounded-lg border text-sm font-bold transition-colors ${
                         currentPage === item
-                          ? 'bg-brand-dark text-white border-brand-dark'
-                          : 'border-rule text-muted hover:bg-neutral-50 hover:text-ink'
+                          ? 'bg-brand-red text-slate-950 border-brand-red shadow-[0_0_12px_rgba(0,242,255,0.35)]'
+                          : 'border-white/5 text-slate-400 hover:bg-white/5 hover:text-white'
                       }`}
                     >
                       {item}
@@ -385,7 +385,7 @@ export const Library: React.FC = () => {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === pagination.totalPages}
-                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-rule text-muted hover:bg-neutral-50 hover:text-ink transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/5 text-slate-400 hover:bg-white/5 hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

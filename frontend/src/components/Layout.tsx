@@ -3,11 +3,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Home, Sparkles, ClipboardList, FolderOpen, User,
   LogOut, Tag, CreditCard, BookOpen, GraduationCap,
-  Menu, X, ChevronRight
+  Menu, X, ChevronRight, Sun, Moon
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../services/api';
 import QuotaBanner, { UpgradeModal } from './QuotaBanner';
+import { useTheme } from '../hooks/useTheme';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, clearAuth } = useAuthStore();
+  const { theme, toggleTheme } = useTheme();
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
@@ -87,10 +89,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               onClick={() => setMobileSidebarOpen(false)}
               className={`nav-item group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                 isActive
-                  ? 'active bg-gradient-to-r from-white/[0.12] to-white/[0.05] border-l-[3px] border-l-blue-400 text-white'
+                  ? 'active bg-gradient-to-r from-white/[0.12] to-white/[0.05] border-l-[3px] border-l-brand-red text-white'
                   : 'text-white/60 hover:text-white'
               }`}
-              style={isActive ? { boxShadow: 'inset 0 0 20px rgba(59,130,246,0.08)' } : {}}
+              style={isActive ? { boxShadow: 'inset 0 0 20px rgba(0,242,255,0.05)' } : {}}
             >
               <Icon
                 className={`w-[18px] h-[18px] flex-shrink-0 transition-all duration-200 ${isActive ? item.color : 'text-white/40 group-hover:text-white/80'}`}
@@ -170,12 +172,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className="md:ml-[64px] lg:ml-[240px] flex-grow flex flex-col transition-all duration-300">
 
         {/* Top Header */}
-        <header className="h-14 glass-light border-b border-rule/60 flex items-center justify-between px-4 md:px-6 sticky top-0 z-20 shadow-sm">
+        <header className="h-14 glass-dark border-b border-white/5 flex items-center justify-between px-4 md:px-6 sticky top-0 z-20 shadow-md">
           {/* Left: Hamburger (mobile) + Page Title */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileSidebarOpen(true)}
-              className="md:hidden p-2 rounded-lg text-ink hover:bg-slate-100 transition-colors"
+              className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -184,8 +186,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
                 <img src="/logo-gurubantu.png" alt="GuruBantu AI" className="w-5 h-5 object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display='none'; }} />
               </div>
-              <span className="font-display font-black text-sm text-slate-900">
-                GuruBantu <span className="text-blue-600">AI</span>
+              <span className="font-display font-black text-sm text-white">
+                GuruBantu <span className="text-brand-red">AI</span>
               </span>
             </div>
             {/* Page Title — Desktop */}
@@ -195,7 +197,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <activeItem.icon className={`w-3.5 h-3.5 ${activeItem.color}`} />
                 </div>
               )}
-              <h1 className="font-bold text-base text-ink">
+              <h1 className="font-bold text-base text-white">
                 {activeItem ? activeItem.label : 'GuruBantu AI'}
               </h1>
             </div>
@@ -203,26 +205,35 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
           {/* Right: User info */}
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline text-sm text-muted font-medium">
-              Halo, <span className="font-bold text-ink">{user?.name?.split(' ')[0] || 'Guru'}</span>
+            <span className="hidden sm:inline text-sm text-slate-400 font-medium">
+              Halo, <span className="font-bold text-white">{user?.name?.split(' ')[0] || 'Guru'}</span>
             </span>
             {user?.plan && (
               <span className={`hidden lg:inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black tracking-wide ${getPlanBadgeStyle(user.plan)}`}>
                 {user.plan.toUpperCase()}
               </span>
             )}
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 text-slate-400 hover:text-white rounded-lg transition-colors hover:bg-white/5 flex items-center justify-center"
+              title={theme === 'light' ? 'Aktifkan Mode Gelap' : 'Aktifkan Mode Terang'}
+              aria-label="Toggle Theme"
+            >
+              {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4 text-amber-400" />}
+            </button>
             {/* Avatar */}
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${
               user?.emailVerified
                 ? 'bg-gradient-to-br from-green-400 to-emerald-500 shadow-[0_0_12px_rgba(52,211,153,0.5)]'
-                : 'bg-gradient-to-br from-blue-500 to-indigo-600 shadow-[0_0_12px_rgba(59,130,246,0.4)]'
+                : 'bg-gradient-to-br from-blue-500 to-indigo-600 shadow-[0_0_12px_rgba(0,242,255,0.4)]'
             }`}>
               {user?.name ? user.name.substring(0, 2).toUpperCase() : 'G'}
             </div>
             {/* Quick Logout — Mobile only */}
             <button
               onClick={handleLogout}
-              className="p-2 text-muted hover:text-red-500 rounded-lg transition-colors hover:bg-red-50 md:hidden"
+              className="p-2 text-slate-400 hover:text-red-500 rounded-lg transition-colors hover:bg-white/5 md:hidden"
               title="Keluar"
               aria-label="Logout"
             >
@@ -242,7 +253,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
 
         {/* Page Content */}
-        <main key={location.pathname} className="p-4 md:p-6 lg:p-8 max-w-7xl w-full mx-auto flex-grow animate-page">
+        <main key={location.pathname} className="p-4 md:p-6 lg:p-8 max-w-7xl w-full mx-auto flex-grow animate-page text-white">
           {children}
         </main>
 
@@ -251,7 +262,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       </div>
 
       {/* ── Mobile Bottom Tab Bar ── */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 glass-light border-t border-rule/60 flex items-center justify-around px-1 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 glass-dark border-t border-white/5 flex items-center justify-around px-1 shadow-[0_-4px_20px_rgba(0,0,0,0.4)]">
         {navItems.slice(0, 5).map((item) => {
           const isActive = location.pathname === item.path;
           const Icon = item.icon;
@@ -260,11 +271,11 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               key={item.path}
               to={item.path}
               className={`flex flex-col items-center justify-center gap-0.5 flex-1 h-full py-2 px-1 transition-all duration-200 ${
-                isActive ? 'text-blue-600' : 'text-muted'
+                isActive ? 'text-brand-red' : 'text-slate-400'
               }`}
             >
               <div className={`p-1.5 rounded-xl transition-all duration-200 ${
-                isActive ? 'bg-blue-50 shadow-sm' : ''
+                isActive ? 'bg-white/5 shadow-inner' : ''
               }`}>
                 <Icon
                   className={`w-4.5 h-4.5 transition-all ${isActive ? item.color : ''}`}
@@ -281,7 +292,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <UpgradeModal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
-        onNavigatePricing={() => { setShowUpgradeModal(false); navigate('/profile'); }}
+        onNavigatePricing={() => { setShowUpgradeModal(false); navigate('/pricing'); }}
       />
 
       {/* Floating WhatsApp */}

@@ -112,13 +112,12 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4 animate-page"
-      style={{background: 'linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 40%, #F0F9FF 100%)'}}>
+    <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4 animate-page bg-auth-gradient">
 
       {/* Background animated blobs */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-300/20 rounded-full blur-[80px] animate-blob pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-300/20 rounded-full blur-[60px] animate-blob-delay pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-violet-300/10 rounded-full blur-[80px] animate-blob-delay2 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[80px] animate-blob pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[60px] animate-blob-delay pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-violet-600/5 rounded-full blur-[80px] animate-blob-delay2 pointer-events-none" />
 
       {/* Card */}
       <div className="relative z-10 w-full max-w-md">
@@ -128,19 +127,19 @@ export const Login: React.FC = () => {
             <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-glow-blue group-hover:scale-110 transition-transform">
               <img src="/logo-gurubantu.png" alt="GuruBantu AI" className="w-8 h-8 object-contain rounded-xl" onError={(e) => { (e.target as HTMLImageElement).style.display='none'; }} />
             </div>
-            <span className="font-display font-black text-xl text-slate-900">
+            <span className="font-display font-black text-xl text-white">
               GuruBantu <span className="gradient-text-blue">AI</span>
             </span>
           </Link>
-          <h1 className="font-display font-black text-3xl text-slate-900 mb-2">Masuk ke Akun</h1>
-          <p className="text-slate-500 text-sm">Selamat kembali, Guru Hebat! 👋</p>
+          <h1 className="font-display font-black text-3xl text-white mb-2">Masuk ke Akun</h1>
+          <p className="text-slate-400 text-sm">Selamat kembali, Guru Hebat! 👋</p>
         </div>
 
         {/* Form Card */}
         <div className="glass-card rounded-3xl p-7 shadow-2xl animate-fade-up-1">
           {/* Server Error */}
           {serverError && (
-            <div className="flex items-start gap-3 p-3.5 mb-5 bg-red-50 border border-red-200/80 rounded-2xl text-red-700 animate-scale-in">
+            <div className="flex items-start gap-3 p-3.5 mb-5 bg-red-950/40 border border-red-500/30 rounded-2xl text-red-400 animate-scale-in">
               <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
               <span className="text-sm font-semibold leading-relaxed">{serverError}</span>
             </div>
@@ -149,7 +148,7 @@ export const Login: React.FC = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
             {/* Email */}
             <div className="space-y-1.5">
-              <label htmlFor="login-email" className="block text-sm font-bold text-slate-700">
+              <label htmlFor="login-email" className="block text-sm font-bold text-slate-300">
                 Email Guru
               </label>
               <div className="relative">
@@ -162,11 +161,11 @@ export const Login: React.FC = () => {
                   placeholder="email@sekolah.com"
                   autoComplete="email"
                   {...register('email')}
-                  className={`input-premium w-full pl-10 pr-4 py-3 text-sm text-slate-900 placeholder-slate-400 ${errors.email ? 'error' : ''}`}
+                  className={`input-premium w-full pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 ${errors.email ? 'error' : ''}`}
                 />
               </div>
               {errors.email && (
-                <p className="text-xs text-red-500 font-semibold flex items-center gap-1 pt-0.5">
+                <p className="text-xs text-red-400 font-semibold flex items-center gap-1 pt-0.5">
                   <AlertCircle className="w-3 h-3" />{errors.email.message}
                 </p>
               )}
@@ -175,10 +174,10 @@ export const Login: React.FC = () => {
             {/* Password */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center">
-                <label htmlFor="login-password" className="block text-sm font-bold text-slate-700">
+                <label htmlFor="login-password" className="block text-sm font-bold text-slate-300">
                   Kata Sandi
                 </label>
-                <Link to="/forgot-password" className="text-xs text-blue-600 font-semibold hover:text-blue-700 transition-colors">
+                <Link to="/forgot-password" className="text-xs text-brand-red font-semibold hover:text-cyan-400 transition-colors">
                   Lupa Sandi?
                 </Link>
               </div>
@@ -192,19 +191,19 @@ export const Login: React.FC = () => {
                   placeholder="••••••••"
                   autoComplete="current-password"
                   {...register('password')}
-                  className={`input-premium w-full pl-10 pr-11 py-3 text-sm text-slate-900 placeholder-slate-400 ${errors.password ? 'error' : ''}`}
+                  className={`input-premium w-full pl-10 pr-11 py-3 text-sm text-white placeholder-slate-500 ${errors.password ? 'error' : ''}`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-500 transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-brand-red transition-colors"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-red-500 font-semibold flex items-center gap-1 pt-0.5">
+                <p className="text-xs text-red-400 font-semibold flex items-center gap-1 pt-0.5">
                   <AlertCircle className="w-3 h-3" />{errors.password.message}
                 </p>
               )}
@@ -215,11 +214,11 @@ export const Login: React.FC = () => {
               type="submit"
               id="login-submit"
               disabled={isLoading}
-              className="btn-primary w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-sm text-white disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+              className="btn-primary w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl font-black text-sm text-slate-950 disabled:opacity-60 disabled:cursor-not-allowed mt-2"
             >
               {isLoading ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-slate-950/30 border-t-slate-950 rounded-full animate-spin" />
                   Memverifikasi...
                 </>
               ) : (
@@ -236,7 +235,7 @@ export const Login: React.FC = () => {
               type="button"
               onClick={handleQuickDemo}
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl font-black text-xs border border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50 text-indigo-700 hover:text-indigo-800 transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60 mt-2.5 shadow-sm"
+              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl font-black text-xs border border-indigo-500/20 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60 mt-2.5 shadow-sm"
             >
               🔑 Masuk Instan Akun Demo (Bypass)
             </button>
@@ -244,22 +243,22 @@ export const Login: React.FC = () => {
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
-            <div className="flex-1 h-px bg-slate-200" />
-            <span className="text-xs text-slate-400 font-semibold">atau</span>
-            <div className="flex-1 h-px bg-slate-200" />
+            <div className="flex-1 h-px bg-white/10" />
+            <span className="text-xs text-slate-500 font-semibold">atau</span>
+            <div className="flex-1 h-px bg-white/10" />
           </div>
 
           {/* Register Link */}
-          <p className="text-center text-sm text-slate-500">
+          <p className="text-center text-sm text-slate-400">
             Belum punya akun?{' '}
-            <Link to="/register" className="text-blue-600 font-black hover:text-blue-700 transition-colors">
+            <Link to="/register" className="text-brand-red font-black hover:text-cyan-400 transition-colors">
               Daftar Gratis
             </Link>
           </p>
         </div>
 
         {/* Trust badges */}
-        <div className="flex items-center justify-center gap-5 mt-6 text-[10px] text-slate-400 font-semibold animate-fade-up-2">
+        <div className="flex items-center justify-center gap-5 mt-6 text-[10px] text-slate-500 font-semibold animate-fade-up-2">
           <span className="flex items-center gap-1">🔒 SSL Encrypted</span>
           <span className="flex items-center gap-1">🇮🇩 Server Indonesia</span>
           <span className="flex items-center gap-1">✅ Data Aman</span>

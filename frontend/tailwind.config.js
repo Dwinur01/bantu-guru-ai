@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -21,33 +22,33 @@ export default {
       },
       colors: {
         brand: {
-          red:   '#2563EB',
-          dark:  '#0B1120',
-          mid:   '#3B82F6',
-          light: '#DBEAFE',
-          pale:  '#EFF6FF',
-          navy:  '#1E3A8A',
+          red:   '#00f2ff', // Lumina Electric Blue
+          dark:  'var(--bg-page)', // Lumina Obsidian Background
+          mid:   '#6366f1', // Lumina Indigo Accent
+          light: '#1e1b4b', // Dark Indigo/Violet shade
+          pale:  'var(--bg-card)', // Lumina Slate Surface
+          navy:  '#4f46e5', // Indigo Navy
         },
         neon: {
-          blue:   '#60A5FA',
-          indigo: '#818CF8',
-          purple: '#A78BFA',
-          cyan:   '#22D3EE',
-          green:  '#34D399',
+          blue:   '#00f2ff',
+          indigo: '#6366f1',
+          purple: '#8b5cf6',
+          cyan:   '#00f2ff',
+          green:  '#10b981',
         },
         glass: {
-          dark:  'rgba(11, 17, 32, 0.85)',
-          light: 'rgba(255,255,255,0.70)',
-          mid:   'rgba(255,255,255,0.12)',
+          dark:  'var(--glass-dark-bg)',
+          light: 'var(--glass-light-bg)',
+          mid:   'var(--glass-mid-bg)',
         },
-        success: { DEFAULT: '#10B981', bg: '#ECFDF5', glow: 'rgba(16,185,129,0.4)' },
-        warning: { DEFAULT: '#F59E0B', bg: '#FEF3C7', glow: 'rgba(245,158,11,0.4)' },
-        error:   { DEFAULT: '#EF4444', bg: '#FEF2F2', glow: 'rgba(239,68,68,0.4)' },
-        ink:     '#0F172A',
-        muted:   '#64748B',
-        rule:    '#E2E8F0',
-        cream:   '#FFFFFF',
-        page:    '#F8FAFC',
+        success: { DEFAULT: '#10B981', bg: 'rgba(16,185,129,0.1)', glow: 'rgba(16,185,129,0.4)' },
+        warning: { DEFAULT: '#F59E0B', bg: 'rgba(245,158,11,0.1)', glow: 'rgba(245,158,11,0.4)' },
+        error:   { DEFAULT: '#EF4444', bg: 'rgba(239,68,68,0.1)', glow: 'rgba(239,68,68,0.4)' },
+        ink:     'var(--text-primary)', // Light text
+        muted:   'var(--text-secondary)', // Slate text
+        rule:    'var(--border-color)', // Transparent border
+        cream:   'var(--bg-card)', // Dark card bg
+        page:    'var(--bg-page)', // Dark page bg
       },
       backgroundImage: {
         'gradient-hero': 'linear-gradient(135deg, #020617 0%, #0F172A 50%, #1E1B4B 100%)',
