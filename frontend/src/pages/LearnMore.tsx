@@ -14,6 +14,7 @@ import {
   Settings, 
   Tv 
 } from 'lucide-react';
+import { useTheme } from '../hooks/useTheme';
 
 interface Step {
   number: string;
@@ -28,6 +29,7 @@ interface Step {
 export const LearnMore: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const { theme } = useTheme();
 
   const steps: Step[] = [
     {
@@ -38,30 +40,32 @@ export const LearnMore: React.FC = () => {
       icon: Settings,
       colorClass: 'from-amber-400 to-orange-500',
       mockVisual: (
-        <div className="bg-slate-900/90 border border-white/10 rounded-2xl p-6 text-left font-sans text-xs text-slate-300 space-y-4 shadow-2xl relative overflow-hidden">
+        <div className={`border rounded-2xl p-6 text-left font-sans text-xs space-y-4 shadow-2xl relative overflow-hidden ${
+          theme === 'light' ? 'bg-white border-slate-200 text-slate-805' : 'bg-slate-900/90 border-white/10 text-slate-300'
+        }`}>
           <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-xl" />
-          <div className="flex items-center justify-between border-b border-white/5 pb-3">
-            <span className="font-bold text-white text-sm">Form Asisten RPP AI</span>
-            <span className="px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded-full text-[10px] font-semibold">Langkah 1</span>
+          <div className={`flex items-center justify-between border-b pb-3 ${theme === 'light' ? 'border-slate-100' : 'border-white/5'}`}>
+            <span className={`font-bold text-sm ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>Form Asisten RPP AI</span>
+            <span className="px-2 py-0.5 bg-amber-500/20 text-amber-600 dark:text-amber-300 rounded-full text-[10px] font-semibold">Langkah 1</span>
           </div>
           <div className="space-y-3">
             <div className="space-y-1">
               <label className="text-[10px] text-slate-400 font-bold uppercase">Mata Pelajaran</label>
-              <div className="bg-white/5 border border-white/10 rounded-lg p-2 text-white">Bahasa Indonesia</div>
+              <div className={`border rounded-lg p-2 ${theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-900' : 'bg-white/5 border-white/10 text-white'}`}>Bahasa Indonesia</div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-1">
                 <label className="text-[10px] text-slate-400 font-bold uppercase">Fase / Kelas</label>
-                <div className="bg-white/5 border border-white/10 rounded-lg p-2 text-white">Fase D / Kelas VII</div>
+                <div className={`border rounded-lg p-2 ${theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-900' : 'bg-white/5 border-white/10 text-white'}`}>Fase D / Kelas VII</div>
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] text-slate-400 font-bold uppercase">Alokasi Waktu</label>
-                <div className="bg-white/5 border border-white/10 rounded-lg p-2 text-white">2 x 40 Menit</div>
+                <div className={`border rounded-lg p-2 ${theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-900' : 'bg-white/5 border-white/10 text-white'}`}>2 x 40 Menit</div>
               </div>
             </div>
             <div className="space-y-1">
               <label className="text-[10px] text-slate-400 font-bold uppercase">Topik Utama (Dikte AI)</label>
-              <div className="bg-white/5 border border-white/10 rounded-lg p-2.5 text-white flex items-center justify-between">
+              <div className={`border rounded-lg p-2.5 flex items-center justify-between ${theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-900' : 'bg-white/5 border-white/10 text-white'}`}>
                 <span>Menulis Teks Prosedur Membuat Kue Nusantara</span>
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
               </div>
@@ -84,23 +88,25 @@ export const LearnMore: React.FC = () => {
       icon: Cpu,
       colorClass: 'from-blue-500 to-indigo-600',
       mockVisual: (
-        <div className="bg-slate-900/90 border border-white/10 rounded-2xl p-6 text-left font-sans text-xs text-slate-300 space-y-4 shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[250px]">
+        <div className={`border rounded-2xl p-6 text-left font-sans text-xs space-y-4 shadow-2xl relative overflow-hidden flex flex-col justify-between min-h-[250px] ${
+          theme === 'light' ? 'bg-white border-slate-200 text-slate-805' : 'bg-slate-900/90 border-white/10 text-slate-300'
+        }`}>
           <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-xl" />
-          <div className="flex items-center justify-between border-b border-white/5 pb-3">
-            <span className="font-bold text-white text-sm">Mesin AI GuruBantu</span>
-            <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded-full text-[10px] font-semibold">Langkah 2</span>
+          <div className={`flex items-center justify-between border-b pb-3 ${theme === 'light' ? 'border-slate-100' : 'border-white/5'}`}>
+            <span className={`font-bold text-sm ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>Mesin AI GuruBantu</span>
+            <span className="px-2 py-0.5 bg-blue-500/20 text-blue-600 dark:text-blue-300 rounded-full text-[10px] font-semibold">Langkah 2</span>
           </div>
           <div className="flex flex-col items-center justify-center py-4 space-y-3 flex-grow">
             <div className="relative w-14 h-14 flex items-center justify-center">
               <div className="absolute inset-0 rounded-full border border-blue-500/30 animate-ping" />
               <div className="absolute w-12 h-12 border-2 border-dashed border-blue-400 rounded-full animate-spin" />
-              <Cpu className="w-6 h-6 text-blue-400 relative z-10" />
+              <Cpu className="w-6 h-6 text-blue-500 dark:text-blue-400 relative z-10" />
             </div>
             <div className="text-center space-y-1">
-              <p className="font-semibold text-white">Menganalisis Kompetensi Inti...</p>
+              <p className={`font-semibold ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>Menganalisis Kompetensi Inti...</p>
               <p className="text-[10px] text-slate-400">Menyusun Rubrik Asesmen & Profil Pelajar Pancasila</p>
             </div>
-            <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden border border-white/5">
+            <div className={`w-full rounded-full h-1.5 overflow-hidden border ${theme === 'light' ? 'bg-slate-100 border-slate-200' : 'bg-white/5 border-white/5'}`}>
               <div className="bg-gradient-to-r from-blue-500 to-indigo-600 h-full w-[75%] rounded-full animate-pulse" />
             </div>
           </div>
@@ -118,21 +124,23 @@ export const LearnMore: React.FC = () => {
       icon: Download,
       colorClass: 'from-emerald-500 to-teal-600',
       mockVisual: (
-        <div className="bg-slate-900/90 border border-white/10 rounded-2xl p-6 text-left font-sans text-xs text-slate-300 space-y-4 shadow-2xl relative overflow-hidden">
+        <div className={`border rounded-2xl p-6 text-left font-sans text-xs space-y-4 shadow-2xl relative overflow-hidden ${
+          theme === 'light' ? 'bg-white border-slate-200 text-slate-805' : 'bg-slate-900/90 border-white/10 text-slate-300'
+        }`}>
           <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl" />
-          <div className="flex items-center justify-between border-b border-white/5 pb-3">
-            <span className="font-bold text-white text-sm">Dokumen Siap Diunduh</span>
-            <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 rounded-full text-[10px] font-semibold">Langkah 3</span>
+          <div className={`flex items-center justify-between border-b pb-3 ${theme === 'light' ? 'border-slate-100' : 'border-white/5'}`}>
+            <span className={`font-bold text-sm ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>Dokumen Siap Diunduh</span>
+            <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 rounded-full text-[10px] font-semibold">Langkah 3</span>
           </div>
-          <div className="flex gap-4 items-center bg-white/5 p-4 rounded-xl border border-white/5">
+          <div className={`flex gap-4 items-center p-4 rounded-xl border ${theme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-white/5 border-white/5'}`}>
             <div className="w-12 h-16 bg-white/95 rounded shadow flex items-center justify-center text-slate-800 font-bold border-t-4 border-blue-600 relative overflow-hidden">
-              <FileText className="w-7 h-7 text-blue-600" />
-              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[7px] text-slate-400">DOCX</div>
+               <FileText className="w-7 h-7 text-blue-600" />
+               <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[7px] text-slate-400">DOCX</div>
             </div>
             <div className="flex-1 space-y-1">
-              <h4 className="font-bold text-white text-xs">RPP_Bahasa_Indonesia_FaseD.docx</h4>
+              <h4 className={`font-bold text-xs ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>RPP_Bahasa_Indonesia_FaseD.docx</h4>
               <p className="text-[10px] text-slate-400">Ukuran: 45 KB · Berisi RPP Lengkap</p>
-              <div className="flex items-center gap-1 text-[10px] text-emerald-400 font-bold">
+              <div className="flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Format Standar Kemendikbud</span>
               </div>
@@ -177,9 +185,9 @@ export const LearnMore: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] font-sans text-slate-300 animate-page">
+    <div className="min-h-screen font-sans animate-page" style={{ backgroundColor: 'var(--bg-page)', color: 'var(--text-secondary)' }}>
       {/* Header / Hero */}
-      <header className="w-full bg-[#0d0d12] py-20 px-6 text-center text-white relative overflow-hidden border-b border-white/[0.05]">
+      <header className="w-full py-20 px-6 text-center relative overflow-hidden border-b" style={{ backgroundColor: 'var(--bg-sidebar)', borderColor: 'var(--border-color)' }}>
         {/* Background Blobs */}
         <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[90px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[90px]" />
@@ -187,19 +195,23 @@ export const LearnMore: React.FC = () => {
         <div className="max-w-4xl mx-auto space-y-5 relative z-10 flex flex-col items-center">
           <Link 
             to="/" 
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 bg-white/5 hover:bg-white/10 px-3.5 py-2 rounded-xl border border-white/10 transition-all mb-4"
+            className={`inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 rounded-xl border transition-all mb-4 ${
+              theme === 'light' ? 'text-blue-600 bg-blue-50/50 hover:bg-blue-50 border-blue-200' : 'text-blue-400 bg-white/5 hover:bg-white/10 border-white/10'
+            }`}
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Kembali ke Beranda</span>
           </Link>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-xs font-bold text-blue-300">
-            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+          <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ${
+            theme === 'light' ? 'bg-blue-50 border border-blue-200 text-blue-600' : 'bg-blue-500/15 border border-blue-500/30 text-blue-300'
+          }`}>
+            <Sparkles className="w-3.5 h-3.5" />
             PANDUAN LENGKAP PLATFORM
           </div>
           <h1 className="font-display text-4xl sm:text-5xl font-black tracking-tight leading-tight">
             Bagaimana <span className="gradient-text-blue">GuruBantu AI</span> Bekerja
           </h1>
-          <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-muted max-w-xl mx-auto leading-relaxed">
             Hanya butuh 3 langkah mudah untuk mengotomatiskan seluruh pembuatan dokumen rencana mengajar Anda. Pelajari alur kerja cerdasnya berikut ini.
           </p>
         </div>
@@ -211,13 +223,15 @@ export const LearnMore: React.FC = () => {
         {/* Interactive Steps Section */}
         <section className="space-y-10">
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-1 text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full text-xs font-bold border border-blue-500/20">
+            <div className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${
+              theme === 'light' ? 'bg-blue-50 border border-blue-200 text-blue-600' : 'text-blue-400 bg-blue-500/10 border border-blue-500/20'
+            }`}>
               🛠️ ALUR GENERATOR DOKUMEN
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h2 className="font-display text-2xl sm:text-3xl font-black text-ink tracking-tight">
               3 Langkah Praktis Pembuatan RPP & Soal
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
+            <p className="text-xs sm:text-sm text-muted max-w-md mx-auto">
               Klik pada setiap langkah di bawah untuk melihat simulasi visual proses kecerdasan buatan kami bekerja.
             </p>
           </div>
@@ -236,8 +250,12 @@ export const LearnMore: React.FC = () => {
                     onClick={() => setActiveStep(idx)}
                     className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 flex items-start gap-4 hover-card-premium ${
                       isActive 
-                        ? 'bg-[#1c1c24]/90 border-blue-500/50 shadow-lg shadow-blue-500/5 ring-1 ring-blue-500/10 text-white' 
-                        : 'bg-[#131318]/90 border-white/[0.08] text-slate-400 hover:bg-[#1c1c24]/80'
+                        ? (theme === 'light'
+                            ? 'border-blue-500 shadow-lg shadow-blue-100/50 ring-1 ring-blue-500/15 bg-blue-50/30'
+                            : 'border-blue-500/50 shadow-lg shadow-blue-500/5 ring-1 ring-blue-500/10 bg-slate-900/40')
+                        : (theme === 'light'
+                            ? 'border-slate-200 hover:border-blue-300 bg-white text-slate-800'
+                            : 'border-white/[0.08] hover:border-blue-500/30 text-white')
                     }`}
                   >
                     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${step.colorClass} flex items-center justify-center text-white font-black text-sm flex-shrink-0 shadow-md`}>
@@ -245,11 +263,11 @@ export const LearnMore: React.FC = () => {
                     </div>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-black uppercase text-blue-400 tracking-wider">Langkah {step.number}</span>
+                        <span className="text-[10px] font-black uppercase text-blue-500 tracking-wider">Langkah {step.number}</span>
                         {isActive && <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
                       </div>
-                      <h3 className="font-black text-sm text-white">{step.title}</h3>
-                      <p className="text-xs text-slate-400">{step.subtitle}</p>
+                      <h3 className={`font-black text-sm ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>{step.title}</h3>
+                      <p className="text-xs text-muted">{step.subtitle}</p>
                     </div>
                   </button>
                 );
@@ -257,14 +275,16 @@ export const LearnMore: React.FC = () => {
             </div>
 
             {/* Interactive Visual Display */}
-            <div className="lg:col-span-7 bg-[#131318]/90 border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between min-h-[380px] relative hover-card-premium">
+            <div className="lg:col-span-7 border border-rule rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between min-h-[380px] relative hover-card-premium" style={{ backgroundColor: 'var(--bg-card)' }}>
               <div className="absolute top-4 left-4 flex gap-1.5">
                 <span className="w-3 h-3 bg-red-400 rounded-full opacity-60" />
                 <span className="w-3 h-3 bg-amber-400 rounded-full opacity-60" />
                 <span className="w-3 h-3 bg-green-400 rounded-full opacity-60" />
               </div>
               <div className="mb-4 text-right">
-                <span className="text-[10px] font-bold bg-white/5 border border-white/10 text-slate-400 px-3 py-1 rounded-full">
+                <span className={`text-[10px] font-bold px-3 py-1 rounded-full border ${
+                  theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-500' : 'bg-white/5 border-white/10 text-slate-400'
+                }`}>
                   Interactive Simulator
                 </span>
               </div>
@@ -272,13 +292,15 @@ export const LearnMore: React.FC = () => {
               {/* Dynamic Content (Mock Visual & Description) */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center flex-grow">
                 <div className="order-2 md:order-1 space-y-3">
-                  <div className="inline-flex items-center gap-1 bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded text-[10px] font-bold">
+                  <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold ${
+                    theme === 'light' ? 'bg-blue-50 text-blue-600' : 'bg-blue-500/10 text-blue-400'
+                  }`}>
                     INFO LANGKAH
                   </div>
-                  <h4 className="font-black text-sm text-white leading-snug">
+                  <h4 className="font-black text-sm text-ink leading-snug">
                     {steps[activeStep].title}
                   </h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                  <p className="text-xs text-muted leading-relaxed">
                     {steps[activeStep].description}
                   </p>
                 </div>
@@ -292,7 +314,11 @@ export const LearnMore: React.FC = () => {
         </section>
 
         {/* Video Tutorial / Visual Flow Section */}
-        <section className="bg-gradient-to-br from-[#0F172A] to-[#1E1B4B] rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden shadow-premium">
+        <section className={`border rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden shadow-premium ${
+          theme === 'light'
+            ? 'bg-gradient-to-br from-slate-900 to-indigo-955 border-indigo-950/40'
+            : 'bg-gradient-to-br from-[#0F172A] to-[#1E1B4B] border-white/10'
+        }`}>
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/10 to-purple-600/10 blur-xl" />
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
             <div className="md:col-span-6 space-y-4 text-left">
@@ -303,7 +329,7 @@ export const LearnMore: React.FC = () => {
               <h3 className="font-display text-2xl sm:text-3xl font-black tracking-tight leading-snug">
                 Lihat Kecepatan Pembuatan Berkas
               </h3>
-              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
                 Tonton ilustrasi generator dokumen RPP kami. Dalam 30 detik, draf lengkap sesuai format standar Kemendikbud langsung siap dicetak. Hemat jam kerja administratif Anda sekarang juga.
               </p>
               <div className="pt-2">
@@ -332,13 +358,15 @@ export const LearnMore: React.FC = () => {
         {/* FAQ Accordion Section */}
         <section className="space-y-10">
           <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-1 text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full text-xs font-bold border border-purple-500/20">
+            <div className={`inline-flex items-center gap-1 text-xs font-bold px-3 py-1 rounded-full ${
+              theme === 'light' ? 'text-purple-700 bg-purple-50 border border-purple-200' : 'text-purple-400 bg-purple-500/10 border border-purple-500/20'
+            }`}>
               💡 PERTANYAAN UMUM
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h2 className="font-display text-2xl sm:text-3xl font-black text-ink tracking-tight">
               Tanya Jawab Terpopuler
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
+            <p className="text-xs sm:text-sm text-muted max-w-md mx-auto">
               Temukan jawaban cepat atas pertanyaan Anda tentang platform kecerdasan buatan asisten guru kami.
             </p>
           </div>
@@ -349,14 +377,16 @@ export const LearnMore: React.FC = () => {
               return (
                 <div 
                   key={idx} 
-                  className="bg-[#131318]/90 border border-white/[0.08] rounded-2xl overflow-hidden shadow-sm transition-all duration-300"
+                  className={`border rounded-2xl overflow-hidden shadow-sm transition-all duration-300 ${
+                    theme === 'light' ? 'border-slate-200/80 bg-white hover:bg-slate-50/80' : 'border-white/[0.08] bg-white/5 hover:bg-white/10'
+                  }`}
                 >
                   <button
                     onClick={() => toggleFaq(idx)}
-                    className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-bold text-white text-sm hover:bg-white/5 transition-colors"
+                    className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-bold text-ink text-sm transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <HelpCircle className="w-4.5 h-4.5 text-blue-400 flex-shrink-0" />
+                      <HelpCircle className="w-4.5 h-4.5 text-blue-500 dark:text-blue-400 flex-shrink-0" />
                       <span>{faq.q}</span>
                     </div>
                     {isOpen ? (
@@ -366,7 +396,9 @@ export const LearnMore: React.FC = () => {
                     )}
                   </button>
                   {isOpen && (
-                    <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-slate-400 leading-relaxed border-t border-white/[0.05] bg-white/[0.02] animate-fade-in">
+                    <div className={`px-6 pb-6 pt-1 text-xs sm:text-sm leading-relaxed border-t animate-fade-in ${
+                      theme === 'light' ? 'text-slate-600 border-slate-100 bg-slate-50/20' : 'text-slate-400 border-white/[0.05] bg-white/[0.02]'
+                    }`}>
                       {faq.a}
                     </div>
                   )}
@@ -377,11 +409,15 @@ export const LearnMore: React.FC = () => {
         </section>
 
         {/* Call to Action */}
-        <section className="bg-gradient-to-br from-[#131318] to-[#0d0d12] border border-white/[0.08] text-white rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden shadow-premium">
+        <section className={`border text-white rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden shadow-premium ${
+          theme === 'light'
+            ? 'bg-gradient-to-br from-blue-600 to-indigo-700 border-blue-500'
+            : 'bg-gradient-to-br from-[#131318] to-[#0d0d12] border-white/[0.08]'
+        }`}>
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/10 to-purple-600/10 blur-xl" />
           <div className="space-y-6 relative z-10">
             <h3 className="font-display text-2xl sm:text-3xl font-black tracking-tight">Sudah Siap Memulai?</h3>
-            <p className="text-slate-400 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+            <p className="text-blue-100 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
               Bergabunglah bersama ribuan guru honorer dan guru PNS Indonesia lainnya yang telah menghemat ribuan jam kerja administrasi mereka.
             </p>
             <div className="pt-2 flex flex-wrap justify-center gap-3">
@@ -399,3 +435,5 @@ export const LearnMore: React.FC = () => {
     </div>
   );
 };
+
+export default LearnMore;

@@ -542,10 +542,48 @@
 ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(100,116,139,0.5); }
 
+/* --- Typo fallbacks for slate-650 and slate-350 (Dark Mode defaults) --- */
+.text-slate-650 {
+  color: #475569; /* Slate 600 */
+}
+.text-slate-350 {
+  color: #94a3b8; /* Slate 400 */
+}
+.border-slate-350 {
+  border-color: #334155; /* Slate 700 */
+}
+
 /* ============================================================
    12. LIGHT MODE OVERRIDES
    ============================================================ */
 :root.light {
+  /* Glassmorphism — Light Mode */
+  .glass-dark {
+    background: rgba(255, 255, 255, 0.88) !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: rgba(15, 23, 42, 0.1) !important;
+    box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08), 0 1px 4px rgba(15, 23, 42, 0.04) !important;
+  }
+  .glass-mid {
+    background: rgba(15, 23, 42, 0.04) !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+  }
+
+  /* Input premium — Light Mode */
+  .input-premium {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-color: rgba(15, 23, 42, 0.15) !important;
+    color: #0f172a !important;
+  }
+  .input-premium:focus {
+    background: #ffffff !important;
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12), 0 4px 12px rgba(99, 102, 241, 0.06) !important;
+  }
+
   /* Dynamic Background Overrides */
   .bg-\[\#0a0a0f\] { background-color: var(--bg-page) !important; }
   .bg-\[\#0d0d12\] { background-color: var(--bg-sidebar) !important; }
@@ -600,80 +638,58 @@
   .text-red-400 { color: #b91c1c !important; }
   .text-brand-red { color: #4f46e5 !important; }
   
-  /* Target text colors inside elements that became white/light */
-  .bg-\[\#131318\].text-white,
-  .bg-\[\#131318\] .text-white,
-  .bg-\[\#131318\]\/90.text-white,
-  .bg-\[\#131318\]\/90 .text-white,
-  .bg-\[\#131318\]\/60.text-white,
-  .bg-\[\#131318\]\/60 .text-white,
-  .bg-\[\#131318\]\/45.text-white,
-  .bg-\[\#131318\]\/45 .text-white,
-  .bg-\[\#131318\]\/40.text-white,
-  .bg-\[\#131318\]\/40 .text-white,
-  .bg-\[\#0B0B0F\].text-white,
-  .bg-\[\#0B0B0F\] .text-white,
-  .bg-\[\#121217\].text-white,
-  .bg-\[\#121217\] .text-white,
-  .glass-card.text-white,
-  .glass-card .text-white,
-  .glass-dark.text-white,
-  .glass-dark .text-white,
-  .glass-light.text-white,
-  .glass-light .text-white,
-  .bg-white.text-white,
-  .bg-white .text-white,
-  .text-white,
+  /* ── Text white → dark slate override (LIGHT MODE ONLY) ──
+     Only applies to elements that genuinely need their text converted.
+     Exclude elements that live inside actually dark/colored containers.
+  */
+  .text-white:not([class*="bg-gradient"]):not([class*="bg-blue"]):not([class*="bg-indigo"]):not([class*="bg-purple"]):not([class*="bg-violet"]):not([class*="bg-emerald"]):not([class*="bg-green"]):not([class*="bg-red"]):not([class*="bg-amber"]):not([class*="bg-orange"]):not([class*="bg-cyan"]):not([class*="bg-sky"]) {
+    color: var(--text-primary) !important;
+  }
+  /* Also override common opacity variants */
   .text-white\/60,
   .text-white\/70,
   .text-white\/80 {
-    color: #0f172a !important;
+    color: var(--text-secondary) !important;
+  }
+  /* Preserve white text inside genuinely dark bg elements */
+  [class*="bg-gradient"] .text-white,
+  [class*="bg-gradient"] .text-white\/60,
+  [class*="bg-gradient"] .text-white\/70,
+  [class*="bg-gradient"] .text-white\/80,
+  .bg-blue-500 .text-white, .bg-blue-600 .text-white, .bg-blue-700 .text-white,
+  .bg-indigo-500 .text-white, .bg-indigo-600 .text-white,
+  .bg-purple-500 .text-white, .bg-purple-600 .text-white,
+  .bg-violet-500 .text-white, .bg-violet-600 .text-white,
+  .bg-emerald-500 .text-white, .bg-emerald-600 .text-white,
+  .bg-green-500 .text-white, .bg-red-600 .text-white,
+  .bg-amber-500 .text-white, .bg-orange-500 .text-white,
+  .bg-cyan-500 .text-white, .bg-sky-500 .text-white,
+  .bg-\[\#25D366\] .text-white, .bg-\[\#20ba5a\] .text-white,
+  .btn-primary .text-white, .btn-primary span, .btn-primary svg,
+  .border-white .text-white {
+    color: #ffffff !important;
   }
   
   .bg-\[\#131318\].text-slate-300,
   .bg-\[\#131318\] .text-slate-300,
-  .bg-\[\#131318\]\/90.text-slate-300,
-  .bg-\[\#131318\]\/90 .text-slate-300,
-  .bg-\[\#131318\]\/60.text-slate-300,
-  .bg-\[\#131318\]\/60 .text-slate-300,
-  .bg-\[\#131318\]\/45.text-slate-300,
-  .bg-\[\#131318\]\/45 .text-slate-300,
-  .bg-\[\#131318\]\/40.text-slate-300,
-  .bg-\[\#131318\]\/40 .text-slate-300,
   .bg-\[\#0B0B0F\].text-slate-300,
   .bg-\[\#0B0B0F\] .text-slate-300,
-  .bg-\[\#121217\].text-slate-300,
-  .bg-\[\#121217\] .text-slate-300,
   .glass-card.text-slate-300,
   .glass-card .text-slate-300,
   .glass-dark.text-slate-300,
   .glass-dark .text-slate-300,
-  .glass-light.text-slate-300,
-  .glass-light .text-slate-300,
   .text-slate-300 {
     color: #334155 !important;
   }
 
   .bg-\[\#131318\].text-slate-400,
   .bg-\[\#131318\] .text-slate-400,
-  .bg-\[\#131318\]\/90.text-slate-400,
-  .bg-\[\#131318\]\/90 .text-slate-400,
-  .bg-\[\#131318\]\/60.text-slate-400,
-  .bg-\[\#131318\]\/60 .text-slate-400,
-  .bg-\[\#131318\]\/45.text-slate-400,
-  .bg-\[\#131318\]\/45 .text-slate-400,
-  .bg-\[\#131318\]\/40.text-slate-400,
-  .bg-\[\#131318\]\/40 .text-slate-400,
   .bg-\[\#0B0B0F\].text-slate-400,
   .bg-\[\#0B0B0F\] .text-slate-400,
-  .bg-\[\#121217\].text-slate-400,
-  .bg-\[\#121217\] .text-slate-400,
   .glass-card.text-slate-400,
   .glass-card .text-slate-400,
   .glass-dark.text-slate-400,
   .glass-dark .text-slate-400,
-  .glass-light.text-slate-400,
-  .glass-light .text-slate-400,
   .text-slate-400 {
     color: #475569 !important;
   }
@@ -837,5 +853,77 @@
   /* Auth page gradient in Light Mode */
   .bg-auth-gradient {
     background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #F0F9FF 100%) !important;
+  }
+
+  /* ── About & LearnMore page dark hardcoded backgrounds ── */
+  /* These pages now use CSS variables directly via style prop, so no CSS override needed */
+
+  /* ── Top header bar in Layout ── */
+  header.glass-dark {
+    background: rgba(255, 255, 255, 0.88) !important;
+    border-bottom-color: rgba(15, 23, 42, 0.08) !important;
+  }
+
+  /* ── Sidebar text colors in light mode (override theme toggle button) ── */
+  header .text-slate-400 {
+    color: #64748b !important;
+  }
+  header .hover\:text-white:hover {
+    color: #0f172a !important;
+  }
+
+  /* ── Page loader (GlobalPageLoader) stays dark since it's a full-screen overlay ── */
+  /* No CSS override needed — it uses inline styles and is always dark */
+
+  /* ── Logout button subtle red text on hover (keep in light mode) ── */
+  button.hover\:text-red-400:hover {
+    color: #dc2626 !important;
+  }
+
+  /* ── input-premium placeholder in light mode ── */
+  .input-premium::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1;
+  }
+
+  /* ── bg-white/5 and bg-white/10 overrides in light mode ── */
+  .bg-white\/5 {
+    background-color: rgba(15, 23, 42, 0.04) !important;
+  }
+  .bg-white\/10 {
+    background-color: rgba(15, 23, 42, 0.08) !important;
+  }
+  .hover\:bg-white\/5:hover {
+    background-color: rgba(15, 23, 42, 0.06) !important;
+  }
+  .hover\:bg-white\/10:hover {
+    background-color: rgba(15, 23, 42, 0.1) !important;
+  }
+
+  /* ── bg-red-950/40 and border-red-500/30 overrides in light mode (alert boxes) ── */
+  .bg-red-950\/40 {
+    background-color: #fef2f2 !important; /* Red 50 */
+  }
+  .border-red-500\/30 {
+    border-color: #fecaca !important; /* Red 200 */
+  }
+  
+  /* ── bg-blue-950/40 and border-blue-500/35 overrides in light mode ── */
+  .bg-blue-950\/40 {
+    background-color: #eff6ff !important; /* Blue 50 */
+  }
+  .border-blue-500\/35 {
+    border-color: #bfdbfe !important; /* Blue 200 */
+  }
+
+  /* ── Typo fallbacks in light mode ── */
+  .text-slate-650 {
+    color: #475569 !important; /* Slate 600 */
+  }
+  .text-slate-350 {
+    color: #475569 !important; /* Slate 600 */
+  }
+  .border-slate-350 {
+    border-color: #cbd5e1 !important; /* Slate 300 */
   }
 }

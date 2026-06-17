@@ -14,12 +14,12 @@ interface Transaction {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string; icon: React.ElementType }> = {
-  active:    { label: 'Sukses',       color: 'text-emerald-400',   bg: 'bg-emerald-500/10',   icon: CheckCircle },
-  pending:   { label: 'Menunggu',     color: 'text-amber-400',     bg: 'bg-amber-500/10',     icon: Clock },
-  settlement:{ label: 'Sukses',       color: 'text-emerald-400',   bg: 'bg-emerald-500/10',   icon: CheckCircle },
-  expire:    { label: 'Kedaluwarsa',  color: 'text-slate-400',     bg: 'bg-white/5',          icon: XCircle },
-  cancel:    { label: 'Dibatalkan',   color: 'text-slate-400',     bg: 'bg-white/5',          icon: XCircle },
-  deny:      { label: 'Ditolak',      color: 'text-red-400',       bg: 'bg-red-500/10',       icon: AlertCircle },
+  active:    { label: 'Sukses',       color: 'text-emerald-600 dark:text-emerald-400',   bg: 'bg-emerald-50 dark:bg-emerald-500/10',   icon: CheckCircle },
+  pending:   { label: 'Menunggu',     color: 'text-amber-600 dark:text-amber-400',     bg: 'bg-amber-50 dark:bg-amber-500/10',     icon: Clock },
+  settlement:{ label: 'Sukses',       color: 'text-emerald-600 dark:text-emerald-400',   bg: 'bg-emerald-50 dark:bg-emerald-500/10',   icon: CheckCircle },
+  expire:    { label: 'Kedaluwarsa',  color: 'text-slate-500 dark:text-slate-400',     bg: 'bg-slate-100 dark:bg-white/5',          icon: XCircle },
+  cancel:    { label: 'Dibatalkan',   color: 'text-slate-500 dark:text-slate-400',     bg: 'bg-slate-100 dark:bg-white/5',          icon: XCircle },
+  deny:      { label: 'Ditolak',      color: 'text-red-650 dark:text-red-400',       bg: 'bg-red-50 dark:bg-red-500/10',       icon: AlertCircle },
 };
 
 const PLAN_LABELS: Record<string, string> = {
@@ -104,12 +104,12 @@ export const Billing: React.FC = () => {
       {isLoading ? (
         <div className="space-y-3 animate-pulse">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-[#131318]/90 border border-[#272730] rounded-xl p-5 h-24" />
+            <div key={i} className="bg-cream/90 border border-rule rounded-xl p-5 h-24" />
           ))}
         </div>
       ) : transactions.length === 0 ? (
-        <div className="bg-[#131318]/90 border border-[#272730] rounded-2xl p-12 text-center space-y-4">
-          <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mx-auto">
+        <div className="bg-cream/90 border border-rule rounded-2xl p-12 text-center space-y-4">
+          <div className="w-14 h-14 bg-glass/10 rounded-2xl flex items-center justify-center mx-auto">
             <Receipt className="w-7 h-7 text-muted" />
           </div>
           <div>
@@ -130,7 +130,7 @@ export const Billing: React.FC = () => {
             const StatusIcon = statusCfg.icon;
             const staggerClass = `animate-stagger-${(index % 4) + 1}`;
             return (
-              <div key={tx.id} className={`bg-[#131318]/90 border border-[#272730] rounded-xl p-5 flex items-start justify-between gap-4 hover-card-premium ${staggerClass}`}>
+              <div key={tx.id} className={`bg-cream/90 border border-rule rounded-xl p-5 flex items-start justify-between gap-4 hover-card-premium ${staggerClass}`}>
                 <div className="flex items-start gap-3 min-w-0">
                   <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${statusCfg.bg}`}>
                     <StatusIcon className={`w-4.5 h-4.5 ${statusCfg.color}`} />
@@ -161,7 +161,7 @@ export const Billing: React.FC = () => {
               id="billing-load-more-btn"
               onClick={handleLoadMore}
               disabled={isLoadingMore}
-              className="w-full py-3 border border-white/5 rounded-xl text-sm font-semibold text-muted hover:bg-white/5 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full py-3 border border-rule rounded-xl text-sm font-semibold text-muted hover:bg-glass/10 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {isLoadingMore ? 'Memuat...' : <><ChevronDown className="w-4 h-4" /> Muat Lebih Banyak</>}
             </button>
