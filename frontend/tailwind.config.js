@@ -49,6 +49,7 @@ export default {
         rule:    'var(--border-color)', // Transparent border
         cream:   'var(--bg-card)', // Dark card bg
         page:    'var(--bg-page)', // Dark page bg
+        sidebar: 'var(--bg-sidebar)', // Sidebar bg
       },
       backgroundImage: {
         'gradient-hero': 'linear-gradient(135deg, #020617 0%, #0F172A 50%, #1E1B4B 100%)',

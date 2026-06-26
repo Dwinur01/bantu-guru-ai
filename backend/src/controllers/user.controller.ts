@@ -1,7 +1,9 @@
 import { Response, NextFunction } from 'express';
-import prisma from '../utils/db';
 import { AuthenticatedRequest } from '../middleware/auth.middleware';
-import crypto from 'crypto';
+import { UserService } from '../services/user.service';
+import { sendSuccess, sendError } from '../utils/response';
+import fs from 'fs';
+import path from 'path';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // GET /api/user/me - Ambil data profil user yang sedang login
@@ -11,59 +13,18 @@ export const getProfile = async (req: AuthenticatedRequest, res: Response, next:
     const userId = req.user?.userId;
 
     if (!userId) {
-      res.status(401).json({ success: false, error: 'UNAUTHORIZED', message: 'Sesi tidak valid. Silakan login kembali.' });
+      sendError(res, 401, 'UNAUTHORIZED', 'Sesi tidak valid. Silakan login kembali.');
       return;
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: parseInt(userId, 10) },
-      include: {
-        subscriptions: {
-          where: { status: 'active' },
-          orderBy: { expires_at: 'desc' },
-          take: 1,
-        },
-      },
-    });
-
-    if (!user) {
-      res.status(404).json({ success: false, error: 'NOT_FOUND', message: 'Profil pengguna tidak ditemukan.' });
-      return;
+    const profile = await UserService.getProfile(userId);
+    sendSuccess(res, profile);
+  } catch (error: any) {
+    if (error.statusCode) {
+      sendError(res, error.statusCode, error.error, error.message);
+    } else {
+      next(error);
     }
-
-    let maxQuota = 5;
-    if (user.plan === 'saset') maxQuota = 25;
-    else if (user.plan === 'basic' || user.plan === 'pro') maxQuota = 999999;
-
-    const quotaPercentage =
-      user.plan === 'basic' || user.plan === 'pro'
-        ? 100
-        : Math.max(0, Math.round((user.quota_remaining / maxQuota) * 100));
-
-    const showUpgradeBanner = (user.plan === 'free' || user.plan === 'saset') && quotaPercentage <= 20;
-
-    const activeSub = user.subscriptions[0] || null;
-    const activeSubscription = activeSub
-      ? { plan: activeSub.plan, status: activeSub.status, expiresAt: activeSub.expires_at }
-      : null;
-
-    res.status(200).json({
-      success: true,
-      data: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        plan: user.plan,
-        quotaRemaining: user.quota_remaining,
-        quotaPercentage,
-        showUpgradeBanner,
-        emailVerified: user.email_verified,
-        createdAt: user.created_at,
-        activeSubscription,
-      },
-    });
-  } catch (error) {
-    next(error);
   }
 };
 
@@ -74,25 +35,24 @@ export const updateProfile = async (req: AuthenticatedRequest, res: Response, ne
   try {
     const userId = req.user?.userId;
     if (!userId) {
-      res.status(401).json({ success: false, error: 'UNAUTHORIZED', message: 'Sesi tidak valid.' });
+      sendError(res, 401, 'UNAUTHORIZED', 'Sesi tidak valid.');
       return;
     }
 
     const { name } = req.body as { name?: string };
     if (!name || typeof name !== 'string' || name.trim().length < 2) {
-      res.status(400).json({ success: false, error: 'VALIDATION_ERROR', message: 'Nama minimal 2 karakter.' });
+      sendError(res, 400, 'VALIDATION_ERROR', 'Nama minimal 2 karakter.');
       return;
     }
 
-    const updatedUser = await prisma.user.update({
-      where: { id: parseInt(userId, 10) },
-      data: { name: name.trim() },
-      select: { id: true, name: true, email: true, plan: true },
-    });
-
-    res.status(200).json({ success: true, data: updatedUser, message: 'Profil berhasil diperbarui.' });
-  } catch (error) {
-    next(error);
+    const updatedUser = await UserService.updateProfile(userId, name);
+    sendSuccess(res, updatedUser, 'Profil berhasil diperbarui.');
+  } catch (error: any) {
+    if (error.statusCode) {
+      sendError(res, error.statusCode, error.error, error.message);
+    } else {
+      next(error);
+    }
   }
 };
 
@@ -103,30 +63,22 @@ export const deleteAccount = async (req: AuthenticatedRequest, res: Response, ne
   try {
     const userId = req.user?.userId;
     if (!userId) {
-      res.status(401).json({ success: false, error: 'UNAUTHORIZED', message: 'Sesi tidak valid.' });
+      sendError(res, 401, 'UNAUTHORIZED', 'Sesi tidak valid.');
       return;
     }
 
-    const scheduledDeletion = new Date(Date.now() + 24 * 60 * 60 * 1000); // +24 jam
-    const deletionToken = crypto.randomBytes(32).toString('hex');
-
-    await prisma.user.update({
-      where: { id: parseInt(userId, 10) },
-      data: { scheduled_deletion: scheduledDeletion, deletion_token: deletionToken },
-    });
-
-    // Dalam produksi: kirim email dengan link cancel berisi deletionToken
-    // Sementara: log ke console untuk pengujian lokal
-    console.log(`[AccountDeletion] User ${userId} dijadwalkan dihapus pada ${scheduledDeletion.toISOString()}`);
-    console.log(`[AccountDeletion] Cancel token: ${deletionToken}`);
-
-    res.status(200).json({
-      success: true,
-      message: 'Permintaan penghapusan akun diterima. Akun akan dihapus dalam 24 jam. Cek email Anda untuk membatalkan proses ini.',
-      scheduledAt: scheduledDeletion,
-    });
-  } catch (error) {
-    next(error);
+    const result = await UserService.deleteAccount(userId);
+    sendSuccess(
+      res,
+      result,
+      'Permintaan penghapusan akun diterima. Akun akan dihapus dalam 24 jam. Cek email Anda untuk membatalkan proses ini.'
+    );
+  } catch (error: any) {
+    if (error.statusCode) {
+      sendError(res, error.statusCode, error.error, error.message);
+    } else {
+      next(error);
+    }
   }
 };
 
@@ -137,23 +89,65 @@ export const cancelDeletion = async (req: AuthenticatedRequest, res: Response, n
   try {
     const { token } = req.query as { token?: string };
     if (!token) {
-      res.status(400).json({ success: false, error: 'MISSING_TOKEN', message: 'Token pembatalan tidak ditemukan.' });
+      sendError(res, 400, 'MISSING_TOKEN', 'Token pembatalan tidak ditemukan.');
       return;
     }
 
-    const user = await prisma.user.findUnique({ where: { deletion_token: token } });
-    if (!user) {
-      res.status(404).json({ success: false, error: 'INVALID_TOKEN', message: 'Token tidak valid atau sudah digunakan.' });
+    const result = await UserService.cancelDeletion(token);
+    sendSuccess(res, result, 'Penghapusan akun berhasil dibatalkan. Akun Anda aman.');
+  } catch (error: any) {
+    if (error.statusCode) {
+      sendError(res, error.statusCode, error.error, error.message);
+    } else {
+      next(error);
+    }
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/user/feedback - Kirim masukan untuk developer
+// ─────────────────────────────────────────────────────────────────────────────
+export const postFeedback = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) {
+      sendError(res, 401, 'UNAUTHORIZED', 'Sesi tidak valid.');
       return;
     }
 
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { scheduled_deletion: null, deletion_token: null },
-    });
+    const { message, category } = req.body as { message?: string; category?: string };
+    if (!message || typeof message !== 'string' || message.trim().length < 5) {
+      sendError(res, 400, 'VALIDATION_ERROR', 'Pesan masukan minimal 5 karakter.');
+      return;
+    }
 
-    res.status(200).json({ success: true, message: 'Penghapusan akun berhasil dibatalkan. Akun Anda aman.' });
-  } catch (error) {
+    const userProfile = await UserService.getProfile(userId);
+    const feedbackItem = {
+      id: Date.now(),
+      userId,
+      userEmail: userProfile.email,
+      userName: userProfile.name,
+      message,
+      category: category || 'general',
+      createdAt: new Date().toISOString(),
+    };
+
+    const filePath = path.join(__dirname, '../../feedbacks.json');
+    let feedbacks: any[] = [];
+    try {
+      if (fs.existsSync(filePath)) {
+        const fileContent = fs.readFileSync(filePath, 'utf-8');
+        feedbacks = JSON.parse(fileContent);
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    feedbacks.push(feedbackItem);
+    fs.writeFileSync(filePath, JSON.stringify(feedbacks, null, 2), 'utf-8');
+
+    sendSuccess(res, null, 'Masukan Anda berhasil dikirim. Terima kasih!');
+  } catch (error: any) {
     next(error);
   }
 };

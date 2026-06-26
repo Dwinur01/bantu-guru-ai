@@ -86,3 +86,10 @@ coverage/
 # ─── Generated Word Documents ──────────────────────────────────────────────────
 *.docx
 **/*.docx
+
+# ─── Exclude docs directory ───
+docs/
+
+# ─── Vite temp files ───
+*.timestamp-*.mjs
+

@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import { createPayment, paymentWebhook, getPaymentStatus, getPaymentHistory } from '../controllers/payment.controller';
 import { verifyAccessToken } from '../middleware/auth.middleware';
+import { validateBody } from '../middleware/validate.middleware';
+import { createPaymentSchema } from '../validators/payment.validator';
 
 const paymentRouter = Router();
 
 // POST /api/payment/create — Buat transaksi Midtrans Snap (🔒 Terproteksi)
-paymentRouter.post('/create', verifyAccessToken, createPayment);
+paymentRouter.post('/create', verifyAccessToken, validateBody(createPaymentSchema), createPayment);
 
 // GET /api/payment/status?order_id=xxx — Cek status pembayaran (🔒 Terproteksi, untuk polling)
 paymentRouter.get('/status', verifyAccessToken, getPaymentStatus);

@@ -222,6 +222,25 @@ Midtrans Snap diintegrasikan penuh agar guru dapat dengan mudah membayar paket:
 
 ---
 
+## 🚀 Pembaruan Fitur Terbaru
+
+### 1. Mata Pelajaran Kustom ("Lainnya — Tulis Sendiri")
+* Di setiap formulir generator (RPP, Soal Ujian, Modul Ajar), ditambahkan opsi **"Lainnya (Tulis Sendiri)"** pada dropdown mata pelajaran.
+* Memunculkan input area teks (*textarea*) dinamis yang memungkinkan guru menulis mata pelajaran kustom di luar daftar baku Kurikulum Merdeka.
+* Validasi schema Zod terintegrasi penuh untuk memastikan nama mata pelajaran kustom wajib diisi.
+
+### 2. Formulir Masukan Pengembang (Developer Feedback Form)
+* Ditambahkan bagian **"Kirim Masukan untuk Developer"** di halaman Profil Guru.
+* Guru dapat mengirimkan saran fitur baru, melaporkan bug, atau mengusulkan penambahan mata pelajaran baru yang belum terdaftar.
+* Masukan dikirim melalui API terproteksi (`POST /api/user/feedback`) dan disimpan secara aman di backend dalam file `backend/feedbacks.json`.
+
+### 3. Responsivitas & Desain Sidebar Melayang (Floating Sidebar)
+* Menu navigasi utama di mobile didesain ulang menjadi **Floating Sidebar Panel** yang melayang modern dengan sudut membulat (`rounded-2xl`) dan bayangan lembut (`shadow-2xl`).
+* Menyelesaikan masalah visibilitas ikon/teks di mode terang dengan memetakan warna latar belakang solid yang dinamis (`bg-sidebar`).
+* Menyatukan tombol tutup (`X`) ke dalam baris logo atas, menjaga kerapihan antarmuka mobile.
+
+---
+
 ## 📄 Lisensi
 MIT License — lihat file [LICENSE](LICENSE) untuk detail.
 

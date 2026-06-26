@@ -927,3 +927,21 @@
     border-color: #cbd5e1 !important; /* Slate 300 */
   }
 }
+
+/* ── Custom Theme Utilities (Fallback) ── */
+.bg-page {
+  background-color: var(--bg-page) !important;
+}
+.bg-sidebar {
+  background-color: var(--bg-sidebar) !important;
+}
+.border-rule {
+  border-color: var(--border-color) !important;
+}
+.text-ink {
+  color: var(--text-primary) !important;
+}
+.text-muted {
+  color: var(--text-secondary) !important;
+}
+

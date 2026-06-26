@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getProfile, updateProfile, deleteAccount, cancelDeletion } from '../controllers/user.controller';
+import { getProfile, updateProfile, deleteAccount, cancelDeletion, postFeedback } from '../controllers/user.controller';
 import { verifyAccessToken } from '../middleware/auth.middleware';
 
 const userRouter = Router();
@@ -9,6 +9,9 @@ userRouter.get('/me', verifyAccessToken, getProfile);
 
 // PATCH /api/user/me - Update nama profil (🔒 Terproteksi)
 userRouter.patch('/me', verifyAccessToken, updateProfile);
+
+// POST /api/user/feedback - Kirim masukan untuk developer (🔒 Terproteksi)
+userRouter.post('/feedback', verifyAccessToken, postFeedback);
 
 // DELETE /api/user/me - Jadwalkan penghapusan akun dalam 24 jam (🔒 Terproteksi)
 userRouter.delete('/me', verifyAccessToken, deleteAccount);
